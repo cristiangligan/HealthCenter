@@ -22,4 +22,4 @@ jobs:
         distribution: 'temurin'
 
     - name: Build the code
-      run: javac -d build -classpath HealthCenter/src HealthCenter/src/controller/Controller.java
+      run: javac -d build -classpath src src/controller/Controller.java
