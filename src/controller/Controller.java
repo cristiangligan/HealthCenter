@@ -1,7 +1,9 @@
 package controller;
 
+import view.LogInScreen;
+
 public class Controller {
     public static void main(String[] args) {
-        System.out.println("Hello boss!");
+        LogInScreen logInScreen = new LogInScreen(new Controller());
     }
 }
