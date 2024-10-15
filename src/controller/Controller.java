@@ -1,12 +1,9 @@
 package controller;
 
-import view.DoctorsScreen;
-import view.LogInScreen;
-import view.PatientsScreen;
-import view.UpcomingAppointmentsScreen;
+import view.*;
 
 public class Controller {
     public static void main(String[] args) {
-        UpcomingAppointmentsScreen upcomingAppointmentsScreen = new UpcomingAppointmentsScreen(new Controller());
+        ChooseBookDoctorScreen chooseBookDoctorScreen = new ChooseBookDoctorScreen(new Controller());
     }
 }
