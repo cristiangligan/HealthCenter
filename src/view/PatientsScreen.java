@@ -36,8 +36,8 @@ public class PatientsScreen extends JFrame {
         springLayout.putConstraint(SpringLayout.WEST, backBtn, 0, SpringLayout.WEST, patientsLst);
 
         mainPnl.add(viewMedicalRecordBtn);
-        springLayout.putConstraint(SpringLayout.SOUTH, viewMedicalRecordBtn, -10, SpringLayout.NORTH, patientsLst);
-        springLayout.putConstraint(SpringLayout.WEST, viewMedicalRecordBtn, 0, SpringLayout.WEST, patientsLst);
+        springLayout.putConstraint(SpringLayout.NORTH, viewMedicalRecordBtn, 10, SpringLayout.SOUTH, patientsLst);
+        springLayout.putConstraint(SpringLayout.EAST, viewMedicalRecordBtn, 0, SpringLayout.EAST, patientsLst);
 
         this.pack();
         this.setVisible(true);
