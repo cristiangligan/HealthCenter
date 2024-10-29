@@ -4,6 +4,6 @@ import view.*;
 
 public class Controller {
     public static void main(String[] args) {
-        MedicalRecordsScreen medicalRecordsScreen = new MedicalRecordsScreen(new Controller());
+        DiagnosisScreen diagnosisScreen = new DiagnosisScreen(new Controller());
     }
 }
