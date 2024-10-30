@@ -16,5 +16,6 @@ public class Controller {
         MedicalRecordsScreen medicalRecordsScreen = new MedicalRecordsScreen(new Controller());
         PatientsScreen patientsScreen = new PatientsScreen(new Controller());
         UpcomingAppointmentsScreen upcomingAppointmentsScreen = new UpcomingAppointmentsScreen(new Controller());
+        WelcomeUserNameScreen welcomeUserNameScreen = new WelcomeUserNameScreen(new Controller());
     }
 }
