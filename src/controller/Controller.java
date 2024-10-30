@@ -13,6 +13,7 @@ public class Controller {
     private AdminLogIn adminLogIn;
     private DoctorLogIn doctorLogIn;
     private PatientLogIn patientLogIn;
+
     /*
     private ScheduleScreen scheduleScreen;
     private ChooseBookDoctorScreen chooseBookDoctorScreen;
@@ -23,6 +24,7 @@ public class Controller {
     private PatientsScreen patientsScreen;
     private UpcomingAppointmentsScreen upcomingAppointmentsScreen;
     private WelcomeUserNameScreen welcomeUserNameScreen;
+    private WelcomePatientScreen welcomePatientScreen;
      */
 
     public Controller() {
