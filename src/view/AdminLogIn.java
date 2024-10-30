@@ -12,7 +12,7 @@ public class AdminLogIn extends JFrame {
         private JLabel lblUsername;
         private JLabel lblPassword;
         private JTextField usernameField;
-        private JPasswordField passwordField;
+        private JTextField passwordField;
         private JButton btnBack;
         private JButton btnLogin;
 
@@ -57,10 +57,12 @@ public class AdminLogIn extends JFrame {
                 springLayout.putConstraint(SpringLayout.NORTH, lblPassword, 30, SpringLayout.SOUTH, usernameField);
                 springLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, lblPassword, 0, SpringLayout.HORIZONTAL_CENTER, pnlMain);
 
-                passwordField = new JPasswordField(15);
+                passwordField = new JTextField();
                 pnlMain.add(passwordField);
                 springLayout.putConstraint(SpringLayout.NORTH, passwordField, 10, SpringLayout.SOUTH, lblPassword);
-                springLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, passwordField, 0, SpringLayout.HORIZONTAL_CENTER, pnlMain);
+                springLayout.putConstraint(SpringLayout.WEST, passwordField, 0, SpringLayout.WEST, usernameField);
+                springLayout.putConstraint(SpringLayout.EAST, passwordField, 0, SpringLayout.EAST, usernameField);
+
 
                 btnBack = new JButton("Back");
                 pnlMain.add(btnBack);
@@ -71,6 +73,7 @@ public class AdminLogIn extends JFrame {
                 pnlMain.add(btnLogin);
                 springLayout.putConstraint(SpringLayout.NORTH, btnLogin,20, SpringLayout.SOUTH, passwordField);
                 springLayout.putConstraint(SpringLayout.WEST, btnLogin, -100, SpringLayout.EAST, pnlMain);
+                btnLogin.addActionListener(e -> controller.handleAdminLogIn());
 
                 this.pack();
                 this.setVisible(true);
@@ -79,5 +82,18 @@ public class AdminLogIn extends JFrame {
                 this.setLocationRelativeTo(null);
                 setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        }
+
+        public String getUsername() {
+                return usernameField.getText();
+        }
+
+        public String getPassword() {
+                return passwordField.getText();
+        }
+
+        public void clearFields() {
+                usernameField.setText("");
+                passwordField.setText("");
         }
 }

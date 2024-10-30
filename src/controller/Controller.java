@@ -1,8 +1,11 @@
 package controller;
 
+import model.Admin;
+import model.LogInManager;
 import view.*;
 
 import javax.naming.ldap.Control;
+import javax.swing.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -13,6 +16,10 @@ public class Controller {
     private AdminLogIn adminLogIn;
     private DoctorLogIn doctorLogIn;
     private PatientLogIn patientLogIn;
+
+    private LogInManager logInManager;
+    private WelcomeUserNameScreen welcomeUserNameScreen;
+
     /*
     private ScheduleScreen scheduleScreen;
     private ChooseBookDoctorScreen chooseBookDoctorScreen;
@@ -22,7 +29,6 @@ public class Controller {
     private MedicalRecordsScreen medicalRecordsScreen;
     private PatientsScreen patientsScreen;
     private UpcomingAppointmentsScreen upcomingAppointmentsScreen;
-    private WelcomeUserNameScreen welcomeUserNameScreen;
      */
 
     public Controller() {
@@ -49,6 +55,27 @@ public class Controller {
             e.printStackTrace();
         }
     }
+
+
+    //-------- AdminLogIn - START --------
+    public void handleAdminLogIn() {
+        logInManager = new LogInManager(connection);
+        String username = adminLogIn.getUsername();
+        String password = adminLogIn.getPassword();
+        Admin admin = logInManager.verifyAdmin(username, password);
+        if(admin != null) {
+            welcomeUserNameScreen = new WelcomeUserNameScreen(this);
+            welcomeUserNameScreen.setUsernameLabel(username);
+            adminLogIn.dispose();
+            System.out.println(logInManager.getCurrentAdmin());
+        } else {
+            JOptionPane.showMessageDialog(null, "Incorrect username or password.");
+            adminLogIn.clearFields();
+        }
+    }
+
+    //-------- AdminLogIn - END --------
+
 
 
     //-------- LogInScreen - START --------

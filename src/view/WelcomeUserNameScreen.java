@@ -84,4 +84,8 @@ public class WelcomeUserNameScreen extends JFrame {
             this.setLocationRelativeTo(null);
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         }
+
+        public void setUsernameLabel(String username) {
+            welcomeUsername.setText("Welcome admin " + username);
+        }
     }
