@@ -16,10 +16,8 @@ public class Controller {
     private AdminLogIn adminLogIn;
     private DoctorLogIn doctorLogIn;
     private PatientLogIn patientLogIn;
-
     private LogInManager logInManager;
     private WelcomeUserNameScreen welcomeUserNameScreen;
-
     /*
     private ScheduleScreen scheduleScreen;
     private ChooseBookDoctorScreen chooseBookDoctorScreen;
@@ -29,7 +27,8 @@ public class Controller {
     private MedicalRecordsScreen medicalRecordsScreen;
     private PatientsScreen patientsScreen;
     private UpcomingAppointmentsScreen upcomingAppointmentsScreen;
-     */
+    private WelcomePatientScreen welcomePatientScreen;
+    */
 
     public Controller() {
         logInScreen = new LogInScreen(this);
