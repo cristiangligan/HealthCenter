@@ -5,7 +5,7 @@ import controller.Controller;
 import javax.swing.*;
 import java.awt.*;
 
-public class DoctorScreen extends JFrame {
+public class DoctorNewEditScreen extends JFrame {
     private Controller controller;
     private JPanel mainPnl = new JPanel();
 
@@ -25,7 +25,7 @@ public class DoctorScreen extends JFrame {
     private JButton cancelBtn = new JButton("Cancel");
     private JButton saveBtn = new JButton("Save");
 
-    public DoctorScreen(Controller controller) {
+    public DoctorNewEditScreen(Controller controller) {
         this.controller = controller;
         this.setTitle("Health Center");
         this.setContentPane(mainPnl);
