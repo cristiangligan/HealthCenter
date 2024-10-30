@@ -25,11 +25,47 @@ public class LogInScreen extends JFrame {
         lblLogInAs.setHorizontalAlignment(SwingConstants.CENTER);
         lblLogInAs.setFont(new Font(Font.SERIF, Font.BOLD, 20));
         lblLogInAs.setBackground(Color.red);
-        lblLogInAs.setOpaque(true);
+        lblLogInAs.setOpaque(true); //ej genomskinligt
         pnlMain.add(lblLogInAs);
+
+        //layout för var texten ska hamna
         springLayout.putConstraint(SpringLayout.NORTH, lblLogInAs, 40, SpringLayout.NORTH, pnlMain);
         springLayout.putConstraint(SpringLayout.WEST, lblLogInAs, 10, SpringLayout.WEST, pnlMain);
         springLayout.putConstraint(SpringLayout.EAST, lblLogInAs, -10, SpringLayout.EAST, pnlMain);
+
+        btnAdmin = new JButton("Admin");
+        btnAdmin.setVerticalAlignment(SwingConstants.CENTER);
+        btnAdmin.setHorizontalAlignment(SwingConstants.CENTER);
+        btnAdmin.setFont(new Font(Font.SERIF, Font.BOLD, 15));
+        //btnAdmin.setOpaque(true);
+        pnlMain.add(btnAdmin);
+
+        //sätt layout för admin-knapp
+        springLayout.putConstraint(SpringLayout.NORTH, btnAdmin, 120, SpringLayout.NORTH, pnlMain);
+        springLayout.putConstraint(SpringLayout.WEST, btnAdmin, 150, SpringLayout.WEST, pnlMain);
+        springLayout.putConstraint(SpringLayout.EAST, btnAdmin, -150, SpringLayout.EAST, pnlMain);
+
+        btnDoctor = new JButton("Doctor");
+        btnDoctor.setVerticalAlignment(SwingConstants.CENTER);
+        btnDoctor.setHorizontalAlignment(SwingConstants.CENTER);
+        btnDoctor.setFont(new Font(Font.SERIF, Font.BOLD, 15));
+        pnlMain.add(btnDoctor);
+
+        //sätt layout för doctor-knapp
+        springLayout.putConstraint(SpringLayout.NORTH, btnDoctor, 40, SpringLayout.SOUTH, btnAdmin);
+        springLayout.putConstraint(SpringLayout.WEST, btnDoctor, 150, SpringLayout.WEST, pnlMain);
+        springLayout.putConstraint(SpringLayout.EAST, btnDoctor, -150, SpringLayout.EAST, pnlMain);
+
+        btnPatient = new JButton("Patient");
+        btnPatient.setVerticalAlignment(SwingConstants.CENTER);
+        btnPatient.setHorizontalAlignment(SwingConstants.CENTER);
+        btnPatient.setFont(new Font(Font.SERIF, Font.BOLD, 15));
+        pnlMain.add(btnPatient);
+
+        //sätt layout för doctor-knapp
+        springLayout.putConstraint(SpringLayout.NORTH, btnPatient, 40, SpringLayout.SOUTH, btnDoctor);
+        springLayout.putConstraint(SpringLayout.WEST, btnPatient, 150, SpringLayout.WEST, pnlMain);
+        springLayout.putConstraint(SpringLayout.EAST, btnPatient, -150, SpringLayout.EAST, pnlMain);
 
         this.pack();
         this.setVisible(true);
