@@ -2,19 +2,55 @@ package controller;
 
 import view.*;
 
+import javax.naming.ldap.Control;
+
 public class Controller {
+    private LogInScreen logInScreen;
+    private AdminLogIn adminLogIn;
+    private DoctorLogIn doctorLogIn;
+    private PatientLogIn patientLogIn;
+    /*
+    private ScheduleScreen scheduleScreen;
+    private ChooseBookDoctorScreen chooseBookDoctorScreen;
+    private DiagnosisScreen diagnosisScreen;
+    private DoctorNewEditScreen doctorNewEditScreen;
+    private DoctorsScreen doctorsScreen;
+    private MedicalRecordsScreen medicalRecordsScreen;
+    private PatientsScreen patientsScreen;
+    private UpcomingAppointmentsScreen upcomingAppointmentsScreen;
+     */
+
+    public Controller() {
+        logInScreen = new LogInScreen(this);
+    }
+
+    //-------- LogInScreen - START --------
+
+    public void chooseAdminLogin() {
+        adminLogIn = new AdminLogIn(this);
+        logInScreen.dispose();
+    }
+
+    public void chooseDoctorLogin() {
+        doctorLogIn = new DoctorLogIn(this);
+        logInScreen.dispose();
+    }
+
+    public void choosePatientLogin() {
+        patientLogIn = new PatientLogIn(this);
+        logInScreen.dispose();
+    }
+
+    //-------- LogInScreen - END --------
+
+
+
+
+
+
+
     public static void main(String[] args) {
-        LogInScreen logInScreen = new LogInScreen(new Controller());
-        AdminLogIn adminLogIn = new AdminLogIn(new Controller());
-        DoctorLogIn doctorLogIn = new DoctorLogIn(new Controller());
-        PatientLogIn patientLogIn = new PatientLogIn(new Controller());
-        ScheduleScreen scheduleScreen = new ScheduleScreen(new Controller());
-        ChooseBookDoctorScreen chooseBookDoctorScreen = new ChooseBookDoctorScreen(new Controller());
-        DiagnosisScreen diagnosisScreen = new DiagnosisScreen(new Controller());
-        DoctorNewEditScreen doctorNewEditScreen = new DoctorNewEditScreen(new Controller());
-        DoctorsScreen doctorsScreen = new DoctorsScreen(new Controller());
-        MedicalRecordsScreen medicalRecordsScreen = new MedicalRecordsScreen(new Controller());
-        PatientsScreen patientsScreen = new PatientsScreen(new Controller());
-        UpcomingAppointmentsScreen upcomingAppointmentsScreen = new UpcomingAppointmentsScreen(new Controller());
+        Controller controller = new Controller();
+
     }
 }
