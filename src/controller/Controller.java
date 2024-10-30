@@ -3,8 +3,12 @@ package controller;
 import view.*;
 
 import javax.naming.ldap.Control;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class Controller {
+    private Connection connection;
     private LogInScreen logInScreen;
     private AdminLogIn adminLogIn;
     private DoctorLogIn doctorLogIn;
@@ -23,7 +27,29 @@ public class Controller {
 
     public Controller() {
         logInScreen = new LogInScreen(this);
+        logInToDataBase();
     }
+
+    public void logInToDataBase() {
+        String URL = "jdbc:postgresql://pgserver.mau.se:5432/ao8732";
+        String user = "am6056";
+        String password = "ady9oo1j";
+
+        try {
+            connection = DriverManager.getConnection(URL, user, password);
+
+            if (connection != null) {
+                System.out.println("Connected successfully!");
+
+            } else {
+                System.out.println("Not successful!");
+            }
+        } catch (SQLException e) {
+            System.out.println("Connection failed.");
+            e.printStackTrace();
+        }
+    }
+
 
     //-------- LogInScreen - START --------
 
