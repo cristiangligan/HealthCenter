@@ -39,6 +39,7 @@ public class LogInScreen extends JFrame {
         btnAdmin.setFont(new Font(Font.SERIF, Font.BOLD, 15));
         //btnAdmin.setOpaque(true);
         pnlMain.add(btnAdmin);
+        btnAdmin.addActionListener(e -> controller.chooseAdminLogin());
 
         //sätt layout för admin-knapp
         springLayout.putConstraint(SpringLayout.NORTH, btnAdmin, 120, SpringLayout.NORTH, pnlMain);
@@ -50,6 +51,7 @@ public class LogInScreen extends JFrame {
         btnDoctor.setHorizontalAlignment(SwingConstants.CENTER);
         btnDoctor.setFont(new Font(Font.SERIF, Font.BOLD, 15));
         pnlMain.add(btnDoctor);
+        btnDoctor.addActionListener(e -> controller.chooseDoctorLogin());
 
         //sätt layout för doctor-knapp
         springLayout.putConstraint(SpringLayout.NORTH, btnDoctor, 40, SpringLayout.SOUTH, btnAdmin);
@@ -61,6 +63,7 @@ public class LogInScreen extends JFrame {
         btnPatient.setHorizontalAlignment(SwingConstants.CENTER);
         btnPatient.setFont(new Font(Font.SERIF, Font.BOLD, 15));
         pnlMain.add(btnPatient);
+        btnPatient.addActionListener(e -> controller.choosePatientLogin());
 
         //sätt layout för doctor-knapp
         springLayout.putConstraint(SpringLayout.NORTH, btnPatient, 40, SpringLayout.SOUTH, btnDoctor);
