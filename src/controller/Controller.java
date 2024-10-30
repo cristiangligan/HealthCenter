@@ -18,6 +18,7 @@ public class Controller {
     private MedicalRecordsScreen medicalRecordsScreen;
     private PatientsScreen patientsScreen;
     private UpcomingAppointmentsScreen upcomingAppointmentsScreen;
+    private WelcomeUserNameScreen welcomeUserNameScreen;
      */
 
     public Controller() {
