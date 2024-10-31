@@ -36,8 +36,8 @@ public class WelcomeUserNameScreen extends JFrame {
             btnDoctors.setVerticalAlignment(SwingConstants.CENTER);
             btnDoctors.setHorizontalAlignment(SwingConstants.CENTER);
             btnDoctors.setFont(new Font(Font.SERIF, Font.BOLD, 15));
-            //btnAdmin.setOpaque(true);
             pnlMain.add(btnDoctors);
+            btnDoctors.addActionListener(e -> controller.handleDoctors());
 
             //sätt layout för admin-knapp
             springLayout.putConstraint(SpringLayout.NORTH, btnDoctors, 120, SpringLayout.NORTH, pnlMain);
