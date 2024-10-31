@@ -1,16 +1,19 @@
 package model;
 
+import java.beans.PropertyChangeSupport;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class LogInManager {
+public class AdminManager {
+    public static final String UPDATE_DOCTORS_LIST = "update_doctors_list";
     private Connection connection;
+    private PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
 
     private Admin currentAdmin;
 
-    public LogInManager(Connection connection) {
+    public AdminManager(Connection connection) {
         this.connection = connection;
     }
 
@@ -39,6 +42,22 @@ public class LogInManager {
         }
 
     }
+
+    /*public void addNewDoctor(Doctor doctor) {
+        if (doctor != null) {
+            String insertQuery = "INSERT INTO public.doctor (question, answer, flashcards_set_id) VALUES (?, ?, ?)";
+            try {
+                PreparedStatement statement = connection.prepareStatement(insertQuery);
+                statement.setString(1, question);
+                statement.setString(2, answer);
+                statement.setInt(3, flashcardSet.getId());
+                int rowCount = statement.executeUpdate();
+                propertyChangeSupport.firePropertyChange(UPDATE_FLASHCARD_LIST, null, getFlashcards(flashcardSet.getId()));
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }*/
 
     public Admin getCurrentAdmin() {
         return currentAdmin;

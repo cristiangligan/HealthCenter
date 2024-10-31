@@ -1,10 +1,9 @@
 package controller;
 
 import model.Admin;
-import model.LogInManager;
+import model.AdminManager;
 import view.*;
 
-import javax.naming.ldap.Control;
 import javax.swing.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -16,15 +15,14 @@ public class Controller {
     private AdminLogIn adminLogIn;
     private DoctorLogIn doctorLogIn;
     private PatientLogIn patientLogIn;
-    private LogInManager logInManager;
+    private AdminManager adminManager;
     private WelcomeUserNameScreen welcomeUserNameScreen;
-
     private DoctorsScreen doctorsScreen;
+    private NewEditDoctorScreen newEditDoctorScreen;
     /*
     private ScheduleScreen scheduleScreen;
     private ChooseBookDoctorScreen chooseBookDoctorScreen;
     private DiagnosisScreen diagnosisScreen;
-    private DoctorNewEditScreen doctorNewEditScreen;
     private MedicalRecordsScreen medicalRecordsScreen;
     private PatientsScreen patientsScreen;
     private UpcomingAppointmentsScreen upcomingAppointmentsScreen;
@@ -59,27 +57,25 @@ public class Controller {
 
     //-------- AdminLogIn - START --------
     public void handleAdminLogIn() {
-        logInManager = new LogInManager(connection);
+        adminManager = new AdminManager(connection);
         String username = adminLogIn.getUsername();
         String password = adminLogIn.getPassword();
-        Admin admin = logInManager.verifyAdmin(username, password);
+        Admin admin = adminManager.verifyAdmin(username, password);
         if(admin != null) {
             welcomeUserNameScreen = new WelcomeUserNameScreen(this);
             welcomeUserNameScreen.setUsernameLabel(username);
             adminLogIn.dispose();
-            System.out.println(logInManager.getCurrentAdmin());
+            System.out.println(adminManager.getCurrentAdmin());
         } else {
             JOptionPane.showMessageDialog(null, "Incorrect username or password.");
             adminLogIn.clearFields();
         }
     }
-
     //-------- AdminLogIn - END --------
 
 
 
     //-------- LogInScreen - START --------
-
     public void chooseAdminLogin() {
         adminLogIn = new AdminLogIn(this);
         logInScreen.dispose();
@@ -94,7 +90,6 @@ public class Controller {
         patientLogIn = new PatientLogIn(this);
         logInScreen.dispose();
     }
-
     //-------- LogInScreen - END --------
 
 
@@ -104,6 +99,23 @@ public class Controller {
         welcomeUserNameScreen.dispose();
     }
     //-------- WelcomUserNameScreen - END --------
+
+
+    //-------- DoctorsScreen - START --------
+    public void handleAddNewDoctor() {
+        newEditDoctorScreen = new NewEditDoctorScreen(this);
+        doctorsScreen.dispose();
+    }
+    //-------- DoctorsScreen - END --------
+
+
+    //-------- NewEditDoctorScreen - START --------
+    public void handleSaveNewDoctor() {
+        doctorsScreen = new DoctorsScreen(this);
+        newEditDoctorScreen.dispose();
+    }
+    //-------- NewEditDoctorScreen - END --------
+
 
     public static void main(String[] args) {
       Controller controller = new Controller();
