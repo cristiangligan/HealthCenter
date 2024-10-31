@@ -20,6 +20,7 @@ public class Controller {
     private DoctorsScreen doctorsScreen;
     private NewEditDoctorScreen newEditDoctorScreen;
     private SpecializationsScreen specializationsScreen;
+    private NewEditSpecializationScreen newEditSpecializationScreen;
 
     /*
     private ScheduleScreen scheduleScreen;
@@ -123,6 +124,14 @@ public class Controller {
     }
     //-------- NewEditDoctorScreen - END --------
 
+
+
+    //-------- NewEditSpecializationScreen - START --------
+    public void handleAddNewSpecialization() {
+        newEditSpecializationScreen = new NewEditSpecializationScreen(this);
+        specializationsScreen.dispose();
+    }
+    //-------- NewEditSpecializationScreen - END --------
 
     public static void main(String[] args) {
       Controller controller = new Controller();
