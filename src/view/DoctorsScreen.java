@@ -40,6 +40,7 @@ public class DoctorsScreen extends JFrame {
         mainPnl.add(addBtn);
         springLayout.putConstraint(SpringLayout.SOUTH, addBtn, -10, SpringLayout.NORTH, doctorsLst);
         springLayout.putConstraint(SpringLayout.WEST, addBtn, 0, SpringLayout.WEST, doctorsLst);
+        addBtn.addActionListener(e -> controller.handleAddNewDoctor());
 
         mainPnl.add(deleteBtn);
         springLayout.putConstraint(SpringLayout.SOUTH, deleteBtn, -10, SpringLayout.NORTH, doctorsLst);
