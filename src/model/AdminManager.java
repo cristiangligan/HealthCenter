@@ -57,7 +57,6 @@ public class AdminManager {
                 throw new RuntimeException(e);
             }
         }
-        //
     }*/
 
     public Admin getCurrentAdmin() {
