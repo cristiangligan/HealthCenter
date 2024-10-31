@@ -18,12 +18,13 @@ public class Controller {
     private PatientLogIn patientLogIn;
     private LogInManager logInManager;
     private WelcomeUserNameScreen welcomeUserNameScreen;
+
+    private DoctorsScreen doctorsScreen;
     /*
     private ScheduleScreen scheduleScreen;
     private ChooseBookDoctorScreen chooseBookDoctorScreen;
     private DiagnosisScreen diagnosisScreen;
     private DoctorNewEditScreen doctorNewEditScreen;
-    private DoctorsScreen doctorsScreen;
     private MedicalRecordsScreen medicalRecordsScreen;
     private PatientsScreen patientsScreen;
     private UpcomingAppointmentsScreen upcomingAppointmentsScreen;
@@ -97,10 +98,12 @@ public class Controller {
     //-------- LogInScreen - END --------
 
 
-
-
-
-
+    //-------- WelcomUserNameScreen - START --------
+    public void handleDoctors() {
+        doctorsScreen = new DoctorsScreen(this);
+        welcomeUserNameScreen.dispose();
+    }
+    //-------- WelcomUserNameScreen - END --------
 
     public static void main(String[] args) {
       Controller controller = new Controller();
