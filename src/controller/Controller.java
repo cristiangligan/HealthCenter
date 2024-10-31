@@ -19,6 +19,8 @@ public class Controller {
     private WelcomeUserNameScreen welcomeUserNameScreen;
     private DoctorsScreen doctorsScreen;
     private NewEditDoctorScreen newEditDoctorScreen;
+    private SpecializationsScreen specializationsScreen;
+
     /*
     private ScheduleScreen scheduleScreen;
     private ChooseBookDoctorScreen chooseBookDoctorScreen;
@@ -96,6 +98,11 @@ public class Controller {
     //-------- WelcomUserNameScreen - START --------
     public void handleDoctors() {
         doctorsScreen = new DoctorsScreen(this);
+        welcomeUserNameScreen.dispose();
+    }
+
+    public void handleSpecializations() {
+        specializationsScreen = new SpecializationsScreen(this);
         welcomeUserNameScreen.dispose();
     }
     //-------- WelcomUserNameScreen - END --------

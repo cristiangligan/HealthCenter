@@ -10,7 +10,8 @@ public class WelcomeUserNameScreen extends JFrame {
         private JButton btnDoctors;
         private JButton btnPatients;
         private JButton btnAppointments;
-        private JButton logOut;
+        private JButton btnSpecializations;
+        private JButton btnLogOut = new JButton("Log out");
 
         public WelcomeUserNameScreen(Controller controller) {
             this.controller = controller;
@@ -66,16 +67,21 @@ public class WelcomeUserNameScreen extends JFrame {
             springLayout.putConstraint(SpringLayout.WEST, btnAppointments, 150, SpringLayout.WEST, pnlMain);
             springLayout.putConstraint(SpringLayout.EAST, btnAppointments, -150, SpringLayout.EAST, pnlMain);
 
-            logOut = new JButton("Log out");
-            logOut.setVerticalAlignment(SwingConstants.CENTER);
-            logOut.setHorizontalAlignment(SwingConstants.CENTER);
-            logOut.setFont(new Font(Font.SERIF, Font.BOLD, 15));
-            pnlMain.add(logOut);
+            btnSpecializations = new JButton("Specializations");
+            btnSpecializations.setVerticalAlignment(SwingConstants.CENTER);
+            btnSpecializations.setHorizontalAlignment(SwingConstants.CENTER);
+            btnSpecializations.setFont(new Font(Font.SERIF, Font.BOLD, 15));
+            pnlMain.add(btnSpecializations);
+            btnSpecializations.addActionListener(e -> controller.handleSpecializations());
 
-            springLayout.putConstraint(SpringLayout.NORTH, logOut, 40, SpringLayout.SOUTH, btnAppointments);
-            springLayout.putConstraint(SpringLayout.WEST, logOut, 150, SpringLayout.WEST, pnlMain);
-            springLayout.putConstraint(SpringLayout.EAST, logOut, -150, SpringLayout.EAST, pnlMain);
+            springLayout.putConstraint(SpringLayout.NORTH, btnSpecializations, 40, SpringLayout.SOUTH, btnAppointments);
+            springLayout.putConstraint(SpringLayout.WEST, btnSpecializations, 150, SpringLayout.WEST, pnlMain);
+            springLayout.putConstraint(SpringLayout.EAST, btnSpecializations, -150, SpringLayout.EAST, pnlMain);
 
+            pnlMain.add(btnLogOut);
+            springLayout.putConstraint(SpringLayout.WEST, btnLogOut, 10, SpringLayout.WEST, pnlMain);
+            springLayout.putConstraint(SpringLayout.NORTH, btnLogOut, 0, SpringLayout.NORTH, btnSpecializations);
+            springLayout.putConstraint(SpringLayout.SOUTH, btnLogOut, 0, SpringLayout.SOUTH, btnSpecializations);
 
             this.pack();
             this.setVisible(true);
