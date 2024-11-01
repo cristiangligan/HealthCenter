@@ -62,4 +62,8 @@ public class AdminManager {
     public Admin getCurrentAdmin() {
         return currentAdmin;
     }
+
+    public void setCurrentAdmin(Admin admin) {
+        currentAdmin = admin;
+    }
 }

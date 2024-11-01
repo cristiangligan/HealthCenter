@@ -54,10 +54,12 @@ public class NewEditSpecializationScreen extends JFrame {
         mainPnl.add(cancelBtn);
         springLayout.putConstraint(SpringLayout.WEST, cancelBtn, 40, SpringLayout.WEST, mainPnl);
         springLayout.putConstraint(SpringLayout.SOUTH, cancelBtn, -20, SpringLayout.SOUTH, mainPnl);
+        cancelBtn.addActionListener(e -> controller.handleCancelNewEditSpecialization());
 
         mainPnl.add(saveBtn);
         springLayout.putConstraint(SpringLayout.NORTH, saveBtn, 0, SpringLayout.NORTH, cancelBtn);
         springLayout.putConstraint(SpringLayout.EAST, saveBtn, -40, SpringLayout.EAST, mainPnl);
+        saveBtn.addActionListener(e -> controller.handleSaveSpecialization());
 
         this.pack();
         this.setVisible(true);
