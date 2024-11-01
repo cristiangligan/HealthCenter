@@ -22,7 +22,7 @@ public class RegisterNewPatientScreen extends JFrame {
     private JTextField genderField = new JTextField();
 
 
-    private JButton backbtn = new JButton("Back");
+    private JButton backBtn = new JButton("Back");
     private JButton registerBtn = new JButton("Register");
 
     public RegisterNewPatientScreen(Controller controller) {
@@ -69,7 +69,7 @@ public class RegisterNewPatientScreen extends JFrame {
         springLayout.putConstraint(SpringLayout.WEST, phoneLbl, 40, SpringLayout.WEST, mainPnl);
 
         mainPnl.add(phoneField);
-        phoneField.setPreferredSize(new Dimension(400, 30));
+        phoneField.setPreferredSize((new Dimension(400, 30)));
         springLayout.putConstraint(SpringLayout.NORTH, phoneField, 5, SpringLayout.SOUTH, phoneLbl);
         springLayout.putConstraint(SpringLayout.WEST, phoneField, 40, SpringLayout.WEST, mainPnl);
 
@@ -83,24 +83,25 @@ public class RegisterNewPatientScreen extends JFrame {
         springLayout.putConstraint(SpringLayout.WEST, birthDateField, 40, SpringLayout.WEST, mainPnl);
 
         mainPnl.add(genderLbl);
-        springLayout.putConstraint(SpringLayout.NORTH, genderField, 20, SpringLayout.SOUTH, birthDateField);
-        springLayout.putConstraint(SpringLayout.WEST, genderField, 40, SpringLayout.WEST, mainPnl);
+        springLayout.putConstraint(SpringLayout.NORTH, genderLbl, 20, SpringLayout.SOUTH, birthDateField);
+        springLayout.putConstraint(SpringLayout.WEST, genderLbl, 40, SpringLayout.WEST, mainPnl);
 
         mainPnl.add(genderField);
         genderField.setPreferredSize(new Dimension(400,30));
         springLayout.putConstraint(SpringLayout.NORTH, genderField, 5, SpringLayout.SOUTH, genderLbl);
         springLayout.putConstraint(SpringLayout.WEST, genderField, 40, SpringLayout.WEST, mainPnl);
 
-        mainPnl.add(backbtn);
-        springLayout.putConstraint(SpringLayout.NORTH, backbtn, -20, SpringLayout.SOUTH, mainPnl);
-        springLayout.putConstraint(SpringLayout.WEST, backbtn, 100, SpringLayout.WEST, mainPnl);
-
+        mainPnl.add(backBtn);
         mainPnl.add(registerBtn);
-        springLayout.putConstraint(SpringLayout.SOUTH, registerBtn, -20, SpringLayout.NORTH, mainPnl);
-        springLayout.putConstraint(SpringLayout.WEST, registerBtn, 20, SpringLayout.EAST, backbtn);
+
+        springLayout.putConstraint(SpringLayout.SOUTH, backBtn, -20, SpringLayout.SOUTH, mainPnl);
+        springLayout.putConstraint(SpringLayout.WEST, backBtn, 40, SpringLayout.WEST, mainPnl);
+
+        springLayout.putConstraint(SpringLayout.SOUTH, registerBtn, -20, SpringLayout.SOUTH, mainPnl);
+        springLayout.putConstraint(SpringLayout.EAST, registerBtn, -40, SpringLayout.EAST, mainPnl);
 
         this.pack();
-        this.setSize(new Dimension(800, 600));
+        this.setSize(new Dimension(700, 600));
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
