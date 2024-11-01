@@ -3,7 +3,7 @@ import controller.Controller;
 import javax.swing.*;
 import java.awt.*;
 
-public class WelcomeUserNameScreen extends JFrame {
+public class WelcomeAdminScreen extends JFrame {
         private Controller controller;
         private JPanel pnlMain = new JPanel();
         private JLabel welcomeUsername;
@@ -13,7 +13,7 @@ public class WelcomeUserNameScreen extends JFrame {
         private JButton btnSpecializations;
         private JButton btnLogOut = new JButton("Log out");
 
-        public WelcomeUserNameScreen(Controller controller) {
+        public WelcomeAdminScreen(Controller controller) {
             this.controller = controller;
             this.setTitle("Health Center");
             this.setContentPane(pnlMain);
@@ -82,6 +82,7 @@ public class WelcomeUserNameScreen extends JFrame {
             springLayout.putConstraint(SpringLayout.WEST, btnLogOut, 10, SpringLayout.WEST, pnlMain);
             springLayout.putConstraint(SpringLayout.NORTH, btnLogOut, 0, SpringLayout.NORTH, btnSpecializations);
             springLayout.putConstraint(SpringLayout.SOUTH, btnLogOut, 0, SpringLayout.SOUTH, btnSpecializations);
+            btnLogOut.addActionListener(e -> controller.handleLogOut());
 
             this.pack();
             this.setVisible(true);

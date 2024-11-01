@@ -16,7 +16,7 @@ public class Controller {
     private DoctorLogIn doctorLogIn;
     private PatientLogIn patientLogIn;
     private AdminManager adminManager;
-    private WelcomeUserNameScreen welcomeUserNameScreen;
+    private WelcomeAdminScreen welcomeAdminScreen;
     private DoctorsScreen doctorsScreen;
     private NewEditDoctorScreen newEditDoctorScreen;
     private SpecializationsScreen specializationsScreen;
@@ -34,8 +34,9 @@ public class Controller {
     */
 
     public Controller() {
-        logInScreen = new LogInScreen(this);
-        logInToDataBase();
+        welcomeAdminScreen = new WelcomeAdminScreen(this);
+        //logInScreen = new LogInScreen(this);
+        //logInToDataBase();
     }
 
     public void logInToDataBase() {
@@ -66,8 +67,8 @@ public class Controller {
         String password = adminLogIn.getPassword();
         Admin admin = adminManager.verifyAdmin(username, password);
         if(admin != null) {
-            welcomeUserNameScreen = new WelcomeUserNameScreen(this);
-            welcomeUserNameScreen.setUsernameLabel(username);
+            welcomeAdminScreen = new WelcomeAdminScreen(this);
+            welcomeAdminScreen.setUsernameLabel(username);
             adminLogIn.dispose();
             System.out.println(adminManager.getCurrentAdmin());
         } else {
@@ -76,6 +77,11 @@ public class Controller {
         }
     }
     //-------- AdminLogIn - END --------
+
+
+
+
+
 
 
 
@@ -94,20 +100,43 @@ public class Controller {
         patientLogIn = new PatientLogIn(this);
         logInScreen.dispose();
     }
+
+    public void handleBackFromDoctorsScreen() {
+        welcomeAdminScreen = new WelcomeAdminScreen(this);
+        //welcomeUserNameScreen.setUsernameLabel(adminManager.getCurrentAdmin().toString());
+        welcomeAdminScreen.setUsernameLabel("temporary");
+        doctorsScreen.dispose();
+    }
     //-------- LogInScreen - END --------
 
 
-    //-------- WelcomUserNameScreen - START --------
+
+
+
+
+
+    //-------- WelcomeUserNameScreen - START --------
     public void handleDoctors() {
         doctorsScreen = new DoctorsScreen(this);
-        welcomeUserNameScreen.dispose();
+        welcomeAdminScreen.dispose();
     }
 
     public void handleSpecializations() {
         specializationsScreen = new SpecializationsScreen(this);
-        welcomeUserNameScreen.dispose();
+        welcomeAdminScreen.dispose();
     }
-    //-------- WelcomUserNameScreen - END --------
+
+    public void handleLogOut() {
+        logInScreen = new LogInScreen(this);
+        connection = null;
+        //adminManager.setCurrentAdmin(null);
+        welcomeAdminScreen.dispose();
+    }
+    //-------- WelcomeUserNameScreen - END --------
+
+
+
+
 
 
     //-------- DoctorsScreen - START --------
@@ -115,11 +144,26 @@ public class Controller {
         newEditDoctorScreen = new NewEditDoctorScreen(this);
         doctorsScreen.dispose();
     }
+
+    public void handleEditDoctor() {
+        newEditDoctorScreen = new NewEditDoctorScreen(this);
+        doctorsScreen.dispose();
+    }
     //-------- DoctorsScreen - END --------
 
 
+
+
+
+
+
     //-------- NewEditDoctorScreen - START --------
-    public void handleSaveNewDoctor() {
+    public void handleSaveDoctor() {
+        doctorsScreen = new DoctorsScreen(this);
+        newEditDoctorScreen.dispose();
+    }
+
+    public void handleCancelNewEditDoctor() {
         doctorsScreen = new DoctorsScreen(this);
         newEditDoctorScreen.dispose();
     }
@@ -127,12 +171,41 @@ public class Controller {
 
 
 
-    //-------- NewEditSpecializationScreen - START --------
+
+    //-------- SpecializationsScreen - START --------
     public void handleAddNewSpecialization() {
         newEditSpecializationScreen = new NewEditSpecializationScreen(this);
         specializationsScreen.dispose();
     }
+
+    public void handleEditSpecialization() {
+        newEditSpecializationScreen = new NewEditSpecializationScreen(this);
+        specializationsScreen.dispose();
+    }
+    public void handleBackFromSpecializationsScreen() {
+        welcomeAdminScreen = new WelcomeAdminScreen(this);
+        //welcomeUserNameScreen.setUsernameLabel(adminManager.getCurrentAdmin().toString());
+        welcomeAdminScreen.setUsernameLabel("temporary");
+        specializationsScreen.dispose();
+    }
+    //-------- SpecializationsScreen - END --------
+
+
+
+
+    //-------- NewEditSpecializationScreen - START --------
+    public void handleSaveSpecialization() {
+        doctorsScreen = new DoctorsScreen(this);
+        newEditDoctorScreen.dispose();
+    }
+
+    public void handleCancelNewEditSpecialization() {
+        specializationsScreen = new SpecializationsScreen(this);
+        newEditSpecializationScreen.dispose();
+    }
     //-------- NewEditSpecializationScreen - END --------
+
+
 
     public static void main(String[] args) {
       Controller controller = new Controller();
