@@ -22,6 +22,7 @@ public class Controller {
     private SpecializationsScreen specializationsScreen;
     private NewEditSpecializationScreen newEditSpecializationScreen;
 
+
     /*
     private ScheduleScreen scheduleScreen;
     private ChooseBookDoctorScreen chooseBookDoctorScreen;
@@ -31,6 +32,7 @@ public class Controller {
     private UpcomingAppointmentsScreen upcomingAppointmentsScreen;
     private WelcomePatientScreen welcomePatientScreen;
     private RegisterNewPatientScreen registerNewPatientScreen;
+    private EditInfoPatientScreen editInfoPatientScreen;
     */
 
     public Controller() {
