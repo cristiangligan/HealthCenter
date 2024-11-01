@@ -13,7 +13,6 @@ public class Controller {
     private AdminLogIn adminLogIn;
     private DoctorLogIn doctorLogIn;
     private PatientLogIn patientLogIn;
-    private RegisterNewPatientScreen registerNewPatientScreen;
 
     /*
     private ScheduleScreen scheduleScreen;
@@ -30,7 +29,6 @@ public class Controller {
 
     public Controller() {
         logInScreen = new LogInScreen(this);
-        registerNewPatientScreen = new RegisterNewPatientScreen(this);
         logInToDataBase();
     }
 
