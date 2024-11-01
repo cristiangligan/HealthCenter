@@ -30,6 +30,7 @@ public class Controller {
     private PatientsScreen patientsScreen;
     private UpcomingAppointmentsScreen upcomingAppointmentsScreen;
     private WelcomePatientScreen welcomePatientScreen;
+    private RegisterNewPatientScreen registerNewPatientScreen;
     */
 
     public Controller() {
