@@ -1,7 +1,6 @@
 package view;
 
 import controller.Controller;
-import model.Specialization;
 
 import javax.swing.*;
 import java.awt.*;
@@ -92,11 +91,12 @@ public class NewEditDoctorScreen extends JFrame {
         mainPnl.add(cancelBtn);
         springLayout.putConstraint(SpringLayout.NORTH, cancelBtn, 10, SpringLayout.SOUTH, lastNameField);
         springLayout.putConstraint(SpringLayout.WEST, cancelBtn, 0, SpringLayout.WEST, lastNameField);
+        cancelBtn.addActionListener(e -> controller.handleCancelNewEditDoctor());
 
         mainPnl.add(saveBtn);
         springLayout.putConstraint(SpringLayout.NORTH, saveBtn, 0, SpringLayout.NORTH, cancelBtn);
         springLayout.putConstraint(SpringLayout.EAST, saveBtn, 0, SpringLayout.EAST, specializationField);
-        saveBtn.addActionListener(e -> controller.handleSaveNewDoctor());
+        saveBtn.addActionListener(e -> controller.handleSaveDoctor());
 
         this.pack();
         this.setVisible(true);

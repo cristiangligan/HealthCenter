@@ -36,6 +36,7 @@ public class SpecializationsScreen extends JFrame {
         mainPnl.add(backBtn);
         springLayout.putConstraint(SpringLayout.NORTH, backBtn, 10, SpringLayout.SOUTH, doctorsLst);
         springLayout.putConstraint(SpringLayout.WEST, backBtn, 0, SpringLayout.WEST, doctorsLst);
+        backBtn.addActionListener(e -> controller.handleBackFromSpecializationsScreen());
 
         mainPnl.add(addBtn);
         springLayout.putConstraint(SpringLayout.SOUTH, addBtn, -10, SpringLayout.NORTH, doctorsLst);
@@ -49,6 +50,7 @@ public class SpecializationsScreen extends JFrame {
         mainPnl.add(editBtn);
         springLayout.putConstraint(SpringLayout.SOUTH, editBtn, 0, SpringLayout.SOUTH, addBtn);
         springLayout.putConstraint(SpringLayout.WEST, editBtn, 140, SpringLayout.EAST, addBtn);
+        editBtn.addActionListener(e -> controller.handleEditSpecialization());
 
         this.pack();
         this.setVisible(true);
