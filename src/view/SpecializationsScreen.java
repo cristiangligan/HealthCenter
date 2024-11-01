@@ -5,17 +5,17 @@ import controller.Controller;
 import javax.swing.*;
 import java.awt.*;
 
-public class DoctorsScreen extends JFrame {
+public class SpecializationsScreen extends JFrame {
     private Controller controller;
     private JPanel mainPnl = new JPanel();
-    private JLabel titleLbl = new JLabel("Doctors");
+    private JLabel titleLbl = new JLabel("Specializations");
     private JButton addBtn = new JButton("Add");
     private JButton editBtn = new JButton("Edit");
     private JButton deleteBtn = new JButton("Delete");
     private JButton backBtn = new JButton("Back");
     private JList doctorsLst = new JList();
 
-    public DoctorsScreen(Controller controller) {
+    public SpecializationsScreen(Controller controller) {
         this.controller = controller;
         this.setTitle("Health Center");
         this.setContentPane(mainPnl);
@@ -40,7 +40,7 @@ public class DoctorsScreen extends JFrame {
         mainPnl.add(addBtn);
         springLayout.putConstraint(SpringLayout.SOUTH, addBtn, -10, SpringLayout.NORTH, doctorsLst);
         springLayout.putConstraint(SpringLayout.WEST, addBtn, 0, SpringLayout.WEST, doctorsLst);
-        addBtn.addActionListener(e -> controller.handleAddNewDoctor());
+        addBtn.addActionListener(e -> controller.handleAddNewSpecialization());
 
         mainPnl.add(deleteBtn);
         springLayout.putConstraint(SpringLayout.SOUTH, deleteBtn, -10, SpringLayout.NORTH, doctorsLst);

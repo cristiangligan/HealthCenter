@@ -1,11 +1,12 @@
 package view;
 
 import controller.Controller;
+import model.Specialization;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class DoctorNewEditScreen extends JFrame {
+public class NewEditDoctorScreen extends JFrame {
     private Controller controller;
     private JPanel mainPnl = new JPanel();
 
@@ -20,12 +21,12 @@ public class DoctorNewEditScreen extends JFrame {
     private JTextField firstNameField = new JTextField();
     private JTextField lastNameField = new JTextField();
     private JTextField phoneField = new JTextField();
-    private JTextField specializationField = new JTextField();
+    private JComboBox<Specialization> specializationField = new JComboBox<>();
 
     private JButton cancelBtn = new JButton("Cancel");
     private JButton saveBtn = new JButton("Save");
 
-    public DoctorNewEditScreen(Controller controller) {
+    public NewEditDoctorScreen(Controller controller) {
         this.controller = controller;
         this.setTitle("Health Center");
         this.setContentPane(mainPnl);
@@ -60,6 +61,7 @@ public class DoctorNewEditScreen extends JFrame {
         springLayout.putConstraint(SpringLayout.WEST, specializationField, 0, SpringLayout.WEST, phoneField);
         springLayout.putConstraint(SpringLayout.EAST, specializationField, 0, SpringLayout.EAST, phoneField);
         springLayout.putConstraint(SpringLayout.SOUTH, specializationField, 0, SpringLayout.SOUTH, firstNameField);
+        specializationField.setModel(new DefaultComboBoxModel<>(Specialization.values()));
 
         mainPnl.add(lastNameField);
         lastNameField.setPreferredSize(new Dimension(0, 40));
@@ -94,6 +96,7 @@ public class DoctorNewEditScreen extends JFrame {
         mainPnl.add(saveBtn);
         springLayout.putConstraint(SpringLayout.NORTH, saveBtn, 0, SpringLayout.NORTH, cancelBtn);
         springLayout.putConstraint(SpringLayout.EAST, saveBtn, 0, SpringLayout.EAST, specializationField);
+        saveBtn.addActionListener(e -> controller.handleSaveNewDoctor());
 
         this.pack();
         this.setVisible(true);
@@ -101,5 +104,25 @@ public class DoctorNewEditScreen extends JFrame {
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    private enum Specialization {
+        EMPTY(""),
+        CARDIOLOGIST("cardiologist"),
+        DERMATOLOGIST("dermatologist"),
+        GYNECOLOGIST("gynecologist"),
+        NEUROLOGIST("neurologist"),
+        ONCOLOGIST("oncologist"),
+        OPHTHALMOLOGIST("ophthalmologist");
+
+        private final String specialization;
+        Specialization(String specialization) {
+            this.specialization = specialization;
+        }
+
+        @Override
+        public String toString() {
+            return specialization;
+        }
     }
 }
