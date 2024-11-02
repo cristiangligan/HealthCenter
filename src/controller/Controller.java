@@ -25,13 +25,13 @@ public class Controller {
     private MedicalRecordsScreen medicalRecordsScreen;
     private DiagnosisScreen diagnosisScreen;
 
+    private UpcomingAppointmentsScreen upcomingAppointmentsScreen;
+
+
 
     /*
     private ScheduleScreen scheduleScreen;
     private ChooseBookDoctorScreen chooseBookDoctorScreen;
-    private MedicalRecordsScreen medicalRecordsScreen;
-    private PatientsScreen patientsScreen;
-    private UpcomingAppointmentsScreen upcomingAppointmentsScreen;
     private WelcomePatientScreen welcomePatientScreen;
     private RegisterNewPatientScreen registerNewPatientScreen;
     private EditInfoPatientScreen editInfoPatientScreen;
@@ -155,6 +155,21 @@ public class Controller {
         medicalRecordsScreen = new MedicalRecordsScreen(this);
         diagnosisScreen.dispose();
     }
+
+    //-------- AppointmentsScreen - START --------
+    public void handleAppointments() {
+        upcomingAppointmentsScreen = new UpcomingAppointmentsScreen(this);
+        welcomeAdminScreen.dispose();
+    }
+
+    public void handleBackFromUpcomingAppointmentsScreen() {
+        welcomeAdminScreen = new WelcomeAdminScreen(this);
+        upcomingAppointmentsScreen.dispose();
+    }
+
+
+    //-------- SpecializationScreen - END --------
+
 
 
     public void handleSpecializations() {
