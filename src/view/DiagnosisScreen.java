@@ -56,6 +56,7 @@ public class DiagnosisScreen extends JFrame {
         mainPnl.add(backBtn);
         springLayout.putConstraint(SpringLayout.NORTH, backBtn, 10, SpringLayout.SOUTH, descriptionArea);
         springLayout.putConstraint(SpringLayout.WEST, backBtn, 0, SpringLayout.WEST, descriptionArea);
+        backBtn.addActionListener(e -> controller.handleBackFromDiagnosisScreen());
 
         mainPnl.add(costLbl);
         springLayout.putConstraint(SpringLayout.NORTH, costLbl, 0, SpringLayout.NORTH, backBtn);

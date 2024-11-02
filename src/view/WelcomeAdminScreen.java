@@ -50,6 +50,8 @@ public class WelcomeAdminScreen extends JFrame {
             btnPatients.setHorizontalAlignment(SwingConstants.CENTER);
             btnPatients.setFont(new Font(Font.SERIF, Font.BOLD, 15));
             pnlMain.add(btnPatients);
+            btnPatients.addActionListener(e -> controller.handlePatients());
+
 
             //sätt layout för doctor-knapp
             springLayout.putConstraint(SpringLayout.NORTH, btnPatients, 40, SpringLayout.SOUTH, btnDoctors);
