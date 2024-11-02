@@ -34,10 +34,13 @@ public class PatientsScreen extends JFrame {
         mainPnl.add(backBtn);
         springLayout.putConstraint(SpringLayout.NORTH, backBtn, 10, SpringLayout.SOUTH, patientsLst);
         springLayout.putConstraint(SpringLayout.WEST, backBtn, 0, SpringLayout.WEST, patientsLst);
+        //back from patient screen to welcome username
+        backBtn.addActionListener(e -> controller.handleBackFromPatientScreen());
 
         mainPnl.add(viewMedicalRecordBtn);
         springLayout.putConstraint(SpringLayout.NORTH, viewMedicalRecordBtn, 10, SpringLayout.SOUTH, patientsLst);
         springLayout.putConstraint(SpringLayout.EAST, viewMedicalRecordBtn, 0, SpringLayout.EAST, patientsLst);
+        viewMedicalRecordBtn.addActionListener(e -> controller.handleViewMedicalRecord());
 
         this.pack();
         this.setVisible(true);

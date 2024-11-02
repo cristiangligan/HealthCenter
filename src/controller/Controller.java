@@ -19,14 +19,16 @@ public class Controller {
     private WelcomeAdminScreen welcomeAdminScreen;
     private DoctorsScreen doctorsScreen;
     private NewEditDoctorScreen newEditDoctorScreen;
+    private PatientsScreen patientsScreen;
     private SpecializationsScreen specializationsScreen;
     private NewEditSpecializationScreen newEditSpecializationScreen;
+    private MedicalRecordsScreen medicalRecordsScreen;
+    private DiagnosisScreen diagnosisScreen;
 
 
     /*
     private ScheduleScreen scheduleScreen;
     private ChooseBookDoctorScreen chooseBookDoctorScreen;
-    private DiagnosisScreen diagnosisScreen;
     private MedicalRecordsScreen medicalRecordsScreen;
     private PatientsScreen patientsScreen;
     private UpcomingAppointmentsScreen upcomingAppointmentsScreen;
@@ -122,6 +124,38 @@ public class Controller {
         doctorsScreen = new DoctorsScreen(this);
         welcomeAdminScreen.dispose();
     }
+
+    //Bellas code patient-part from admin
+    public void handlePatients() {
+        patientsScreen = new PatientsScreen(this);
+        welcomeAdminScreen.dispose();
+    }
+
+    public void handleBackFromPatientScreen() {
+        welcomeAdminScreen = new WelcomeAdminScreen(this);
+        patientsScreen.dispose();
+    }
+
+    public void handleViewMedicalRecord() {
+        medicalRecordsScreen = new MedicalRecordsScreen(this);
+        patientsScreen.dispose();
+    }
+
+    public void handleBackFromMedicalRecord() {
+        patientsScreen = new PatientsScreen(this);
+        medicalRecordsScreen.dispose();
+    }
+
+    public void handleViewFromMedicalRecord() {
+        diagnosisScreen = new DiagnosisScreen(this);
+        medicalRecordsScreen.dispose();
+    }
+
+    public void handleBackFromDiagnosisScreen() {
+        medicalRecordsScreen = new MedicalRecordsScreen(this);
+        diagnosisScreen.dispose();
+    }
+
 
     public void handleSpecializations() {
         specializationsScreen = new SpecializationsScreen(this);

@@ -34,10 +34,12 @@ public class MedicalRecordsScreen extends JFrame {
         mainPnl.add(backBtn);
         springLayout.putConstraint(SpringLayout.NORTH, backBtn, 10, SpringLayout.SOUTH, medicalRecordsLst);
         springLayout.putConstraint(SpringLayout.WEST, backBtn, 0, SpringLayout.WEST, medicalRecordsLst);
+        backBtn.addActionListener(e -> controller.handleBackFromMedicalRecord());
 
         mainPnl.add(viewBtn);
         springLayout.putConstraint(SpringLayout.NORTH, viewBtn, 10, SpringLayout.SOUTH, medicalRecordsLst);
         springLayout.putConstraint(SpringLayout.EAST, viewBtn, 0, SpringLayout.EAST, medicalRecordsLst);
+        viewBtn.addActionListener(e -> controller.handleViewFromMedicalRecord());
 
         this.pack();
         this.setVisible(true);
