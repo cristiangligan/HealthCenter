@@ -1,9 +1,12 @@
 package view;
 
 import controller.Controller;
+import model.Specialization;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
+import java.util.Vector;
 
 public class SpecializationsScreen extends JFrame {
     private Controller controller;
@@ -13,7 +16,7 @@ public class SpecializationsScreen extends JFrame {
     private JButton editBtn = new JButton("Edit");
     private JButton deleteBtn = new JButton("Delete");
     private JButton backBtn = new JButton("Back");
-    private JList doctorsLst = new JList();
+    private JList specializationLst = new JList();
 
     public SpecializationsScreen(Controller controller) {
         this.controller = controller;
@@ -27,25 +30,25 @@ public class SpecializationsScreen extends JFrame {
         springLayout.putConstraint(SpringLayout.NORTH, titleLbl, 10, SpringLayout.NORTH, mainPnl);
         springLayout.putConstraint(SpringLayout.WEST, titleLbl, 40, SpringLayout.WEST, mainPnl);
 
-        mainPnl.add(doctorsLst);
-        springLayout.putConstraint(SpringLayout.NORTH, doctorsLst, 100, SpringLayout.NORTH, mainPnl);
-        springLayout.putConstraint(SpringLayout.WEST, doctorsLst, 40, SpringLayout.WEST, mainPnl);
-        springLayout.putConstraint(SpringLayout.EAST, doctorsLst, -40, SpringLayout.EAST, mainPnl);
-        springLayout.putConstraint(SpringLayout.SOUTH, doctorsLst, -60, SpringLayout.SOUTH, mainPnl);
+        mainPnl.add(specializationLst);
+        springLayout.putConstraint(SpringLayout.NORTH, specializationLst, 100, SpringLayout.NORTH, mainPnl);
+        springLayout.putConstraint(SpringLayout.WEST, specializationLst, 40, SpringLayout.WEST, mainPnl);
+        springLayout.putConstraint(SpringLayout.EAST, specializationLst, -40, SpringLayout.EAST, mainPnl);
+        springLayout.putConstraint(SpringLayout.SOUTH, specializationLst, -60, SpringLayout.SOUTH, mainPnl);
 
         mainPnl.add(backBtn);
-        springLayout.putConstraint(SpringLayout.NORTH, backBtn, 10, SpringLayout.SOUTH, doctorsLst);
-        springLayout.putConstraint(SpringLayout.WEST, backBtn, 0, SpringLayout.WEST, doctorsLst);
+        springLayout.putConstraint(SpringLayout.NORTH, backBtn, 10, SpringLayout.SOUTH, specializationLst);
+        springLayout.putConstraint(SpringLayout.WEST, backBtn, 0, SpringLayout.WEST, specializationLst);
         backBtn.addActionListener(e -> controller.handleBackFromSpecializationsScreen());
 
         mainPnl.add(addBtn);
-        springLayout.putConstraint(SpringLayout.SOUTH, addBtn, -10, SpringLayout.NORTH, doctorsLst);
-        springLayout.putConstraint(SpringLayout.WEST, addBtn, 0, SpringLayout.WEST, doctorsLst);
+        springLayout.putConstraint(SpringLayout.SOUTH, addBtn, -10, SpringLayout.NORTH, specializationLst);
+        springLayout.putConstraint(SpringLayout.WEST, addBtn, 0, SpringLayout.WEST, specializationLst);
         addBtn.addActionListener(e -> controller.handleAddNewSpecialization());
 
         mainPnl.add(deleteBtn);
-        springLayout.putConstraint(SpringLayout.SOUTH, deleteBtn, -10, SpringLayout.NORTH, doctorsLst);
-        springLayout.putConstraint(SpringLayout.EAST, deleteBtn, 0, SpringLayout.EAST, doctorsLst);
+        springLayout.putConstraint(SpringLayout.SOUTH, deleteBtn, -10, SpringLayout.NORTH, specializationLst);
+        springLayout.putConstraint(SpringLayout.EAST, deleteBtn, 0, SpringLayout.EAST, specializationLst);
 
         mainPnl.add(editBtn);
         springLayout.putConstraint(SpringLayout.SOUTH, editBtn, 0, SpringLayout.SOUTH, addBtn);
@@ -58,5 +61,9 @@ public class SpecializationsScreen extends JFrame {
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    public void displaySpecializations(List<Specialization> specializations) {
+        specializationLst.setListData(specializations.toArray());
     }
 }

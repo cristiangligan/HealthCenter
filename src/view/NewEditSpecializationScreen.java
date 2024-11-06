@@ -68,4 +68,12 @@ public class NewEditSpecializationScreen extends JFrame {
         this.setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
+
+    public String getSpecializationName() {
+        return specializationNameField.getText();
+    }
+
+    public String getCost() {
+        return costField.getText();
+    }
 }
