@@ -2,14 +2,18 @@ package controller;
 
 import model.Admin;
 import model.AdminManager;
+import model.Specialization;
 import view.*;
 
 import javax.swing.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.List;
 
-public class Controller {
+public class Controller implements PropertyChangeListener {
     private Connection connection;
     private LogInScreen logInScreen;
     private AdminLogIn adminLogIn;
@@ -66,6 +70,7 @@ public class Controller {
     //-------- AdminLogIn - START --------
     public void handleAdminLogIn() {
         adminManager = new AdminManager(connection);
+        adminManager.subscribeListener(this);
         String username = adminLogIn.getUsername();
         String password = adminLogIn.getPassword();
         Admin admin = adminManager.verifyAdmin(username, password);
@@ -172,6 +177,7 @@ public class Controller {
 
     public void handleSpecializations() {
         specializationsScreen = new SpecializationsScreen(this);
+        handleUpdateSpecializationList(adminManager.getSpecializations());
         welcomeAdminScreen.dispose();
     }
 
@@ -242,8 +248,25 @@ public class Controller {
 
     //-------- NewEditSpecializationScreen - START --------
     public void handleSaveSpecialization() {
-        doctorsScreen = new DoctorsScreen(this);
-        newEditDoctorScreen.dispose();
+        specializationsScreen = new SpecializationsScreen(this);
+        String name = newEditSpecializationScreen.getSpecializationName();
+        int cost;
+        if (name == null || name.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Please input a specialization name.");
+        } else {
+            try {
+                cost = Integer.parseInt(newEditSpecializationScreen.getCost());
+                if (cost == 0) {
+                    JOptionPane.showMessageDialog(null, "Cost can not be 0.");
+                } else {
+                    Specialization specialization = new Specialization(name, cost);
+                    adminManager.saveSpecialization(specialization);
+                    newEditSpecializationScreen.dispose();
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Please input an cost as an int.");
+            }
+        }
     }
 
     public void handleCancelNewEditSpecialization() {
@@ -253,6 +276,21 @@ public class Controller {
     //-------- NewEditSpecializationScreen - END --------
 
 
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        switch (evt.getPropertyName()) {
+            case AdminManager.UPDATE_SPECIALIZATION_LIST: {
+                handleUpdateSpecializationList((List<Specialization>) evt.getNewValue());
+                break;
+            }
+        }
+    }
+
+    private void handleUpdateSpecializationList(List<Specialization> specializations) {
+        if (specializationsScreen != null) {
+            specializationsScreen.displaySpecializations(specializations);
+        }
+    }
 
     public static void main(String[] args) {
       Controller controller = new Controller();
