@@ -38,9 +38,8 @@ public class Controller {
     */
 
     public Controller() {
-        welcomeAdminScreen = new WelcomeAdminScreen(this);
-        //logInScreen = new LogInScreen(this);
-        //logInToDataBase();
+        logInScreen = new LogInScreen(this);
+        logInToDataBase();
     }
 
     public void logInToDataBase() {
@@ -107,8 +106,7 @@ public class Controller {
 
     public void handleBackFromDoctorsScreen() {
         welcomeAdminScreen = new WelcomeAdminScreen(this);
-        //welcomeUserNameScreen.setUsernameLabel(adminManager.getCurrentAdmin().toString());
-        welcomeAdminScreen.setUsernameLabel("temporary");
+        welcomeAdminScreen.setUsernameLabel(adminManager.getCurrentAdmin().toString());
         doctorsScreen.dispose();
     }
     //-------- LogInScreen - END --------
@@ -179,8 +177,7 @@ public class Controller {
 
     public void handleLogOut() {
         logInScreen = new LogInScreen(this);
-        connection = null;
-        //adminManager.setCurrentAdmin(null);
+        adminManager.setCurrentAdmin(null);
         welcomeAdminScreen.dispose();
     }
     //-------- WelcomeUserNameScreen - END --------
@@ -235,8 +232,7 @@ public class Controller {
     }
     public void handleBackFromSpecializationsScreen() {
         welcomeAdminScreen = new WelcomeAdminScreen(this);
-        //welcomeUserNameScreen.setUsernameLabel(adminManager.getCurrentAdmin().toString());
-        welcomeAdminScreen.setUsernameLabel("temporary");
+        welcomeAdminScreen.setUsernameLabel(adminManager.getCurrentAdmin().toString());
         specializationsScreen.dispose();
     }
     //-------- SpecializationsScreen - END --------
