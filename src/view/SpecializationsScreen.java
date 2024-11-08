@@ -66,4 +66,8 @@ public class SpecializationsScreen extends JFrame {
     public void displaySpecializations(List<Specialization> specializations) {
         specializationLst.setListData(specializations.toArray());
     }
+
+    public Specialization getSelectedSpecialization() {
+        return (Specialization) specializationLst.getSelectedValue();
+    }
 }

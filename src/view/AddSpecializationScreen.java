@@ -5,7 +5,7 @@ import controller.Controller;
 import javax.swing.*;
 import java.awt.*;
 
-public class NewEditSpecializationScreen extends JFrame {
+public class AddSpecializationScreen extends JFrame {
     private Controller controller;
     private JPanel mainPnl = new JPanel();
     private JLabel titleLbl = new JLabel("Specialization");
@@ -18,7 +18,7 @@ public class NewEditSpecializationScreen extends JFrame {
     private JButton cancelBtn = new JButton("Cancel");
     private JButton saveBtn = new JButton("Save");
 
-    public NewEditSpecializationScreen(Controller controller) {
+    public AddSpecializationScreen(Controller controller) {
         this.controller = controller;
         this.setTitle("Health Center");
         this.setContentPane(mainPnl);
@@ -59,7 +59,7 @@ public class NewEditSpecializationScreen extends JFrame {
         mainPnl.add(saveBtn);
         springLayout.putConstraint(SpringLayout.NORTH, saveBtn, 0, SpringLayout.NORTH, cancelBtn);
         springLayout.putConstraint(SpringLayout.EAST, saveBtn, -40, SpringLayout.EAST, mainPnl);
-        saveBtn.addActionListener(e -> controller.handleSaveSpecialization());
+        saveBtn.addActionListener(e -> controller.handleAddSaveSpecialization());
 
         this.pack();
         this.setVisible(true);
