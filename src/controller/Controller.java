@@ -25,7 +25,8 @@ public class Controller implements PropertyChangeListener {
     private NewEditDoctorScreen newEditDoctorScreen;
     private PatientsScreen patientsScreen;
     private SpecializationsScreen specializationsScreen;
-    private NewEditSpecializationScreen newEditSpecializationScreen;
+    private AddSpecializationScreen addSpecializationScreen;
+    private EditSpecializationScreen editSpecializationScreen;
     private MedicalRecordsScreen medicalRecordsScreen;
     private DiagnosisScreen diagnosisScreen;
     private UpcomingAppointmentsScreen upcomingAppointmentsScreen;
@@ -72,10 +73,12 @@ public class Controller implements PropertyChangeListener {
         adminManager.subscribeListener(this);
         String username = adminLogIn.getUsername();
         String password = adminLogIn.getPassword();
-        Admin admin = adminManager.verifyAdmin(username, password);
+        Admin admin = new Admin(username, password);
+        admin = adminManager.verifyAdmin(admin);
         if(admin != null) {
+            adminManager.setCurrentAdmin(admin);
             welcomeAdminScreen = new WelcomeAdminScreen(this);
-            welcomeAdminScreen.setUsernameLabel(username);
+            welcomeAdminScreen.setUsernameLabel(admin.toString());
             adminLogIn.dispose();
             System.out.println(adminManager.getCurrentAdmin());
         } else {
@@ -280,13 +283,18 @@ public class Controller implements PropertyChangeListener {
 
     //-------- SpecializationsScreen - START --------
     public void handleAddNewSpecialization() {
-        newEditSpecializationScreen = new NewEditSpecializationScreen(this);
+        addSpecializationScreen = new AddSpecializationScreen(this);
         specializationsScreen.dispose();
     }
 
     public void handleEditSpecialization() {
-        newEditSpecializationScreen = new NewEditSpecializationScreen(this);
-        specializationsScreen.dispose();
+        Specialization specialization = specializationsScreen.getSelectedSpecialization();
+        if (specialization != null) {
+            adminManager.setSelectedSpecialization(specialization);
+            editSpecializationScreen = new EditSpecializationScreen(this);
+            editSpecializationScreen.displaySpecializationInfo(specialization);
+            specializationsScreen.dispose();
+        }
     }
     public void handleBackFromSpecializationsScreen() {
         welcomeAdminScreen = new WelcomeAdminScreen(this);
@@ -299,21 +307,22 @@ public class Controller implements PropertyChangeListener {
 
 
     //-------- NewEditSpecializationScreen - START --------
-    public void handleSaveSpecialization() {
-        specializationsScreen = new SpecializationsScreen(this);
-        String name = newEditSpecializationScreen.getSpecializationName();
+    public void handleAddSaveSpecialization() {
+        String name = addSpecializationScreen.getSpecializationName();
         int cost;
-        if (name == null || name.isEmpty()) {
+        if (name == null || name.isEmpty() || name.isBlank()) {
             JOptionPane.showMessageDialog(null, "Please input a specialization name.");
         } else {
             try {
-                cost = Integer.parseInt(newEditSpecializationScreen.getCost());
+                cost = Integer.parseInt(addSpecializationScreen.getCost());
                 if (cost == 0) {
                     JOptionPane.showMessageDialog(null, "Cost can not be 0.");
                 } else {
                     Specialization specialization = new Specialization(name, cost);
                     adminManager.saveSpecialization(specialization);
-                    newEditSpecializationScreen.dispose();
+                    specializationsScreen = new SpecializationsScreen(this);
+                    handleUpdateSpecializationList(adminManager.getSpecializations());
+                    addSpecializationScreen.dispose();
                 }
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "Please input an cost as an int.");
@@ -321,9 +330,42 @@ public class Controller implements PropertyChangeListener {
         }
     }
 
+    public void handleEditSaveSpecialization() {
+        String editedName = editSpecializationScreen.getSpecializationName();
+        int editedCost;
+        if (editedName == null || editedName.isEmpty() || editedName.isBlank()) {
+            JOptionPane.showMessageDialog(null, "Please input a specialization name.");
+        } else {
+            try {
+                editedCost = Integer.parseInt(editSpecializationScreen.getCost());
+                if (editedCost == 0) {
+                    JOptionPane.showMessageDialog(null, "Cost can not be 0.");
+                } else {
+                    Specialization specialization = adminManager.getSelectedSpecialization();
+                    Specialization editedSpecialization = new Specialization(editedName, editedCost);
+                    editedSpecialization.setId(specialization.getId());
+                    adminManager.saveEditedSpecialization(editedSpecialization);
+                    adminManager.setSelectedSpecialization(null);
+                    specializationsScreen = new SpecializationsScreen(this);
+                    handleUpdateSpecializationList(adminManager.getSpecializations());
+                    editSpecializationScreen.dispose();
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Please input an cost as an int.");
+            }
+        }
+    }
+
+    public void handleCancelEditSpecialization() {
+
+    }
+
+
     public void handleCancelNewEditSpecialization() {
         specializationsScreen = new SpecializationsScreen(this);
-        newEditSpecializationScreen.dispose();
+        handleUpdateSpecializationList(adminManager.getSpecializations());
+        adminManager.setSelectedSpecialization(null);
+        editSpecializationScreen.dispose();
     }
     //-------- NewEditSpecializationScreen - END --------
 

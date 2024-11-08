@@ -16,21 +16,26 @@ public class AdminManager {
     private PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
 
     private Admin currentAdmin;
+    private Specialization selectedSpecialization;
 
     public AdminManager(Connection connection) {
         this.connection = connection;
     }
 
-    public Admin verifyAdmin(String username, String password) {
+    public Admin verifyAdmin(Admin admin) {
         String verifyQuery = "SELECT admin.id FROM public.admin WHERE admin.username = ? AND admin.password = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(verifyQuery)) {
+            String username = admin.getUsername();
+            String password = admin.getPassword();
+
             preparedStatement.setString(1, username);
             preparedStatement.setString(2, password);
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     int id = resultSet.getInt("id");
-                    currentAdmin = new Admin(id, username, password);
+                    currentAdmin = new Admin(username, password);
+                    currentAdmin.setId(id);
                     return currentAdmin;
                 } else {
                     System.out.println("User har ingen id kopplat till sig");
@@ -106,6 +111,33 @@ public class AdminManager {
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    public void saveEditedSpecialization(Specialization editedSpecialization) {
+        if (editedSpecialization != null) {
+            String updateQuery = "UPDATE public.specialization SET name = ?, visit_cost = ? WHERE specialization.id = ?";
+            try (PreparedStatement statement = connection.prepareStatement(updateQuery)) {
+                statement.setString(1, editedSpecialization.getName());
+                statement.setInt(2, editedSpecialization.getCost());
+                statement.setInt(3, editedSpecialization.getId());
+                statement.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+    }
+
+    public void deleteSpecialization(Specialization specialization) {
+
+    }
+
+    public void setSelectedSpecialization(Specialization specialization) {
+        this.selectedSpecialization = specialization;
+    }
+
+    public Specialization getSelectedSpecialization() {
+        return selectedSpecialization;
     }
 
     public void subscribeListener(PropertyChangeListener listener) {

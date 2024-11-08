@@ -50,6 +50,7 @@ public class AdminLogIn extends JFrame {
                 pnlMain.add(usernameField);
                 springLayout.putConstraint(SpringLayout.NORTH, usernameField, 10, SpringLayout.SOUTH, lblUsername);
                 springLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, usernameField, 0, SpringLayout.HORIZONTAL_CENTER, pnlMain);
+                usernameField.setText("cristian");
 
                 lblPassword = new JLabel("Password");
                 lblPassword.setFont(new Font(Font.SERIF, Font.BOLD, 16));
@@ -62,7 +63,7 @@ public class AdminLogIn extends JFrame {
                 springLayout.putConstraint(SpringLayout.NORTH, passwordField, 10, SpringLayout.SOUTH, lblPassword);
                 springLayout.putConstraint(SpringLayout.WEST, passwordField, 0, SpringLayout.WEST, usernameField);
                 springLayout.putConstraint(SpringLayout.EAST, passwordField, 0, SpringLayout.EAST, usernameField);
-
+                passwordField.setText("password123");
 
                 btnBack = new JButton("Back");
                 pnlMain.add(btnBack);
