@@ -92,7 +92,10 @@ public class RegisterNewPatientScreen extends JFrame {
         springLayout.putConstraint(SpringLayout.WEST, genderField, 40, SpringLayout.WEST, mainPnl);
 
         mainPnl.add(backBtn);
+        backBtn.addActionListener(e -> controller.handleBackFromRegisterNewPatient());
+
         mainPnl.add(registerBtn);
+        registerBtn.addActionListener(e -> controller.handleRegisterNewPatientBtn());
 
         springLayout.putConstraint(SpringLayout.SOUTH, backBtn, -20, SpringLayout.SOUTH, mainPnl);
         springLayout.putConstraint(SpringLayout.WEST, backBtn, 40, SpringLayout.WEST, mainPnl);

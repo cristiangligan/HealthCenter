@@ -50,11 +50,13 @@ public class DoctorLogIn extends JFrame {
         pnlMain.add(btnBack);
         springLayout.putConstraint(SpringLayout.NORTH, btnBack,20, SpringLayout.SOUTH, doctorIdTextField);
         springLayout.putConstraint(SpringLayout.WEST, btnBack, 100, SpringLayout.WEST, pnlMain);
+        btnBack.addActionListener(e -> controller.handleBackFromDoctorLoggedIn());
 
         btnLogin = new JButton("Login");
         pnlMain.add(btnLogin);
         springLayout.putConstraint(SpringLayout.NORTH, btnLogin,20, SpringLayout.SOUTH, doctorIdTextField);
         springLayout.putConstraint(SpringLayout.WEST, btnLogin, -100, SpringLayout.EAST, pnlMain);
+        btnLogin.addActionListener(e -> controller.handleDoctorLogIn());
 
 
         this.pack();

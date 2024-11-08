@@ -73,6 +73,7 @@ public class WelcomeDoctorScreen extends JFrame {
         logOut.setHorizontalAlignment(SwingConstants.CENTER);
         logOut.setFont(new Font(Font.SERIF, Font.BOLD, 15));
         pnlMain.add(logOut);
+        logOut.addActionListener(e -> controller.logOutDoctor());
 
         springLayout.putConstraint(SpringLayout.NORTH, logOut, 40, SpringLayout.SOUTH, btnMyAppointments);
         springLayout.putConstraint(SpringLayout.WEST, logOut, 150, SpringLayout.WEST, pnlMain);

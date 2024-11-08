@@ -15,6 +15,7 @@ public class EditInfoPatientScreen extends JFrame {
     private JLabel phoneLbl = new JLabel("Phone");
     private JLabel birthDateLbl = new JLabel("Birth date");
     private JLabel genderLbl = new JLabel("Gender");
+    //obs medical number och registration date ska vara fixed - ska ej gå att ändra!
     private JLabel medicalNumLbl = new JLabel("Medical number");
     private JLabel registerDateLbl = new JLabel("Register date");
 

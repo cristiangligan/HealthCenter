@@ -28,16 +28,15 @@ public class Controller implements PropertyChangeListener {
     private NewEditSpecializationScreen newEditSpecializationScreen;
     private MedicalRecordsScreen medicalRecordsScreen;
     private DiagnosisScreen diagnosisScreen;
-
     private UpcomingAppointmentsScreen upcomingAppointmentsScreen;
-
+    private RegisterNewPatientScreen registerNewPatientScreen;
+    private WelcomePatientScreen welcomePatientScreen;
+    private ChooseBookDoctorScreen chooseBookDoctorScreen;
+    private ScheduleScreen scheduleScreen;
+    private WelcomeDoctorScreen welcomeDoctorScreen;
 
 
     /*
-    private ScheduleScreen scheduleScreen;
-    private ChooseBookDoctorScreen chooseBookDoctorScreen;
-    private WelcomePatientScreen welcomePatientScreen;
-    private RegisterNewPatientScreen registerNewPatientScreen;
     private EditInfoPatientScreen editInfoPatientScreen;
     */
 
@@ -84,11 +83,12 @@ public class Controller implements PropertyChangeListener {
             adminLogIn.clearFields();
         }
     }
+
+    public void handleBackFromAdminLogIn() {
+        logInScreen = new LogInScreen(this);
+        adminLogIn.dispose();
+    }
     //-------- AdminLogIn - END --------
-
-
-
-
 
 
 
@@ -118,8 +118,62 @@ public class Controller implements PropertyChangeListener {
 
 
 
+    //-------- DoctorLogIn - START --------
+    //log in as doctor
+
+    public void handleDoctorLogIn() {
+        welcomeDoctorScreen = new WelcomeDoctorScreen(this);
+        doctorLogIn.dispose();
+    }
+    public void handleBackFromDoctorLoggedIn() {
+        try {
+            logInScreen = new LogInScreen(this);
+            doctorsScreen.dispose();
+        }catch (NullPointerException e) {
+            System.out.println(e);
+        }
+    }
+
+    //-------- DoctorLogIn - END --------
+
+    //-------- WelcomeDoctorScreen - START --------
+    public void viewMyPatients() {
+
+    }
+
+    public void viewMyScedule() {
+    }
+
+    public void viewMyAppointments() {
+    }
+    public void logOutDoctor() {
+        logInScreen = new LogInScreen(this);
+        welcomeDoctorScreen.dispose();
+    }
+    //-------- WelcomeDoctorScreen - END --------
 
 
+    //log in as patient
+    public void handleBackFromPatientLoggedIn() {
+        logInScreen = new LogInScreen(this);
+        patientLogIn.dispose();
+    }
+    //ny
+    public void handleBtnRegisterNewPatient() {
+        registerNewPatientScreen = new RegisterNewPatientScreen(this);
+        patientLogIn.dispose();
+    }
+    //ny
+    public void handleBackFromRegisterNewPatient() {
+        patientLogIn = new PatientLogIn(this);
+        registerNewPatientScreen.dispose();
+    }
+
+    //metod för att spara ny patient som registrerar sig
+    public void handleRegisterNewPatientBtn() {
+        JOptionPane.showMessageDialog(null, "Patient registered");
+        //new patient saved to database
+    }
 
 
     //-------- WelcomeUserNameScreen - START --------
@@ -169,8 +223,6 @@ public class Controller implements PropertyChangeListener {
         welcomeAdminScreen = new WelcomeAdminScreen(this);
         upcomingAppointmentsScreen.dispose();
     }
-
-
     //-------- SpecializationScreen - END --------
 
 
@@ -181,7 +233,7 @@ public class Controller implements PropertyChangeListener {
         welcomeAdminScreen.dispose();
     }
 
-    public void handleLogOut() {
+    public void logOutAdmin() {
         logInScreen = new LogInScreen(this);
         adminManager.setCurrentAdmin(null);
         welcomeAdminScreen.dispose();
@@ -274,6 +326,49 @@ public class Controller implements PropertyChangeListener {
         newEditSpecializationScreen.dispose();
     }
     //-------- NewEditSpecializationScreen - END --------
+
+    //-------- WelcomePatientScreen - START --------
+    public void logInAsPatient() {
+        welcomePatientScreen = new WelcomePatientScreen(this);
+        patientLogIn.dispose();
+    }
+
+    public void viewInfoPatient() {
+
+    }
+
+    public void bookAnAppointmentPatient() {
+        chooseBookDoctorScreen = new ChooseBookDoctorScreen(this);
+        welcomePatientScreen.dispose();
+    }
+
+    public void handleBookATimeBtn() {
+        scheduleScreen = new ScheduleScreen(this);
+        chooseBookDoctorScreen.dispose();
+    }
+
+    public void handleBackFromChooseBookDoctorScreen() {
+        welcomePatientScreen = new WelcomePatientScreen(this);
+        chooseBookDoctorScreen.dispose();
+    }
+
+    public void handleBackFromScheduleScreen() {
+        chooseBookDoctorScreen = new ChooseBookDoctorScreen(this);
+        scheduleScreen.dispose();
+    }
+/*
+    //hur gör vi med denna?
+    public void viewMedicalRecordsPatient() {
+        medicalRecordsScreen = new MedicalRecordsScreen(this);
+        welcomePatientScreen.dispose();
+    }
+ */
+
+    public void logOutPatient() {
+        patientLogIn = new PatientLogIn(this);
+        welcomePatientScreen.dispose();
+    }
+    //-------- WelcomePatientScreen - END --------
 
 
     @Override
