@@ -51,16 +51,19 @@ public class PatientLogIn extends JFrame {
         pnlMain.add(btnBack);
         springLayout.putConstraint(SpringLayout.NORTH, btnBack,30, SpringLayout.SOUTH, patMedicalNbrTextField);
         springLayout.putConstraint(SpringLayout.WEST, btnBack, 100, SpringLayout.WEST, pnlMain);
+        btnBack.addActionListener(e -> controller.handleBackFromPatientLoggedIn());
 
         btnLogin = new JButton("Log in");
         pnlMain.add(btnLogin);
         springLayout.putConstraint(SpringLayout.NORTH, btnLogin,30, SpringLayout.SOUTH, patMedicalNbrTextField);
         springLayout.putConstraint(SpringLayout.WEST, btnLogin, 0, SpringLayout.WEST, pnlMain);
+        btnLogin.addActionListener(e -> controller.logInAsPatient());
 
         btnRegister = new JButton("Register");
         pnlMain.add(btnRegister);
         springLayout.putConstraint(SpringLayout.NORTH, btnRegister,30, SpringLayout.SOUTH, patMedicalNbrTextField);
         springLayout.putConstraint(SpringLayout.WEST, btnRegister, -100, SpringLayout.EAST, pnlMain);
+        btnRegister.addActionListener(e -> controller.handleBtnRegisterNewPatient());
 
         this.pack();
         this.setVisible(true);

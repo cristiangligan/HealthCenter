@@ -196,6 +196,7 @@ public class ScheduleScreen extends JFrame {
         mainPnl.add(backBtn);
         springLayout.putConstraint(SpringLayout.SOUTH, backBtn, -20, SpringLayout.SOUTH, mainPnl);
         springLayout.putConstraint(SpringLayout.WEST, backBtn, 0, SpringLayout.WEST, monday13Btn);
+        backBtn.addActionListener(e -> controller.handleBackFromScheduleScreen());
 
         this.pack();
         this.setVisible(true);

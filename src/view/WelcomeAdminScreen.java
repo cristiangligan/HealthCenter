@@ -85,7 +85,7 @@ public class WelcomeAdminScreen extends JFrame {
             springLayout.putConstraint(SpringLayout.WEST, btnLogOut, 10, SpringLayout.WEST, pnlMain);
             springLayout.putConstraint(SpringLayout.NORTH, btnLogOut, 0, SpringLayout.NORTH, btnSpecializations);
             springLayout.putConstraint(SpringLayout.SOUTH, btnLogOut, 0, SpringLayout.SOUTH, btnSpecializations);
-            btnLogOut.addActionListener(e -> controller.handleLogOut());
+            btnLogOut.addActionListener(e -> controller.logOutAdmin());
 
             this.pack();
             this.setVisible(true);

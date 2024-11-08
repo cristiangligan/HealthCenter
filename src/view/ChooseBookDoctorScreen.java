@@ -34,10 +34,12 @@ public class ChooseBookDoctorScreen extends JFrame {
         mainPnl.add(backBtn);
         springLayout.putConstraint(SpringLayout.NORTH, backBtn, 10, SpringLayout.SOUTH, upcomingAppointmentsLst);
         springLayout.putConstraint(SpringLayout.WEST, backBtn, 0, SpringLayout.WEST, upcomingAppointmentsLst);
+        backBtn.addActionListener(e -> controller.handleBackFromChooseBookDoctorScreen());
 
         mainPnl.add(bookTimeBtn);
         springLayout.putConstraint(SpringLayout.NORTH, bookTimeBtn, 10, SpringLayout.SOUTH, upcomingAppointmentsLst);
         springLayout.putConstraint(SpringLayout.EAST, bookTimeBtn, 0, SpringLayout.EAST, upcomingAppointmentsLst);
+        bookTimeBtn.addActionListener(e -> controller.handleBookATimeBtn());
 
         this.pack();
         this.setVisible(true);

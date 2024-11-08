@@ -68,6 +68,7 @@ public class AdminLogIn extends JFrame {
                 pnlMain.add(btnBack);
                 springLayout.putConstraint(SpringLayout.NORTH, btnBack,20, SpringLayout.SOUTH, passwordField);
                 springLayout.putConstraint(SpringLayout.WEST, btnBack, 100, SpringLayout.WEST, pnlMain);
+                btnBack.addActionListener(e -> controller.handleBackFromAdminLogIn());
 
                 btnLogin = new JButton("Login");
                 pnlMain.add(btnLogin);

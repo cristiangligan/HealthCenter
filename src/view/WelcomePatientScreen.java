@@ -12,7 +12,7 @@ public class WelcomePatientScreen extends JFrame {
     private JButton btnMyInfo;
     private JButton btnBookAnAppointment;
     private JButton btnViewMedicalRecord;
-    private JButton logOut;
+    private JButton btnLogOut;
 
     public WelcomePatientScreen(Controller controller) {
         this.controller = controller;
@@ -49,6 +49,7 @@ public class WelcomePatientScreen extends JFrame {
         btnBookAnAppointment.setHorizontalAlignment(SwingConstants.CENTER);
         btnBookAnAppointment.setFont(new Font(Font.SERIF, Font.BOLD, 15));
         pnlMain.add(btnBookAnAppointment);
+        btnBookAnAppointment.addActionListener(e -> controller.bookAnAppointmentPatient());
 
         //sätt layout för doctor-knapp
         springLayout.putConstraint(SpringLayout.NORTH, btnBookAnAppointment, 40, SpringLayout.SOUTH, btnMyInfo);
@@ -60,21 +61,23 @@ public class WelcomePatientScreen extends JFrame {
         btnViewMedicalRecord.setHorizontalAlignment(SwingConstants.CENTER);
         btnViewMedicalRecord.setFont(new Font(Font.SERIF, Font.BOLD, 15));
         pnlMain.add(btnViewMedicalRecord);
+        //btnViewMedicalRecord.addActionListener(e -> controller.viewMedicalRecordsPatient());
 
         //sätt layout för doctor-knapp
         springLayout.putConstraint(SpringLayout.NORTH, btnViewMedicalRecord, 40, SpringLayout.SOUTH, btnBookAnAppointment);
         springLayout.putConstraint(SpringLayout.WEST, btnViewMedicalRecord, 150, SpringLayout.WEST, pnlMain);
         springLayout.putConstraint(SpringLayout.EAST, btnViewMedicalRecord, -150, SpringLayout.EAST, pnlMain);
 
-        logOut = new JButton("Log out");
-        logOut.setVerticalAlignment(SwingConstants.CENTER);
-        logOut.setHorizontalAlignment(SwingConstants.CENTER);
-        logOut.setFont(new Font(Font.SERIF, Font.BOLD, 15));
-        pnlMain.add(logOut);
+        btnLogOut = new JButton("Log out");
+        btnLogOut.setVerticalAlignment(SwingConstants.CENTER);
+        btnLogOut.setHorizontalAlignment(SwingConstants.CENTER);
+        btnLogOut.setFont(new Font(Font.SERIF, Font.BOLD, 15));
+        pnlMain.add(btnLogOut);
+        btnLogOut.addActionListener(e -> controller.logOutPatient());
 
-        springLayout.putConstraint(SpringLayout.NORTH, logOut, 40, SpringLayout.SOUTH, btnViewMedicalRecord);
-        springLayout.putConstraint(SpringLayout.WEST, logOut, 150, SpringLayout.WEST, pnlMain);
-        springLayout.putConstraint(SpringLayout.EAST, logOut, -150, SpringLayout.EAST, pnlMain);
+        springLayout.putConstraint(SpringLayout.NORTH, btnLogOut, 40, SpringLayout.SOUTH, btnViewMedicalRecord);
+        springLayout.putConstraint(SpringLayout.WEST, btnLogOut, 150, SpringLayout.WEST, pnlMain);
+        springLayout.putConstraint(SpringLayout.EAST, btnLogOut, -150, SpringLayout.EAST, pnlMain);
 
         this.pack();
         this.setVisible(true);
