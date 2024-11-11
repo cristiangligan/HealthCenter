@@ -1,6 +1,7 @@
 package view;
 
 import controller.Controller;
+import model.Specialization;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,7 +21,7 @@ public class NewEditDoctorScreen extends JFrame {
     private JTextField firstNameField = new JTextField();
     private JTextField lastNameField = new JTextField();
     private JTextField phoneField = new JTextField();
-    private JComboBox<String> specializationField = new JComboBox<String>();
+    private JComboBox<Specialization> specializationField = new JComboBox<>();
 
     private JButton cancelBtn = new JButton("Cancel");
     private JButton saveBtn = new JButton("Save");
@@ -60,7 +61,7 @@ public class NewEditDoctorScreen extends JFrame {
         springLayout.putConstraint(SpringLayout.WEST, specializationField, 0, SpringLayout.WEST, phoneField);
         springLayout.putConstraint(SpringLayout.EAST, specializationField, 0, SpringLayout.EAST, phoneField);
         springLayout.putConstraint(SpringLayout.SOUTH, specializationField, 0, SpringLayout.SOUTH, firstNameField);
-        specializationField.setModel(new DefaultComboBoxModel<>(controller.getSpecializationStrings()));
+        specializationField.setModel(new DefaultComboBoxModel<>(controller.getSpecializationArray()));
 
         mainPnl.add(lastNameField);
         lastNameField.setPreferredSize(new Dimension(0, 40));

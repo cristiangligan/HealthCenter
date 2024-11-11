@@ -29,6 +29,6 @@ public class Specialization {
 
     @Override
     public String toString() {
-        return name + " | " + cost + "$";
+        return name;
     }
 }
