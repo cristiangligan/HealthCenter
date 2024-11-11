@@ -11,6 +11,7 @@ import java.beans.PropertyChangeListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Controller implements PropertyChangeListener {
@@ -275,6 +276,18 @@ public class Controller implements PropertyChangeListener {
     public void handleCancelNewEditDoctor() {
         doctorsScreen = new DoctorsScreen(this);
         newEditDoctorScreen.dispose();
+    }
+
+    public String[] getSpecializationStrings() {
+        ArrayList<Specialization> specializations = (ArrayList<Specialization>) adminManager.getSpecializations();
+        String[] specializationStrings = new String[specializations.size() + 1];
+        int i = 0;
+        specializationStrings[i] = "";
+        for (int j = 0; j < specializations.size(); j++) {
+            i++;
+            specializationStrings[i] = specializations.get(j).getName();
+        }
+        return specializationStrings;
     }
     //-------- NewEditDoctorScreen - END --------
 

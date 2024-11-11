@@ -20,7 +20,7 @@ public class NewEditDoctorScreen extends JFrame {
     private JTextField firstNameField = new JTextField();
     private JTextField lastNameField = new JTextField();
     private JTextField phoneField = new JTextField();
-    private JComboBox<Specialization> specializationField = new JComboBox<>();
+    private JComboBox<String> specializationField = new JComboBox<String>();
 
     private JButton cancelBtn = new JButton("Cancel");
     private JButton saveBtn = new JButton("Save");
@@ -60,7 +60,7 @@ public class NewEditDoctorScreen extends JFrame {
         springLayout.putConstraint(SpringLayout.WEST, specializationField, 0, SpringLayout.WEST, phoneField);
         springLayout.putConstraint(SpringLayout.EAST, specializationField, 0, SpringLayout.EAST, phoneField);
         springLayout.putConstraint(SpringLayout.SOUTH, specializationField, 0, SpringLayout.SOUTH, firstNameField);
-        specializationField.setModel(new DefaultComboBoxModel<>(Specialization.values()));
+        specializationField.setModel(new DefaultComboBoxModel<>(controller.getSpecializationStrings()));
 
         mainPnl.add(lastNameField);
         lastNameField.setPreferredSize(new Dimension(0, 40));
@@ -104,25 +104,5 @@ public class NewEditDoctorScreen extends JFrame {
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    }
-
-    private enum Specialization {
-        EMPTY(""),
-        CARDIOLOGIST("cardiologist"),
-        DERMATOLOGIST("dermatologist"),
-        GYNECOLOGIST("gynecologist"),
-        NEUROLOGIST("neurologist"),
-        ONCOLOGIST("oncologist"),
-        OPHTHALMOLOGIST("ophthalmologist");
-
-        private final String specialization;
-        Specialization(String specialization) {
-            this.specialization = specialization;
-        }
-
-        @Override
-        public String toString() {
-            return specialization;
-        }
     }
 }
