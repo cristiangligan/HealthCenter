@@ -88,12 +88,57 @@ public class AdminManager {
         return specializations;
     }
 
+    /*public List<Doctor> getDoctors() {
+        ArrayList<Doctor> doctors = new ArrayList<>();
+        String selectFlashcardSetData = "SELECT * FROM public.doctors";
+        try {
+            PreparedStatement statement = connection.prepareStatement(selectFlashcardSetData);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String firstname = resultSet.getString("firstname");
+                String lastname = resultSet.getString("lastname");
+                String phone = resultSet.getString("phone");
+                Specialization specialization = new Specialization(name, visit_cost);
+                specialization.setId(id);
+                specializations.add(specialization);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return specializations;
+    }*/
+
     public Admin getCurrentAdmin() {
         return currentAdmin;
     }
 
     public void setCurrentAdmin(Admin admin) {
         currentAdmin = admin;
+    }
+
+    public void saveNewDoctor(Doctor doctor) {
+        if (doctor != null) {
+            String insertQuery = "INSERT INTO public.doctor (id, firstname, lastname, phone, id_specialization) VALUES (?, ?, ?, ?, ?)";
+            try {
+                PreparedStatement statement = connection.prepareStatement(insertQuery);
+                int id = doctor.getEmployerNr();
+                String firstName = doctor.getFirstName();
+                String lastName = doctor.getLastName();
+                String phone = doctor.getPhone();
+                Specialization specialization = doctor.getSpecialization();
+                statement.setInt(1, id);
+                statement.setString(2, firstName);
+                statement.setString(3, lastName);
+                statement.setString(4, phone);
+                statement.setInt(5, specialization.getId());
+                int rowCount = statement.executeUpdate();
+                propertyChangeSupport.firePropertyChange(UPDATE_DOCTORS_LIST, null, getSpecializations());
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
     }
 
     public void saveSpecialization(Specialization specialization) {

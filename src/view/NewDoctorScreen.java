@@ -1,12 +1,13 @@
 package view;
 
 import controller.Controller;
+import model.Doctor;
 import model.Specialization;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class NewEditDoctorScreen extends JFrame {
+public class NewDoctorScreen extends JFrame {
     private Controller controller;
     private JPanel mainPnl = new JPanel();
 
@@ -26,7 +27,7 @@ public class NewEditDoctorScreen extends JFrame {
     private JButton cancelBtn = new JButton("Cancel");
     private JButton saveBtn = new JButton("Save");
 
-    public NewEditDoctorScreen(Controller controller) {
+    public NewDoctorScreen(Controller controller) {
         this.controller = controller;
         this.setTitle("Health Center");
         this.setContentPane(mainPnl);
@@ -97,7 +98,7 @@ public class NewEditDoctorScreen extends JFrame {
         mainPnl.add(saveBtn);
         springLayout.putConstraint(SpringLayout.NORTH, saveBtn, 0, SpringLayout.NORTH, cancelBtn);
         springLayout.putConstraint(SpringLayout.EAST, saveBtn, 0, SpringLayout.EAST, specializationField);
-        saveBtn.addActionListener(e -> controller.handleSaveDoctor());
+        saveBtn.addActionListener(e -> controller.handleSaveNewDoctor());
 
         this.pack();
         this.setVisible(true);
@@ -105,5 +106,14 @@ public class NewEditDoctorScreen extends JFrame {
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    public Doctor getDoctorInfo() {
+        int employerNr = Integer.parseInt(employerNrField.getText());
+        String firstName = firstNameField.getText();
+        String lastName = lastNameField.getText();
+        String phoneNr = phoneField.getText();
+        Specialization specialization = (Specialization) specializationField.getSelectedItem();
+        return new Doctor(employerNr, firstName, lastName, phoneNr, specialization);
     }
 }
