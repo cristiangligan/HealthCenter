@@ -278,16 +278,16 @@ public class Controller implements PropertyChangeListener {
         newEditDoctorScreen.dispose();
     }
 
-    public String[] getSpecializationStrings() {
+    public Specialization[] getSpecializationArray() {
         ArrayList<Specialization> specializations = (ArrayList<Specialization>) adminManager.getSpecializations();
-        String[] specializationStrings = new String[specializations.size() + 1];
+        Specialization[] specializationArray = new Specialization[specializations.size() + 1];
         int i = 0;
-        specializationStrings[i] = "";
+        specializationArray[i] = new Specialization("", 0);
         for (int j = 0; j < specializations.size(); j++) {
             i++;
-            specializationStrings[i] = specializations.get(j).getName();
+            specializationArray[i] = specializations.get(j);
         }
-        return specializationStrings;
+        return specializationArray;
     }
     //-------- NewEditDoctorScreen - END --------
 
