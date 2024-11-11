@@ -2,6 +2,7 @@ package controller;
 
 import model.Admin;
 import model.AdminManager;
+import model.Doctor;
 import model.Specialization;
 import view.*;
 
@@ -23,7 +24,7 @@ public class Controller implements PropertyChangeListener {
     private AdminManager adminManager;
     private WelcomeAdminScreen welcomeAdminScreen;
     private DoctorsScreen doctorsScreen;
-    private NewEditDoctorScreen newEditDoctorScreen;
+    private NewDoctorScreen newDoctorScreen;
     private PatientsScreen patientsScreen;
     private SpecializationsScreen specializationsScreen;
     private AddSpecializationScreen addSpecializationScreen;
@@ -251,12 +252,12 @@ public class Controller implements PropertyChangeListener {
 
     //-------- DoctorsScreen - START --------
     public void handleAddNewDoctor() {
-        newEditDoctorScreen = new NewEditDoctorScreen(this);
+        newDoctorScreen = new NewDoctorScreen(this);
         doctorsScreen.dispose();
     }
 
     public void handleEditDoctor() {
-        newEditDoctorScreen = new NewEditDoctorScreen(this);
+        newDoctorScreen = new NewDoctorScreen(this);
         doctorsScreen.dispose();
     }
     //-------- DoctorsScreen - END --------
@@ -268,14 +269,16 @@ public class Controller implements PropertyChangeListener {
 
 
     //-------- NewEditDoctorScreen - START --------
-    public void handleSaveDoctor() {
+    public void handleSaveNewDoctor() {
+        Doctor doctor = newDoctorScreen.getDoctorInfo();
+        adminManager.saveNewDoctor(doctor);
         doctorsScreen = new DoctorsScreen(this);
-        newEditDoctorScreen.dispose();
+        newDoctorScreen.dispose();
     }
 
     public void handleCancelNewEditDoctor() {
         doctorsScreen = new DoctorsScreen(this);
-        newEditDoctorScreen.dispose();
+        newDoctorScreen.dispose();
     }
 
     public Specialization[] getSpecializationArray() {
@@ -433,6 +436,16 @@ public class Controller implements PropertyChangeListener {
                 handleUpdateSpecializationList((List<Specialization>) evt.getNewValue());
                 break;
             }
+            case AdminManager.UPDATE_DOCTORS_LIST: {
+                handleUpdateDoctorList((List<Doctor>) evt.getNewValue());
+                break;
+            }
+        }
+    }
+
+    private void handleUpdateDoctorList(List<Doctor> doctors) {
+        if (doctorsScreen != null) {
+            doctorsScreen.displayDoctors(doctors);
         }
     }
 
