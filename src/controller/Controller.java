@@ -7,6 +7,7 @@ import model.Specialization;
 import view.*;
 
 import javax.swing.*;
+import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.sql.Connection;
@@ -14,6 +15,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Controller implements PropertyChangeListener {
     private Connection connection;
@@ -271,9 +273,27 @@ public class Controller implements PropertyChangeListener {
     //-------- NewEditDoctorScreen - START --------
     public void handleSaveNewDoctor() {
         Doctor doctor = newDoctorScreen.getDoctorInfo();
-        adminManager.saveNewDoctor(doctor);
-        doctorsScreen = new DoctorsScreen(this);
-        newDoctorScreen.dispose();
+        boolean isOk = false;
+        if (doctor != null) {
+            if (doctor.getEmployerNr() != 0) {
+                if (!doctor.getFirstName().isBlank()) {
+                    if (!doctor.getLastName().isBlank()) {
+                        if (!doctor.getPhone().isBlank()) {
+                            if (doctor.getSpecialization() != null) {
+                                isOk = true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if (isOk) {
+            adminManager.saveNewDoctor(doctor);
+            doctorsScreen = new DoctorsScreen(this);
+            newDoctorScreen.dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "Please fill in all fields adequately.");
+        }
     }
 
     public void handleCancelNewEditDoctor() {
@@ -285,12 +305,22 @@ public class Controller implements PropertyChangeListener {
         ArrayList<Specialization> specializations = (ArrayList<Specialization>) adminManager.getSpecializations();
         Specialization[] specializationArray = new Specialization[specializations.size() + 1];
         int i = 0;
-        specializationArray[i] = new Specialization("", 0);
+        specializationArray[i] = null;
         for (int j = 0; j < specializations.size(); j++) {
             i++;
             specializationArray[i] = specializations.get(j);
         }
         return specializationArray;
+    }
+
+    public int getEmployerNrChecked() {
+        int employerNr = 0;
+        try {
+            employerNr = Integer.parseInt(newDoctorScreen.getEmployerNumberText());
+        } catch (NumberFormatException e) {
+            return employerNr;
+        }
+        return employerNr;
     }
     //-------- NewEditDoctorScreen - END --------
 
