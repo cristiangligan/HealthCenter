@@ -88,26 +88,29 @@ public class AdminManager {
         return specializations;
     }
 
-    /*public List<Doctor> getDoctors() {
-        ArrayList<Doctor> doctors = new ArrayList<>();
-        String selectFlashcardSetData = "SELECT * FROM public.doctors";
+    public List<Doctor> getDoctors() {
+        List<Doctor> doctors = new ArrayList<>();
+        String selectFlashcardSetData = "SELECT * FROM public.doctor JOIN public.specialization ON doctor.id_specialization = specialization.id";
         try {
             PreparedStatement statement = connection.prepareStatement(selectFlashcardSetData);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                int id = resultSet.getInt("id");
+                int employerNr = resultSet.getInt("id");
                 String firstname = resultSet.getString("firstname");
                 String lastname = resultSet.getString("lastname");
                 String phone = resultSet.getString("phone");
-                Specialization specialization = new Specialization(name, visit_cost);
-                specialization.setId(id);
-                specializations.add(specialization);
+                int specializationId = resultSet.getInt("id_specialization");
+                String specializationName = resultSet.getString("name");
+                int visit_cost = resultSet.getInt("visit_cost");
+                Specialization specialization = new Specialization(specializationName, visit_cost);
+                specialization.setId(specializationId);
+                doctors.add(new Doctor(employerNr, firstname, lastname, phone, specialization));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return specializations;
-    }*/
+        return doctors;
+    }
 
     public Admin getCurrentAdmin() {
         return currentAdmin;

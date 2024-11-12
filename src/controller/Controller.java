@@ -186,6 +186,7 @@ public class Controller implements PropertyChangeListener {
     //-------- WelcomeUserNameScreen - START --------
     public void handleDoctors() {
         doctorsScreen = new DoctorsScreen(this);
+        doctorsScreen.displayDoctors(adminManager.getDoctors());
         welcomeAdminScreen.dispose();
     }
 
@@ -230,7 +231,7 @@ public class Controller implements PropertyChangeListener {
         welcomeAdminScreen = new WelcomeAdminScreen(this);
         upcomingAppointmentsScreen.dispose();
     }
-    //-------- SpecializationScreen - END --------
+    //-------- AppointmentsScreen - END --------
 
 
 
@@ -290,6 +291,7 @@ public class Controller implements PropertyChangeListener {
         if (isOk) {
             adminManager.saveNewDoctor(doctor);
             doctorsScreen = new DoctorsScreen(this);
+            doctorsScreen.displayDoctors(adminManager.getDoctors());
             newDoctorScreen.dispose();
         } else {
             JOptionPane.showMessageDialog(null, "Please fill in all fields adequately.");
@@ -298,6 +300,7 @@ public class Controller implements PropertyChangeListener {
 
     public void handleCancelNewEditDoctor() {
         doctorsScreen = new DoctorsScreen(this);
+        doctorsScreen.displayDoctors(adminManager.getDoctors());
         newDoctorScreen.dispose();
     }
 
