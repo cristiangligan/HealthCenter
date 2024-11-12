@@ -63,6 +63,7 @@ public class NewDoctorScreen extends JFrame {
         springLayout.putConstraint(SpringLayout.EAST, specializationField, 0, SpringLayout.EAST, phoneField);
         springLayout.putConstraint(SpringLayout.SOUTH, specializationField, 0, SpringLayout.SOUTH, firstNameField);
         specializationField.setModel(new DefaultComboBoxModel<>(controller.getSpecializationArray()));
+        specializationField.setSelectedIndex(0);
 
         mainPnl.add(lastNameField);
         lastNameField.setPreferredSize(new Dimension(0, 40));
@@ -108,8 +109,12 @@ public class NewDoctorScreen extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
+    public String getEmployerNumberText() {
+        return employerNrField.getText();
+    }
+
     public Doctor getDoctorInfo() {
-        int employerNr = Integer.parseInt(employerNrField.getText());
+        int employerNr = controller.getEmployerNrChecked();
         String firstName = firstNameField.getText();
         String lastName = lastNameField.getText();
         String phoneNr = phoneField.getText();
