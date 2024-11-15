@@ -34,6 +34,14 @@ public class Doctor {
     public Specialization getSpecialization() {
         return specialization;
     }
+
+    public void setFirstName(String text) {
+        this.firstName = firstName;
+    }
+
+
+
+
     @Override
     public String toString() {
         return firstName + " " + lastName;

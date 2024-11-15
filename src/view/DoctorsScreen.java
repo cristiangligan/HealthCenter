@@ -48,6 +48,7 @@ public class DoctorsScreen extends JFrame {
         mainPnl.add(deleteBtn);
         springLayout.putConstraint(SpringLayout.SOUTH, deleteBtn, -10, SpringLayout.NORTH, doctorsLst);
         springLayout.putConstraint(SpringLayout.EAST, deleteBtn, 0, SpringLayout.EAST, doctorsLst);
+        deleteBtn.addActionListener(e -> controller.handleDeleteDoctor());
 
         mainPnl.add(editBtn);
         springLayout.putConstraint(SpringLayout.SOUTH, editBtn, 0, SpringLayout.SOUTH, addBtn);
@@ -64,5 +65,9 @@ public class DoctorsScreen extends JFrame {
 
     public void displayDoctors(List<Doctor> doctors) {
         doctorsLst.setListData(doctors.toArray());
+    }
+
+    public Doctor getSelectedDoctor() {
+        return (Doctor) doctorsLst.getSelectedValue();
     }
 }

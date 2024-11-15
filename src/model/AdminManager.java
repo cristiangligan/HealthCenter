@@ -1,5 +1,6 @@
 package model;
 
+import javax.print.Doc;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.sql.Connection;
@@ -120,6 +121,7 @@ public class AdminManager {
         currentAdmin = admin;
     }
 
+    //add new doctor
     public void saveNewDoctor(Doctor doctor) {
         if (doctor != null) {
             String insertQuery = "INSERT INTO public.doctor (id, firstname, lastname, phone, id_specialization) VALUES (?, ?, ?, ?, ?)";
@@ -142,6 +144,41 @@ public class AdminManager {
             }
         }
 
+    }
+
+    public void saveEditedDoctor(Doctor editedDoctor) {
+        if (editedDoctor != null) {
+            String updateQuery = "UPDATE public.doctor SET firstName = ?, lastName = ?, phone = ?, id_specialization = ? WHERE doctor.id = ?";
+            try (PreparedStatement statement = connection.prepareStatement(updateQuery)) {
+                statement.setString(1, editedDoctor.getFirstName());
+                statement.setString(2, editedDoctor.getLastName());
+                statement.setString(3, editedDoctor.getPhone());
+                statement.setInt(4, editedDoctor.getSpecialization().getId());
+                statement.setInt(5, editedDoctor.getEmployerNr());
+
+                int rowsUpdate = statement.executeUpdate();
+                if (rowsUpdate > 0) {
+                    propertyChangeSupport.firePropertyChange(UPDATE_DOCTORS_LIST, null,getDoctors());
+                    System.out.println("Doctor updated successfully.");
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException("Error updating doctor " + e.getMessage(), e);
+            }
+        }
+    }
+
+    //delete doctor
+    public void deleteDoctor(Doctor doctor) {
+        String deleteQuery = "DELETE FROM public.doctor WHERE id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(deleteQuery)) {
+            statement.setInt(1, doctor.getEmployerNr());
+            int rowsDelete = statement.executeUpdate();
+            if (rowsDelete > 0 ) {
+                System.out.println("Doctor deleted successfully.");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error deleting doctor from database.", e);
+        } ;
     }
 
     public void saveSpecialization(Specialization specialization) {
@@ -168,16 +205,14 @@ public class AdminManager {
                 statement.setString(1, editedSpecialization.getName());
                 statement.setInt(2, editedSpecialization.getCost());
                 statement.setInt(3, editedSpecialization.getId());
-                statement.executeUpdate();
+                statement.setInt(4, editedSpecialization.getId());
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-
         }
     }
 
     public void deleteSpecialization(Specialization specialization) {
-
     }
 
     public void setSelectedSpecialization(Specialization specialization) {
