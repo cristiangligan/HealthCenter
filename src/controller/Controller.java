@@ -39,6 +39,7 @@ public class Controller implements PropertyChangeListener {
     private ChooseBookDoctorScreen chooseBookDoctorScreen;
     private ScheduleScreen scheduleScreen;
     private WelcomeDoctorScreen welcomeDoctorScreen;
+    private EditDoctorScreen editDoctorScreen;
 
 
     /*
@@ -233,8 +234,6 @@ public class Controller implements PropertyChangeListener {
     }
     //-------- AppointmentsScreen - END --------
 
-
-
     public void handleSpecializations() {
         specializationsScreen = new SpecializationsScreen(this);
         handleUpdateSpecializationList(adminManager.getSpecializations());
@@ -260,8 +259,29 @@ public class Controller implements PropertyChangeListener {
     }
 
     public void handleEditDoctor() {
-        newDoctorScreen = new NewDoctorScreen(this);
+        Doctor selectedDoctor = doctorsScreen.getSelectedDoctor();
+        if (selectedDoctor == null) {
+            JOptionPane.showMessageDialog(null, "Please select a doctor to edit.");
+            return;
+        }
+        editDoctorScreen = new EditDoctorScreen(this, selectedDoctor);
+        editDoctorScreen.setVisible(true);
         doctorsScreen.dispose();
+    }
+
+    public void handleDeleteDoctor() {
+        Doctor selectedDoctor = doctorsScreen.getSelectedDoctor();
+        if (selectedDoctor == null) {
+            JOptionPane.showMessageDialog(null, "Please select a doctor to delete.");
+            return;
+        }
+        int confirmation = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete the selected doctor?","Delete doctor", JOptionPane.YES_NO_OPTION);
+
+        if (confirmation == JOptionPane.YES_OPTION) {
+            adminManager.deleteDoctor(selectedDoctor); //delete the selected doctor from the database
+            doctorsScreen.displayDoctors(adminManager.getDoctors()); //uppdatera gränssnittet
+            JOptionPane.showMessageDialog(null, "Doctor deleted successfully.");
+        }
     }
     //-------- DoctorsScreen - END --------
 
@@ -298,10 +318,34 @@ public class Controller implements PropertyChangeListener {
         }
     }
 
+    public void handleEditedDoctor() {
+        Doctor editedDoctor = editDoctorScreen.getDoctorInfo();
+        if (editedDoctor == null) {
+            JOptionPane.showMessageDialog(null, "Please fill in all fields correctly.");
+            return;
+        }
+
+        if (editedDoctor.getEmployerNr() == 0 || editedDoctor.getFirstName().isBlank() || editedDoctor.getLastName().isBlank() || editedDoctor.getPhone().isBlank() || editedDoctor.getSpecialization() == null) {
+            JOptionPane.showMessageDialog(null, "Please fill in all fields correctly.");
+            return;
+        }
+        adminManager.saveEditedDoctor(editedDoctor);
+        JOptionPane.showMessageDialog(null, "Doctor edited successfully.");
+        doctorsScreen = new DoctorsScreen(this);
+        doctorsScreen.displayDoctors(adminManager.getDoctors());
+        editDoctorScreen.dispose();
+    }
+
     public void handleCancelNewEditDoctor() {
         doctorsScreen = new DoctorsScreen(this);
         doctorsScreen.displayDoctors(adminManager.getDoctors());
         newDoctorScreen.dispose();
+    }
+
+    public void handleCancelFromEditDoctor() {
+        doctorsScreen = new DoctorsScreen(this);
+        doctorsScreen.displayDoctors(adminManager.getDoctors());
+        editDoctorScreen.dispose();
     }
 
     public Specialization[] getSpecializationArray() {
@@ -316,6 +360,7 @@ public class Controller implements PropertyChangeListener {
         return specializationArray;
     }
 
+    /*
     public int getEmployerNrChecked() {
         int employerNr = 0;
         try {
@@ -325,6 +370,22 @@ public class Controller implements PropertyChangeListener {
         }
         return employerNr;
     }
+
+     */
+    //la till en check för editDoctorScreen också för att kunna hämta employerNumber i editDoctorScreen, är detta rätt? behöll den gamla här ovanför
+    public int getEmployerNrChecked() {
+        try {
+            if (editDoctorScreen != null) {
+                return Integer.parseInt(editDoctorScreen.getEmployerNumberText());
+            } else if (newDoctorScreen != null) {
+                return Integer.parseInt(newDoctorScreen.getEmployerNumberText());
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Employer number must be a valid integer.");
+        }
+        return 0;
+    }
+
     //-------- NewEditDoctorScreen - END --------
 
 
