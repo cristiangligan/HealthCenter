@@ -15,6 +15,10 @@ public class Doctor {
         this.specialization = specialization;
     }
 
+    public void setEmployerNr(int employerNr) {
+        this.employerNr = employerNr;
+    }
+
     public int getEmployerNr() {
         return employerNr;
     }
@@ -38,8 +42,6 @@ public class Doctor {
     public void setFirstName(String text) {
         this.firstName = firstName;
     }
-
-
 
 
     @Override

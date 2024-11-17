@@ -16,6 +16,7 @@ public class DoctorsScreen extends JFrame {
     private JButton deleteBtn = new JButton("Delete");
     private JButton backBtn = new JButton("Back");
     private JList doctorsLst = new JList();
+    private JScrollPane scrollPane = new JScrollPane(doctorsLst);
 
     public DoctorsScreen(Controller controller) {
         this.controller = controller;
@@ -29,25 +30,25 @@ public class DoctorsScreen extends JFrame {
         springLayout.putConstraint(SpringLayout.NORTH, titleLbl, 10, SpringLayout.NORTH, mainPnl);
         springLayout.putConstraint(SpringLayout.WEST, titleLbl, 40, SpringLayout.WEST, mainPnl);
 
-        mainPnl.add(doctorsLst);
-        springLayout.putConstraint(SpringLayout.NORTH, doctorsLst, 100, SpringLayout.NORTH, mainPnl);
-        springLayout.putConstraint(SpringLayout.WEST, doctorsLst, 40, SpringLayout.WEST, mainPnl);
-        springLayout.putConstraint(SpringLayout.EAST, doctorsLst, -40, SpringLayout.EAST, mainPnl);
-        springLayout.putConstraint(SpringLayout.SOUTH, doctorsLst, -60, SpringLayout.SOUTH, mainPnl);
+        mainPnl.add(scrollPane);
+        springLayout.putConstraint(SpringLayout.NORTH, scrollPane, 100, SpringLayout.NORTH, mainPnl);
+        springLayout.putConstraint(SpringLayout.WEST, scrollPane, 40, SpringLayout.WEST, mainPnl);
+        springLayout.putConstraint(SpringLayout.EAST, scrollPane, -40, SpringLayout.EAST, mainPnl);
+        springLayout.putConstraint(SpringLayout.SOUTH, scrollPane, -60, SpringLayout.SOUTH, mainPnl);
 
         mainPnl.add(backBtn);
-        springLayout.putConstraint(SpringLayout.NORTH, backBtn, 10, SpringLayout.SOUTH, doctorsLst);
-        springLayout.putConstraint(SpringLayout.WEST, backBtn, 0, SpringLayout.WEST, doctorsLst);
+        springLayout.putConstraint(SpringLayout.NORTH, backBtn, 10, SpringLayout.SOUTH, scrollPane);
+        springLayout.putConstraint(SpringLayout.WEST, backBtn, 0, SpringLayout.WEST, scrollPane);
         backBtn.addActionListener(e -> controller.handleBackFromDoctorsScreen());
 
         mainPnl.add(addBtn);
-        springLayout.putConstraint(SpringLayout.SOUTH, addBtn, -10, SpringLayout.NORTH, doctorsLst);
-        springLayout.putConstraint(SpringLayout.WEST, addBtn, 0, SpringLayout.WEST, doctorsLst);
+        springLayout.putConstraint(SpringLayout.SOUTH, addBtn, -10, SpringLayout.NORTH, scrollPane);
+        springLayout.putConstraint(SpringLayout.WEST, addBtn, 0, SpringLayout.WEST, scrollPane);
         addBtn.addActionListener(e -> controller.handleAddNewDoctor());
 
         mainPnl.add(deleteBtn);
-        springLayout.putConstraint(SpringLayout.SOUTH, deleteBtn, -10, SpringLayout.NORTH, doctorsLst);
-        springLayout.putConstraint(SpringLayout.EAST, deleteBtn, 0, SpringLayout.EAST, doctorsLst);
+        springLayout.putConstraint(SpringLayout.SOUTH, deleteBtn, -10, SpringLayout.NORTH, scrollPane);
+        springLayout.putConstraint(SpringLayout.EAST, deleteBtn, 0, SpringLayout.EAST, scrollPane);
         deleteBtn.addActionListener(e -> controller.handleDeleteDoctor());
 
         mainPnl.add(editBtn);

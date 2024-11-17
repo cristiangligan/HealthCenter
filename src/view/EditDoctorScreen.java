@@ -64,7 +64,8 @@ public class EditDoctorScreen extends JFrame {
         springLayout.putConstraint(SpringLayout.EAST, specializationField, 0, SpringLayout.EAST, phoneField);
         springLayout.putConstraint(SpringLayout.SOUTH, specializationField, 0, SpringLayout.SOUTH, firstNameField);
         specializationField.setModel(new DefaultComboBoxModel<>(controller.getSpecializationArray()));
-        specializationField.setSelectedIndex(0);
+        setSpecializationSelectedDoctor(doctor.getSpecialization());
+        //specializationField.setSelectedIndex(0);
 
         mainPnl.add(lastNameField);
         lastNameField.setPreferredSize(new Dimension(0, 40));
@@ -146,5 +147,15 @@ public class EditDoctorScreen extends JFrame {
         lastNameField.setText(String.valueOf(doctor.getLastName()));
         phoneField.setText(String.valueOf(doctor.getPhone()));
         specializationField.setSelectedItem(doctor.getSpecialization());
+    }
+
+    public void setSpecializationSelectedDoctor(Specialization specialization) {
+        for (int i = 0; i < specializationField.getItemCount(); i++) {
+            Specialization specializationFromList = specializationField.getItemAt(i);
+            if (specializationFromList != null && specializationFromList.getId() == specialization.getId()) {
+                specializationField.setSelectedIndex(i);
+                return;
+            }
+        }
     }
 }

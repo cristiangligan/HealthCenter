@@ -12,6 +12,8 @@ public class PatientsScreen extends JFrame {
     private JButton viewMedicalRecordBtn = new JButton("View medical record");
     private JButton backBtn = new JButton("Back");
     private JList patientsLst = new JList();
+    //scroll-funktion för lista med patienter
+    private JScrollPane scrollPane = new JScrollPane(patientsLst);
 
     public PatientsScreen(Controller controller) {
         this.controller = controller;

@@ -67,4 +67,11 @@ public class DoctorLogIn extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
+    public int getMedicalId() {
+        return Integer.parseInt(doctorIdTextField.getText());
+    }
+
+    public void clearFields() {
+        doctorIdTextField.setText("");
+    }
 }
