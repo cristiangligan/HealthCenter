@@ -10,6 +10,9 @@ public class Specialization {
         this.cost = cost;
     }
 
+    public Specialization(int id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

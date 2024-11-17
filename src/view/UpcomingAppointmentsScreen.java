@@ -11,6 +11,8 @@ public class UpcomingAppointmentsScreen extends JFrame {
     private JLabel titleLbl = new JLabel("Upcoming appointments");
     private JButton backBtn = new JButton("Back");
     private JList upcomingAppointmentsLst = new JList();
+    //scrollfunktion för när vi har listan
+    private JScrollPane scrollPane = new JScrollPane(upcomingAppointmentsLst);
 
     public UpcomingAppointmentsScreen(Controller controller) {
         this.controller = controller;

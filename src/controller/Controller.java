@@ -1,11 +1,9 @@
 package controller;
 
-import model.Admin;
-import model.AdminManager;
-import model.Doctor;
-import model.Specialization;
+import model.*;
 import view.*;
 
+import javax.print.Doc;
 import javax.swing.*;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
@@ -40,6 +38,7 @@ public class Controller implements PropertyChangeListener {
     private ScheduleScreen scheduleScreen;
     private WelcomeDoctorScreen welcomeDoctorScreen;
     private EditDoctorScreen editDoctorScreen;
+    private DoctorManager doctorManager;
 
 
     /*
@@ -92,6 +91,31 @@ public class Controller implements PropertyChangeListener {
         }
     }
 
+    //log in as doctor
+    public void handleDoctorLogIn() {
+        doctorManager = new DoctorManager(connection);
+        doctorManager.subscribeListener(this);
+
+        try {
+            int medicalId = doctorLogIn.getMedicalId();
+            Doctor doctor = doctorManager.verifyDoctor(medicalId);
+
+            if (doctor != null) {
+                doctorManager.setCurrentDoctor(doctor);
+                welcomeDoctorScreen = new WelcomeDoctorScreen(this);
+                welcomeDoctorScreen.setWelcomeDoctorLabel(doctor.toString());
+                doctorLogIn.dispose();
+                System.out.println(doctorManager.getCurrentDoctor());
+            } else {
+                JOptionPane.showMessageDialog(null, "Incorrect medical number. Please try again.");
+                doctorLogIn.clearFields();
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Medical ID must be a number");
+            doctorLogIn.clearFields();
+        }
+    }
+
     public void handleBackFromAdminLogIn() {
         logInScreen = new LogInScreen(this);
         adminLogIn.dispose();
@@ -127,12 +151,9 @@ public class Controller implements PropertyChangeListener {
 
 
     //-------- DoctorLogIn - START --------
-    //log in as doctor
 
-    public void handleDoctorLogIn() {
-        welcomeDoctorScreen = new WelcomeDoctorScreen(this);
-        doctorLogIn.dispose();
-    }
+    //log in as doctor - LÄGG DEN HÄR SEN
+
     public void handleBackFromDoctorLoggedIn() {
         try {
             logInScreen = new LogInScreen(this);
@@ -265,7 +286,8 @@ public class Controller implements PropertyChangeListener {
             return;
         }
         editDoctorScreen = new EditDoctorScreen(this, selectedDoctor);
-        editDoctorScreen.setVisible(true);
+        Specialization specialization = selectedDoctor.getSpecialization();
+        editDoctorScreen.setSpecializationSelectedDoctor(specialization);
         doctorsScreen.dispose();
     }
 

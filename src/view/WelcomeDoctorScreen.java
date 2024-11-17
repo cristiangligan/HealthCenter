@@ -79,12 +79,14 @@ public class WelcomeDoctorScreen extends JFrame {
         springLayout.putConstraint(SpringLayout.WEST, logOut, 150, SpringLayout.WEST, pnlMain);
         springLayout.putConstraint(SpringLayout.EAST, logOut, -150, SpringLayout.EAST, pnlMain);
 
-
         this.pack();
         this.setVisible(true);
         this.setSize(new Dimension(600, 400));
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+    public void setWelcomeDoctorLabel(String doctorLabel) {
+        welcomeDoctor.setText("Welcome doctor " + doctorLabel);
     }
 }
