@@ -428,6 +428,26 @@ public class Controller implements PropertyChangeListener {
             specializationsScreen.dispose();
         }
     }
+    public void handleDeleteSpecialization() {
+        //hämtar den valda specialiseringen från GUI
+        Specialization selectedSpecialization = specializationsScreen.getSelectedSpecialization();
+        if (selectedSpecialization == null) {
+            JOptionPane.showMessageDialog(null, "Please select a specialization to delete.");
+            return;
+        }
+        if (adminManager.isSpecializationAssignedToDoctors(selectedSpecialization.getId())) {
+            JOptionPane.showMessageDialog(null, "Cannot delete specialization. It is assigned to one or more doctors. Please unassign it first");
+            return;
+        }
+        int confirmation = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete the selected specialization?","Delete specialization", JOptionPane.YES_NO_OPTION);
+
+        if (confirmation == JOptionPane.YES_OPTION) {
+            adminManager.deleteSpecialization(selectedSpecialization); //delete the selected doctor from the database
+            specializationsScreen.displaySpecializations(adminManager.getSpecializations()); //uppdatera gränssnittet
+            JOptionPane.showMessageDialog(null, "Specialization deleted successfully.");
+        }
+    }
+
     public void handleBackFromSpecializationsScreen() {
         welcomeAdminScreen = new WelcomeAdminScreen(this);
         welcomeAdminScreen.setUsernameLabel(adminManager.getCurrentAdmin().toString());

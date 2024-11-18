@@ -47,14 +47,15 @@ public class SpecializationsScreen extends JFrame {
         springLayout.putConstraint(SpringLayout.WEST, addBtn, 0, SpringLayout.WEST, scrollPane);
         addBtn.addActionListener(e -> controller.handleAddNewSpecialization());
 
-        mainPnl.add(deleteBtn);
-        springLayout.putConstraint(SpringLayout.SOUTH, deleteBtn, -10, SpringLayout.NORTH, scrollPane);
-        springLayout.putConstraint(SpringLayout.EAST, deleteBtn, 0, SpringLayout.EAST, scrollPane);
-
         mainPnl.add(editBtn);
         springLayout.putConstraint(SpringLayout.SOUTH, editBtn, 0, SpringLayout.SOUTH, addBtn);
         springLayout.putConstraint(SpringLayout.WEST, editBtn, 140, SpringLayout.EAST, addBtn);
         editBtn.addActionListener(e -> controller.handleEditSpecialization());
+
+        mainPnl.add(deleteBtn);
+        springLayout.putConstraint(SpringLayout.SOUTH, deleteBtn, -10, SpringLayout.NORTH, scrollPane);
+        springLayout.putConstraint(SpringLayout.EAST, deleteBtn, 0, SpringLayout.EAST, scrollPane);
+        deleteBtn.addActionListener(e -> controller.handleDeleteSpecialization());
 
         this.pack();
         this.setVisible(true);

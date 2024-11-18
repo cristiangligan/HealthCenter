@@ -143,7 +143,6 @@ public class AdminManager {
                 throw new RuntimeException(e);
             }
         }
-
     }
 
     public void saveEditedDoctor(Doctor editedDoctor) {
@@ -158,7 +157,7 @@ public class AdminManager {
 
                 int rowsUpdate = statement.executeUpdate();
                 if (rowsUpdate > 0) {
-                    propertyChangeSupport.firePropertyChange(UPDATE_DOCTORS_LIST, null,getDoctors());
+                    propertyChangeSupport.firePropertyChange(UPDATE_DOCTORS_LIST, null, getDoctors());
                     System.out.println("Doctor updated successfully.");
                 }
             } catch (SQLException e) {
@@ -173,12 +172,12 @@ public class AdminManager {
         try (PreparedStatement statement = connection.prepareStatement(deleteQuery)) {
             statement.setInt(1, doctor.getEmployerNr());
             int rowsDelete = statement.executeUpdate();
-            if (rowsDelete > 0 ) {
+            if (rowsDelete > 0) {
                 System.out.println("Doctor deleted successfully.");
             }
         } catch (SQLException e) {
             throw new RuntimeException("Error deleting doctor from database.", e);
-        } ;
+        }
     }
 
     public void saveSpecialization(Specialization specialization) {
@@ -212,7 +211,40 @@ public class AdminManager {
         }
     }
 
+    //kontrollmetod för att kontrollera om en specialisering är kopplad till en läkare:
+    public boolean isSpecializationAssignedToDoctors(int specializationId) {
+        //COUNT counts the amout of rows in the doctor table where the condition id =? == true
+        String query = "SELECT COUNT (*) AS doctor_count FROM doctor WHERE id_specialization = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, specializationId);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    int doctorCount = resultSet.getInt("doctor_count");
+                    return doctorCount > 0; //returns true if there's doctors with the specialization (doctorCount == 0 means no doctors)
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Database error: " + e.getMessage());
+        }
+        return false;
+    }
+
+    //radera specialisering från databasen
     public void deleteSpecialization(Specialization specialization) {
+        if (isSpecializationAssignedToDoctors(specialization.getId())) {
+            throw new RuntimeException("Cannot delete specialization. It is assigned to one or more doctors.");
+        }
+        String deleteQuery = "DELETE FROM public.specialization WHERE id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(deleteQuery)) {
+            statement.setInt(1, specialization.getId());
+            int rowsDelete = statement.executeUpdate();
+            if (rowsDelete > 0) {
+                System.out.println("Specialization deleted successfully.");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error deleting specialization from database.", e);
+        }
     }
 
     public void setSelectedSpecialization(Specialization specialization) {
@@ -231,3 +263,4 @@ public class AdminManager {
         propertyChangeSupport.removePropertyChangeListener(listener);
     }
 }
+
