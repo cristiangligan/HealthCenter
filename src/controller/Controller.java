@@ -156,6 +156,47 @@ public class Controller implements PropertyChangeListener {
         logInScreen = new LogInScreen(this);
         adminLogIn.dispose();
     }
+
+    //metod för att spara ny patient som registrerar sig
+    public void handleRegisterNewPatient() {
+        patientManager = new PatientManager(connection);
+        patientManager.subscribeListener(this);
+
+        String firstName = registerNewPatientScreen.getFirstName();
+        String lastName = registerNewPatientScreen.getLastname();
+        String gender = registerNewPatientScreen.getGender();
+        String address = registerNewPatientScreen.getAddress();
+        String phone = registerNewPatientScreen.getPhone();
+        String birthDate = registerNewPatientScreen.getBirthDate();
+
+        if (firstName.isBlank() || lastName.isBlank() || gender.isBlank() || address.isBlank() || phone.isBlank() || birthDate.isBlank()) {
+            JOptionPane.showMessageDialog(null, "Please fill in all fields correctly.");
+            return;
+        }
+
+        try {
+            java.sql.Date.valueOf(birthDate);
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(null, "Invalid format date. Please insert yyy-mm-dd");
+            return;
+        }
+
+        boolean successSavingPatient = patientManager.saveNewPatient(firstName, lastName, gender, address, phone, birthDate);
+
+        if (successSavingPatient) {
+            JOptionPane.showMessageDialog(null, "Patient registered.");
+            registerNewPatientScreen.dispose();
+            logInScreen = new LogInScreen(this);
+        } else {
+            JOptionPane.showMessageDialog(null, "Failed to register patient. Please try again.");
+        }
+    }
+
+    public void handleBackFromRegisterNewPatient() {
+        patientLogIn = new PatientLogIn(this);
+        registerNewPatientScreen.dispose();
+    }
+
     //-------- AdminLogIn - END --------
 
 
@@ -227,17 +268,6 @@ public class Controller implements PropertyChangeListener {
     public void handleBtnRegisterNewPatient() {
         registerNewPatientScreen = new RegisterNewPatientScreen(this);
         patientLogIn.dispose();
-    }
-    //ny
-    public void handleBackFromRegisterNewPatient() {
-        patientLogIn = new PatientLogIn(this);
-        registerNewPatientScreen.dispose();
-    }
-
-    //metod för att spara ny patient som registrerar sig
-    public void handleRegisterNewPatientBtn() {
-        JOptionPane.showMessageDialog(null, "Patient registered");
-        //new patient saved to database
     }
 
 

@@ -5,10 +5,7 @@ import controller.Controller;
 import javax.swing.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class PatientManager extends JFrame {
     private Controller controller;
@@ -42,6 +39,30 @@ public class PatientManager extends JFrame {
             return null;
         }
     }
+
+    public boolean saveNewPatient(String firstName, String lastName, String gender, String address, String phone, String birthDate) {
+        String verifyQuery = "INSERT INTO public.patient (firstname, lastname, gender, address, phone, birthdate, reg_date) VALUES (?, ?, ?, ?, ?, ?, CURRENT_DATE)";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(verifyQuery)) {
+            preparedStatement.setString(1, firstName);
+            preparedStatement.setString(2, lastName);
+            preparedStatement.setString(3, gender);
+            preparedStatement.setString(4, address);
+            preparedStatement.setString(5, phone);
+            preparedStatement.setString(6, String.valueOf(java.sql.Date.valueOf(birthDate)));
+
+            java.sql.Date sqlBirthDate = java.sql.Date.valueOf(birthDate);
+            preparedStatement.setDate(6, sqlBirthDate);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            return rowsAffected > 0;
+
+        } catch (SQLException e) {
+            System.out.println("Error saving new patient: " + e.getMessage());
+            return false;
+        }
+    }
+
+
     public void subscribeListener(PropertyChangeListener listener) {
         propertyChangeSupport.addPropertyChangeListener(listener);
     }
