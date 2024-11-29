@@ -86,4 +86,7 @@ public class WelcomePatientScreen extends JFrame {
         this.setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
+    public void setWelcomePatient(String patientLabel){
+        welcomePatient.setText("Welcome " + patientLabel);
+    }
 }
