@@ -57,7 +57,7 @@ public class PatientLogIn extends JFrame {
         pnlMain.add(btnLogin);
         springLayout.putConstraint(SpringLayout.NORTH, btnLogin,30, SpringLayout.SOUTH, patMedicalNbrTextField);
         springLayout.putConstraint(SpringLayout.WEST, btnLogin, 0, SpringLayout.WEST, pnlMain);
-        btnLogin.addActionListener(e -> controller.logInAsPatient());
+        btnLogin.addActionListener(e -> controller.handlePatientLogIn());
 
         btnRegister = new JButton("Register");
         pnlMain.add(btnRegister);
@@ -73,4 +73,16 @@ public class PatientLogIn extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     }
+    public String getPatientIdText() {
+        return patMedicalNbrTextField.getText().trim(); //Returns a string whose value is this string, with all leading and trailing white space removed.
+    }
+
+    public void clearFields() {
+        patMedicalNbrTextField.setText("");
+    }
+/*
+    public String getPatientIdText() {
+    }
+
+ */
 }

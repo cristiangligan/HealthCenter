@@ -39,6 +39,7 @@ public class Controller implements PropertyChangeListener {
     private WelcomeDoctorScreen welcomeDoctorScreen;
     private EditDoctorScreen editDoctorScreen;
     private DoctorManager doctorManager;
+    private PatientManager patientManager;
 
 
     /*
@@ -113,6 +114,41 @@ public class Controller implements PropertyChangeListener {
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Medical ID must be a number");
             doctorLogIn.clearFields();
+        }
+    }
+
+    public void handlePatientLogIn() {
+        patientManager = new PatientManager(connection);
+        patientManager.subscribeListener(this);
+
+        try {
+            String patientIdText = String.valueOf(patientLogIn.getPatientIdText());
+            System.out.println("Input from text field " + patientIdText); //debugg
+
+            if (patientIdText.isBlank()) {
+                JOptionPane.showMessageDialog(null, "You must write your medical number. Please try again.");
+                return; //avbryter processen om fältet är tomt
+            }
+            int patientId = Integer.parseInt(patientIdText);
+            Patient patient = patientManager.verifyPatient(patientId);
+
+            if (patient != null) {
+                System.out.println("Logged in as: " + patient.getFirstName() + " " + patient.getLastName());
+                patientManager.setCurrentPatient(patient);
+                welcomePatientScreen = new WelcomePatientScreen(this);
+                welcomePatientScreen.setWelcomePatient(patient.toString());
+                patientLogIn.dispose();
+                System.out.println(patientManager.getCurrentPatient());
+            } else {
+                JOptionPane.showMessageDialog(null, "Incorrect medical number. Please try again.");
+                patientLogIn.clearFields();
+                ;
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Medical number must be a valid number. Please try again.");
+            patientLogIn.clearFields();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
