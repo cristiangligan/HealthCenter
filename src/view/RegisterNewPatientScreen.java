@@ -12,8 +12,8 @@ public class RegisterNewPatientScreen extends JFrame {
     private JLabel addressLbl = new JLabel("Address");
     private JLabel phoneLbl = new JLabel("Phone");
     private JLabel birthDateLbl = new JLabel("Birth date");
+    //ska vi kanske göra om gender till JComboBox?
     private JLabel genderLbl = new JLabel("Gender");
-
     private JTextField firstNameField = new JTextField();
     private JTextField lastNameField = new JTextField();
     private JTextField addressField = new JTextField();
@@ -95,7 +95,7 @@ public class RegisterNewPatientScreen extends JFrame {
         backBtn.addActionListener(e -> controller.handleBackFromRegisterNewPatient());
 
         mainPnl.add(registerBtn);
-        registerBtn.addActionListener(e -> controller.handleRegisterNewPatientBtn());
+        registerBtn.addActionListener(e -> controller.handleRegisterNewPatient());
 
         springLayout.putConstraint(SpringLayout.SOUTH, backBtn, -20, SpringLayout.SOUTH, mainPnl);
         springLayout.putConstraint(SpringLayout.WEST, backBtn, 40, SpringLayout.WEST, mainPnl);
@@ -109,6 +109,28 @@ public class RegisterNewPatientScreen extends JFrame {
         this.setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
+    } //end of constructor OBS! put getters outside
+
+    public String getFirstName() {
+        return firstNameField.getText();
+    }
+
+    public String getLastname() {
+        return lastNameField.getText();
+    }
+
+    public String getGender() {
+        return genderField.getText();
+    }
+
+    public String getAddress() {
+        return addressField.getText();
+    }
+    public String getPhone() {
+        return phoneField.getText();
+    }
+    public String getBirthDate() {
+        return birthDateField.getText();
     }
 }
 
