@@ -53,21 +53,28 @@ public class AdminManager {
 
     }
 
-    /*public void addNewDoctor(Doctor doctor) {
-        if (doctor != null) {
-            String insertQuery = "INSERT INTO public.doctor (question, answer, flashcards_set_id) VALUES (?, ?, ?)";
-            try {
-                PreparedStatement statement = connection.prepareStatement(insertQuery);
-                statement.setString(1, question);
-                statement.setString(2, answer);
-                statement.setInt(3, flashcardSet.getId());
-                int rowCount = statement.executeUpdate();
-                propertyChangeSupport.firePropertyChange(UPDATE_FLASHCARD_LIST, null, getFlashcards(flashcardSet.getId()));
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+    public List<Patient> getPatients() {
+        List<Patient> patients = new ArrayList<>();
+        String selectPatientData = "SELECT * FROM public.patient";
+        try {
+            PreparedStatement statement = connection.prepareStatement(selectPatientData);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String firstname = resultSet.getString("firstname");
+                String lastname = resultSet.getString("lastname");
+                String gender = resultSet.getString("gender");
+                String address = resultSet.getString("address");
+                String phone = resultSet.getString("phone");
+                String birthdate = resultSet.getDate("birthdate").toString();
+                String regdate = resultSet.getDate("reg_date").toString();
+                patients.add(new Patient(id, firstname, lastname, gender, address, phone, birthdate, regdate));
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-    }*/
+        return patients;
+    }
 
     public List<Specialization> getSpecializations() {
         ArrayList<Specialization> specializations = new ArrayList<>();
@@ -91,9 +98,9 @@ public class AdminManager {
 
     public List<Doctor> getDoctors() {
         List<Doctor> doctors = new ArrayList<>();
-        String selectFlashcardSetData = "SELECT * FROM public.doctor JOIN public.specialization ON doctor.id_specialization = specialization.id";
+        String selectDoctorData = "SELECT * FROM public.doctor JOIN public.specialization ON doctor.id_specialization = specialization.id";
         try {
-            PreparedStatement statement = connection.prepareStatement(selectFlashcardSetData);
+            PreparedStatement statement = connection.prepareStatement(selectDoctorData);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 int employerNr = resultSet.getInt("id");
