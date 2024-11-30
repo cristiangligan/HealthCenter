@@ -186,7 +186,9 @@ public class Controller implements PropertyChangeListener {
         if (successSavingPatient) {
             JOptionPane.showMessageDialog(null, "Patient registered.");
             registerNewPatientScreen.dispose();
-            logInScreen = new LogInScreen(this);
+            welcomePatientScreen = new WelcomePatientScreen(this);
+            Patient currentPatient = patientManager.getPatientInfo(firstName, lastName);
+            welcomePatientScreen.setWelcomePatient(currentPatient.getFirstName() + " " + currentPatient.getLastName());
         } else {
             JOptionPane.showMessageDialog(null, "Failed to register patient. Please try again.");
         }
@@ -591,6 +593,9 @@ public class Controller implements PropertyChangeListener {
 
     //-------- WelcomePatientScreen - START --------
     public void logInAsPatient() {
+        if(patientManager == null) {
+            patientManager = new PatientManager(connection);
+        }
         welcomePatientScreen = new WelcomePatientScreen(this);
         patientLogIn.dispose();
     }
@@ -601,6 +606,7 @@ public class Controller implements PropertyChangeListener {
 
     public void bookAnAppointmentPatient() {
         chooseBookDoctorScreen = new ChooseBookDoctorScreen(this);
+        chooseBookDoctorScreen.displayDoctors(patientManager.getDoctors());
         welcomePatientScreen.dispose();
     }
 
@@ -611,6 +617,7 @@ public class Controller implements PropertyChangeListener {
 
     public void handleBackFromChooseBookDoctorScreen() {
         welcomePatientScreen = new WelcomePatientScreen(this);
+        chooseBookDoctorScreen.displayDoctors(patientManager.getDoctors());
         chooseBookDoctorScreen.dispose();
     }
 

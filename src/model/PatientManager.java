@@ -6,12 +6,15 @@ import javax.swing.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PatientManager extends JFrame {
     private Controller controller;
     private Connection connection;
     private PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
     private Patient currentPatient;
+    private Doctor selectedDoctor;
     private Specialization selectedSpecialization;
 
     public PatientManager(Connection connection) {
@@ -62,8 +65,84 @@ public class PatientManager extends JFrame {
         }
     }
 
+    public List<Doctor> getDoctors() {
+        List<Doctor> doctors = new ArrayList<>();
+        String selectDoctorData = "SELECT * FROM public.doctor JOIN public.specialization ON doctor.id_specialization = specialization.id";
+        try {
+            PreparedStatement statement = connection.prepareStatement(selectDoctorData);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                int employerNr = resultSet.getInt("id");
+                String firstname = resultSet.getString("firstname");
+                String lastname = resultSet.getString("lastname");
+                String phone = resultSet.getString("phone");
+                int specializationId = resultSet.getInt("id_specialization");
+                String specializationName = resultSet.getString("name");
+                int visit_cost = resultSet.getInt("visit_cost");
+                Specialization specialization = new Specialization(specializationName, visit_cost);
+                specialization.setId(specializationId);
+                doctors.add(new Doctor(employerNr, firstname, lastname, phone, specialization));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return doctors;
+    }
 
-    public void subscribeListener(PropertyChangeListener listener) {
+    public Patient getPatientInfo(String firstName, String lastName) {
+        Patient patient = null;
+        String selectQuery = "SELECT * FROM public.patient WHERE patient.firstname = ? AND patient.lastname = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(selectQuery)) {
+            preparedStatement.setString(1, firstName);
+            preparedStatement.setString(2, lastName);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    int id = resultSet.getInt("id");
+                    String firstname = resultSet.getString("firstname");
+                    String lastname = resultSet.getString("lastname");
+                    String gender = resultSet.getString("gender");
+                    String address = resultSet.getString("address");
+                    String phone = resultSet.getString("phone");
+                    String birthdate = resultSet.getDate("birthdate").toString();
+                    String regdate = resultSet.getDate("reg_date").toString();
+                    patient = new Patient(id, firstname, lastname, gender, address, phone, birthdate, regdate);
+                }
+            } catch (SQLException e) {
+                return patient;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return patient;
+    }
+
+    public Patient getPatientInfo(int patientId) {
+        Patient patient = null;
+        String selectQuery = "SELECT * FROM public.patient WHERE patient.id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(selectQuery)) {
+            preparedStatement.setInt(1, patientId);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    int id = resultSet.getInt("id");
+                    String firstname = resultSet.getString("firstname");
+                    String lastname = resultSet.getString("lastname");
+                    String gender = resultSet.getString("gender");
+                    String address = resultSet.getString("address");
+                    String phone = resultSet.getString("phone");
+                    String birthdate = resultSet.getDate("birthdate").toString();
+                    String regdate = resultSet.getDate("reg_date").toString();
+                    patient = new Patient(id, firstname, lastname, gender, address, phone, birthdate, regdate);
+                }
+            } catch (SQLException e) {
+                return patient;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return patient;
+    }
+
+        public void subscribeListener(PropertyChangeListener listener) {
         propertyChangeSupport.addPropertyChangeListener(listener);
     }
     public Patient getCurrentPatient() {
