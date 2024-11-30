@@ -1,9 +1,11 @@
 package view;
 
 import controller.Controller;
+import model.Patient;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
 public class PatientsScreen extends JFrame {
     private Controller controller;
@@ -50,5 +52,9 @@ public class PatientsScreen extends JFrame {
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    public void displayPatients(List<Patient> patients) {
+        patientsLst.setListData(patients.toArray());
     }
 }

@@ -281,6 +281,7 @@ public class Controller implements PropertyChangeListener {
     //Bellas code patient-part from admin
     public void handlePatients() {
         patientsScreen = new PatientsScreen(this);
+        patientsScreen.displayPatients(adminManager.getPatients());
         welcomeAdminScreen.dispose();
     }
 
@@ -296,6 +297,7 @@ public class Controller implements PropertyChangeListener {
 
     public void handleBackFromMedicalRecord() {
         patientsScreen = new PatientsScreen(this);
+        patientsScreen.displayPatients(adminManager.getPatients());
         medicalRecordsScreen.dispose();
     }
 
