@@ -1,9 +1,11 @@
 package view;
 
 import controller.Controller;
+import model.Doctor;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
 public class ChooseBookDoctorScreen extends JFrame {
     private Controller controller;
@@ -11,7 +13,7 @@ public class ChooseBookDoctorScreen extends JFrame {
     private JLabel titleLbl = new JLabel("Choose doctor to book");
     private JButton backBtn = new JButton("Back");
     private JButton bookTimeBtn = new JButton("Book a time");
-    private JList upcomingAppointmentsLst = new JList();
+    private JList doctorsLst = new JList();
 
     public ChooseBookDoctorScreen(Controller controller) {
         this.controller = controller;
@@ -25,20 +27,20 @@ public class ChooseBookDoctorScreen extends JFrame {
         springLayout.putConstraint(SpringLayout.NORTH, titleLbl, 10, SpringLayout.NORTH, mainPnl);
         springLayout.putConstraint(SpringLayout.WEST, titleLbl, 40, SpringLayout.WEST, mainPnl);
 
-        mainPnl.add(upcomingAppointmentsLst);
-        springLayout.putConstraint(SpringLayout.NORTH, upcomingAppointmentsLst, 100, SpringLayout.NORTH, mainPnl);
-        springLayout.putConstraint(SpringLayout.WEST, upcomingAppointmentsLst, 40, SpringLayout.WEST, mainPnl);
-        springLayout.putConstraint(SpringLayout.EAST, upcomingAppointmentsLst, -40, SpringLayout.EAST, mainPnl);
-        springLayout.putConstraint(SpringLayout.SOUTH, upcomingAppointmentsLst, -60, SpringLayout.SOUTH, mainPnl);
+        mainPnl.add(doctorsLst);
+        springLayout.putConstraint(SpringLayout.NORTH, doctorsLst, 100, SpringLayout.NORTH, mainPnl);
+        springLayout.putConstraint(SpringLayout.WEST, doctorsLst, 40, SpringLayout.WEST, mainPnl);
+        springLayout.putConstraint(SpringLayout.EAST, doctorsLst, -40, SpringLayout.EAST, mainPnl);
+        springLayout.putConstraint(SpringLayout.SOUTH, doctorsLst, -60, SpringLayout.SOUTH, mainPnl);
 
         mainPnl.add(backBtn);
-        springLayout.putConstraint(SpringLayout.NORTH, backBtn, 10, SpringLayout.SOUTH, upcomingAppointmentsLst);
-        springLayout.putConstraint(SpringLayout.WEST, backBtn, 0, SpringLayout.WEST, upcomingAppointmentsLst);
+        springLayout.putConstraint(SpringLayout.NORTH, backBtn, 10, SpringLayout.SOUTH, doctorsLst);
+        springLayout.putConstraint(SpringLayout.WEST, backBtn, 0, SpringLayout.WEST, doctorsLst);
         backBtn.addActionListener(e -> controller.handleBackFromChooseBookDoctorScreen());
 
         mainPnl.add(bookTimeBtn);
-        springLayout.putConstraint(SpringLayout.NORTH, bookTimeBtn, 10, SpringLayout.SOUTH, upcomingAppointmentsLst);
-        springLayout.putConstraint(SpringLayout.EAST, bookTimeBtn, 0, SpringLayout.EAST, upcomingAppointmentsLst);
+        springLayout.putConstraint(SpringLayout.NORTH, bookTimeBtn, 10, SpringLayout.SOUTH, doctorsLst);
+        springLayout.putConstraint(SpringLayout.EAST, bookTimeBtn, 0, SpringLayout.EAST, doctorsLst);
         bookTimeBtn.addActionListener(e -> controller.handleBookATimeBtn());
 
         this.pack();
@@ -47,5 +49,9 @@ public class ChooseBookDoctorScreen extends JFrame {
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    public void displayDoctors(List<Doctor> doctors) {
+        doctorsLst.setListData(doctors.toArray());
     }
 }
