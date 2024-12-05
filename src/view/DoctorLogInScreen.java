@@ -5,7 +5,7 @@ import controller.Controller;
 import javax.swing.*;
 import java.awt.*;
 
-public class DoctorLogIn extends JFrame {
+public class DoctorLogInScreen extends JFrame {
     private Controller controller;
     private JPanel pnlMain = new JPanel();
     private JLabel lblLogInDoctor;
@@ -14,7 +14,7 @@ public class DoctorLogIn extends JFrame {
     private JButton btnBack;
     private JButton btnLogin;
 
-    public DoctorLogIn(Controller controller) {
+    public DoctorLogInScreen(Controller controller) {
         this.controller = controller;
         this.setTitle("Health Center");
         this.setContentPane(pnlMain);
@@ -50,7 +50,7 @@ public class DoctorLogIn extends JFrame {
         pnlMain.add(btnBack);
         springLayout.putConstraint(SpringLayout.NORTH, btnBack,20, SpringLayout.SOUTH, doctorIdTextField);
         springLayout.putConstraint(SpringLayout.WEST, btnBack, 100, SpringLayout.WEST, pnlMain);
-        btnBack.addActionListener(e -> controller.handleBackFromDoctorLoggedIn());
+        btnBack.addActionListener(e -> controller.handleBackFromDoctorLogInScreen());
 
         btnLogin = new JButton("Login");
         pnlMain.add(btnLogin);

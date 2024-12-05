@@ -211,7 +211,6 @@ public class AdminManager {
                 statement.setString(1, editedSpecialization.getName());
                 statement.setInt(2, editedSpecialization.getCost());
                 statement.setInt(3, editedSpecialization.getId());
-                statement.setInt(4, editedSpecialization.getId());
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
