@@ -54,4 +54,12 @@ public class ChooseBookDoctorScreen extends JFrame {
     public void displayDoctors(List<Doctor> doctors) {
         doctorsLst.setListData(doctors.toArray());
     }
+
+    public Doctor getSelectedDoctor() {
+        return (Doctor) doctorsLst.getSelectedValue();
+    }
+
+    public boolean isDoctorSelected() {
+        return doctorsLst.getSelectedIndex() != -1;
+    }
 }
