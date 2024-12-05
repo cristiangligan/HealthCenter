@@ -96,12 +96,12 @@ public class EditDoctorScreen extends JFrame {
         mainPnl.add(cancelBtn);
         springLayout.putConstraint(SpringLayout.NORTH, cancelBtn, 10, SpringLayout.SOUTH, lastNameField);
         springLayout.putConstraint(SpringLayout.WEST, cancelBtn, 0, SpringLayout.WEST, lastNameField);
-        cancelBtn.addActionListener(e -> controller.handleCancelFromEditDoctor());
+        cancelBtn.addActionListener(e -> controller.handleCancelEditDoctor());
 
         mainPnl.add(saveBtn);
         springLayout.putConstraint(SpringLayout.NORTH, saveBtn, 0, SpringLayout.NORTH, cancelBtn);
         springLayout.putConstraint(SpringLayout.EAST, saveBtn, 0, SpringLayout.EAST, specializationField);
-        saveBtn.addActionListener(e -> controller.handleEditedDoctor());
+        saveBtn.addActionListener(e -> controller.handleSaveEditedDoctor());
 
         employerNrField.setText(String.valueOf(doctor.getEmployerNr()));
         firstNameField.setText(String.valueOf(doctor.getFirstName()));

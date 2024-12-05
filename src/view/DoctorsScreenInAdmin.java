@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-public class DoctorsScreen extends JFrame {
+public class DoctorsScreenInAdmin extends JFrame {
     private Controller controller;
     private JPanel mainPnl = new JPanel();
     private JLabel titleLbl = new JLabel("Doctors");
@@ -18,7 +18,7 @@ public class DoctorsScreen extends JFrame {
     private JList doctorsLst = new JList();
     private JScrollPane scrollPane = new JScrollPane(doctorsLst);
 
-    public DoctorsScreen(Controller controller) {
+    public DoctorsScreenInAdmin(Controller controller) {
         this.controller = controller;
         this.setTitle("Health Center");
         this.setContentPane(mainPnl);
