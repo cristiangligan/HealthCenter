@@ -4,8 +4,10 @@ import controller.Controller;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
-public class ScheduleScreen extends JFrame {
+public class PatientScheduleScreen extends JFrame {
     private Controller controller;
     private JPanel mainPnl = new JPanel();
     private JLabel titleLbl = new JLabel("Schedule");
@@ -43,7 +45,7 @@ public class ScheduleScreen extends JFrame {
 
     private JButton backBtn = new JButton("Back");
 
-    public ScheduleScreen(Controller controller) {
+    public PatientScheduleScreen(Controller controller) {
         this.controller = controller;
         this.setTitle("Health Center");
         this.setContentPane(mainPnl);
@@ -61,105 +63,126 @@ public class ScheduleScreen extends JFrame {
 
         mainPnl.add(monday9Btn);
         monday9Btn.setPreferredSize(new Dimension(108, 40));
+        monday9Btn.setBackground(Color.RED);
         springLayout.putConstraint(SpringLayout.NORTH, monday9Btn, 100, SpringLayout.NORTH, mainPnl);
         springLayout.putConstraint(SpringLayout.WEST, monday9Btn, 10, SpringLayout.WEST, mainPnl);
+        monday9Btn.addActionListener(e -> controller.handleBookAnAppointment(monday9Btn));
 
         mainPnl.add(monday10Btn);
         monday10Btn.setPreferredSize(new Dimension(108, 40));
+        monday10Btn.setBackground(Color.RED);
         springLayout.putConstraint(SpringLayout.NORTH, monday10Btn, 10, SpringLayout.SOUTH, monday9Btn);
         springLayout.putConstraint(SpringLayout.WEST, monday10Btn, 0, SpringLayout.WEST, monday9Btn);
 
         mainPnl.add(monday11Btn);
         monday11Btn.setPreferredSize(new Dimension(108, 40));
+        monday11Btn.setBackground(Color.RED);
         springLayout.putConstraint(SpringLayout.NORTH, monday11Btn, 10, SpringLayout.SOUTH, monday10Btn);
         springLayout.putConstraint(SpringLayout.WEST, monday11Btn, 0, SpringLayout.WEST, monday10Btn);
 
         mainPnl.add(monday13Btn);
         monday13Btn.setPreferredSize(new Dimension(108, 40));
+        monday13Btn.setBackground(Color.RED);
         springLayout.putConstraint(SpringLayout.NORTH, monday13Btn, 10, SpringLayout.SOUTH, monday11Btn);
         springLayout.putConstraint(SpringLayout.WEST, monday13Btn, 0, SpringLayout.WEST, monday11Btn);
 
 
         mainPnl.add(tuesday9Btn);
         tuesday9Btn.setPreferredSize(new Dimension(108, 40));
+        tuesday9Btn.setBackground(Color.ORANGE);
         springLayout.putConstraint(SpringLayout.NORTH, tuesday9Btn, 0, SpringLayout.NORTH, monday9Btn);
         springLayout.putConstraint(SpringLayout.WEST, tuesday9Btn, 10, SpringLayout.EAST, monday9Btn);
 
         mainPnl.add(tuesday10Btn);
         tuesday10Btn.setPreferredSize(new Dimension(108, 40));
+        tuesday10Btn.setBackground(Color.ORANGE);
         springLayout.putConstraint(SpringLayout.NORTH, tuesday10Btn, 10, SpringLayout.SOUTH, tuesday9Btn);
         springLayout.putConstraint(SpringLayout.WEST, tuesday10Btn, 0, SpringLayout.WEST, tuesday9Btn);
 
         mainPnl.add(tuesday11Btn);
         tuesday11Btn.setPreferredSize(new Dimension(108, 40));
+        tuesday11Btn.setBackground(Color.ORANGE);
         springLayout.putConstraint(SpringLayout.NORTH, tuesday11Btn, 10, SpringLayout.SOUTH, tuesday10Btn);
         springLayout.putConstraint(SpringLayout.WEST, tuesday11Btn, 0, SpringLayout.WEST, tuesday10Btn);
 
         mainPnl.add(tuesday13Btn);
         tuesday13Btn.setPreferredSize(new Dimension(108, 40));
+        tuesday13Btn.setBackground(Color.ORANGE);
         springLayout.putConstraint(SpringLayout.NORTH, tuesday13Btn, 10, SpringLayout.SOUTH, tuesday11Btn);
         springLayout.putConstraint(SpringLayout.WEST, tuesday13Btn, 0, SpringLayout.WEST, tuesday11Btn);
 
 
         mainPnl.add(wednesday9Btn);
         wednesday9Btn.setPreferredSize(new Dimension(108, 40));
+        wednesday9Btn.setBackground(Color.YELLOW);
         springLayout.putConstraint(SpringLayout.NORTH, wednesday9Btn, 0, SpringLayout.NORTH, tuesday9Btn);
         springLayout.putConstraint(SpringLayout.WEST, wednesday9Btn, 10, SpringLayout.EAST, tuesday9Btn);
 
         mainPnl.add(wednesday10Btn);
         wednesday10Btn.setPreferredSize(new Dimension(108, 40));
+        wednesday10Btn.setBackground(Color.YELLOW);
         springLayout.putConstraint(SpringLayout.NORTH, wednesday10Btn, 10, SpringLayout.SOUTH, wednesday9Btn);
         springLayout.putConstraint(SpringLayout.WEST, wednesday10Btn, 0, SpringLayout.WEST, wednesday9Btn);
 
         mainPnl.add(wednesday11Btn);
         wednesday11Btn.setPreferredSize(new Dimension(108, 40));
+        wednesday11Btn.setBackground(Color.YELLOW);
         springLayout.putConstraint(SpringLayout.NORTH, wednesday11Btn, 10, SpringLayout.SOUTH, wednesday10Btn);
         springLayout.putConstraint(SpringLayout.WEST, wednesday11Btn, 0, SpringLayout.WEST, wednesday10Btn);
 
         mainPnl.add(wednesday13Btn);
         wednesday13Btn.setPreferredSize(new Dimension(108, 40));
+        wednesday13Btn.setBackground(Color.YELLOW);
         springLayout.putConstraint(SpringLayout.NORTH, wednesday13Btn, 10, SpringLayout.SOUTH, wednesday11Btn);
         springLayout.putConstraint(SpringLayout.WEST, wednesday13Btn, 0, SpringLayout.WEST, wednesday11Btn);
 
 
         mainPnl.add(thursday9Btn);
         thursday9Btn.setPreferredSize(new Dimension(108, 40));
+        thursday9Btn.setBackground(Color.GREEN);
         springLayout.putConstraint(SpringLayout.NORTH, thursday9Btn, 0, SpringLayout.NORTH, wednesday9Btn);
         springLayout.putConstraint(SpringLayout.WEST, thursday9Btn, 10, SpringLayout.EAST, wednesday9Btn);
 
         mainPnl.add(thursday10Btn);
         thursday10Btn.setPreferredSize(new Dimension(108, 40));
+        thursday10Btn.setBackground(Color.GREEN);
         springLayout.putConstraint(SpringLayout.NORTH, thursday10Btn, 10, SpringLayout.SOUTH, thursday9Btn);
         springLayout.putConstraint(SpringLayout.WEST, thursday10Btn, 0, SpringLayout.WEST, thursday9Btn);
 
         mainPnl.add(thursday11Btn);
         thursday11Btn.setPreferredSize(new Dimension(108, 40));
+        thursday11Btn.setBackground(Color.GREEN);
         springLayout.putConstraint(SpringLayout.NORTH, thursday11Btn, 10, SpringLayout.SOUTH, thursday10Btn);
         springLayout.putConstraint(SpringLayout.WEST, thursday11Btn, 0, SpringLayout.WEST, thursday10Btn);
 
         mainPnl.add(thursday13Btn);
         thursday13Btn.setPreferredSize(new Dimension(108, 40));
+        thursday13Btn.setBackground(Color.GREEN);
         springLayout.putConstraint(SpringLayout.NORTH, thursday13Btn, 10, SpringLayout.SOUTH, thursday11Btn);
         springLayout.putConstraint(SpringLayout.WEST, thursday13Btn, 0, SpringLayout.WEST, thursday11Btn);
 
 
         mainPnl.add(friday9Btn);
         friday9Btn.setPreferredSize(new Dimension(108, 40));
+        friday9Btn.setBackground(Color.BLUE);
         springLayout.putConstraint(SpringLayout.NORTH, friday9Btn, 0, SpringLayout.NORTH, thursday9Btn);
         springLayout.putConstraint(SpringLayout.WEST, friday9Btn, 10, SpringLayout.EAST, thursday9Btn);
 
         mainPnl.add(friday10Btn);
         friday10Btn.setPreferredSize(new Dimension(108, 40));
+        friday10Btn.setBackground(Color.BLUE);
         springLayout.putConstraint(SpringLayout.NORTH, friday10Btn, 10, SpringLayout.SOUTH, friday9Btn);
         springLayout.putConstraint(SpringLayout.WEST, friday10Btn, 0, SpringLayout.WEST, friday9Btn);
 
         mainPnl.add(friday11Btn);
         friday11Btn.setPreferredSize(new Dimension(108, 40));
+        friday11Btn.setBackground(Color.BLUE);
         springLayout.putConstraint(SpringLayout.NORTH, friday11Btn, 10, SpringLayout.SOUTH, friday10Btn);
         springLayout.putConstraint(SpringLayout.WEST, friday11Btn, 0, SpringLayout.WEST, friday10Btn);
 
         mainPnl.add(friday13Btn);
         friday13Btn.setPreferredSize(new Dimension(108, 40));
+        friday13Btn.setBackground(Color.BLUE);
         springLayout.putConstraint(SpringLayout.NORTH, friday13Btn, 10, SpringLayout.SOUTH, friday11Btn);
         springLayout.putConstraint(SpringLayout.WEST, friday13Btn, 0, SpringLayout.WEST, friday11Btn);
 
@@ -204,5 +227,19 @@ public class ScheduleScreen extends JFrame {
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    public List<JButton> getButtonList() {
+        List<JButton> buttons = new ArrayList<>();
+        Component[] components = mainPnl.getComponents();
+        for(int i = 0; i < components.length; i++) {
+            if (components[i] instanceof JButton) {
+                JButton button = (JButton) components[i];
+                if (!button.getText().equals("Back")) {
+                    buttons.add(button);
+                }
+            }
+        }
+        return buttons;
     }
 }

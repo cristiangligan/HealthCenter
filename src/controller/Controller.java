@@ -3,7 +3,6 @@ package controller;
 import model.*;
 import view.*;
 
-import javax.print.Doc;
 import javax.swing.*;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
@@ -11,9 +10,8 @@ import java.beans.PropertyChangeListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.Objects;
 
 public class Controller implements PropertyChangeListener {
     private Connection connection;
@@ -35,7 +33,7 @@ public class Controller implements PropertyChangeListener {
     private RegisterNewPatientScreen registerNewPatientScreen;
     private WelcomePatientScreen welcomePatientScreen;
     private ChooseBookDoctorScreen chooseBookDoctorScreen;
-    private ScheduleScreen scheduleScreen;
+    private PatientScheduleScreen patientScheduleScreen;
     private WelcomeDoctorScreen welcomeDoctorScreen;
     private EditDoctorScreen editDoctorScreen;
     private DoctorManager doctorManager;
@@ -611,8 +609,18 @@ public class Controller implements PropertyChangeListener {
     }
 
     public void handleBookATimeBtn() {
-        scheduleScreen = new ScheduleScreen(this);
-        chooseBookDoctorScreen.dispose();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        //if(cal.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY) {
+            if(chooseBookDoctorScreen.isDoctorSelected()) {
+                patientManager.setSelectedDoctor(chooseBookDoctorScreen.getSelectedDoctor());
+                patientScheduleScreen = new PatientScheduleScreen(this);
+                chooseBookDoctorScreen.dispose();
+                ArrayList<JButton> buttons = (ArrayList<JButton>) patientScheduleScreen.getButtonList();
+            }
+       // } else {
+        //    JOptionPane.showMessageDialog(null, "You can only book appointments on fridays for the upcoming week.");
+        //}
     }
 
     public void handleBackFromChooseBookDoctorScreen() {
@@ -623,7 +631,7 @@ public class Controller implements PropertyChangeListener {
 
     public void handleBackFromScheduleScreen() {
         chooseBookDoctorScreen = new ChooseBookDoctorScreen(this);
-        scheduleScreen.dispose();
+        patientScheduleScreen.dispose();
     }
 /*
     //hur gör vi med denna?
@@ -668,5 +676,30 @@ public class Controller implements PropertyChangeListener {
 
     public static void main(String[] args) {
       Controller controller = new Controller();
+    }
+
+    public void handleBookAnAppointment(JButton button) {
+        String time = button.getText();
+        String day = null;
+        if (button.getBackground() == Color.RED) {
+            day = "monday";
+        } else if (button.getBackground() == Color.ORANGE) {
+            day = "tuesday";
+        } else if (button.getBackground() == Color.YELLOW) {
+            day = "wednesday";
+        } else if (button.getBackground() == Color.GREEN) {
+            day = "thursday";
+        } else if (button.getBackground() == Color.BLUE) {
+            day = "friday";
+        }
+        int patientId = patientManager.getCurrentPatient().getPatientMedicalId();
+        int doctorId = patientManager.getSelectedDoctor().getEmployerNr();
+
+        Appointment appointment = new Appointment(day, time, doctorId, patientId);
+        int answer = JOptionPane.showConfirmDialog(null,
+            "Book an appointment on" + day + ": " + time, "HealthCenter", JOptionPane.YES_NO_OPTION);
+        if (answer == 0) {
+            patientManager.bookAppointment(appointment);
+        }
     }
 }

@@ -14,6 +14,7 @@ public class PatientManager extends JFrame {
     private Connection connection;
     private PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
     private Patient currentPatient;
+
     private Doctor selectedDoctor;
     private Specialization selectedSpecialization;
 
@@ -150,5 +151,39 @@ public class PatientManager extends JFrame {
     }
     public void setCurrentPatient(Patient patient) {
         this.currentPatient = patient;
+    }
+
+    public void setSelectedDoctor(Doctor selectedDoctor) {
+        this.selectedDoctor = selectedDoctor;
+    }
+
+    public Doctor getSelectedDoctor() {
+        return selectedDoctor;
+    }
+
+    public void bookAppointment(Appointment appointment) {
+        if (appointment != null) {
+            String insertQuery = "INSERT INTO public.appointment (id_doctor, id_patient, day, time) VALUES (?, ?, ?, ?)";
+            try {
+                PreparedStatement statement = connection.prepareStatement(insertQuery);
+                int id_doctor = appointment.getDoctorId();
+                int id_patient = appointment.getPatientId();
+                String day = appointment.getDay();
+                String time = appointment.getTime();
+                statement.setInt(1, id_doctor);
+                statement.setInt(2, id_patient);
+                statement.setString(3, day);
+                statement.setString(4, time);
+                int rowCount = statement.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    public boolean existAppointmentWithDoctor() {
+        boolean exist = false;
+
+        return exist;
     }
 }
