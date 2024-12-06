@@ -1,19 +1,18 @@
 package model;
 
-import java.sql.Time;
 import java.util.Date;
 
 public class Appointment {
 
     private int id;
-    private String day;
+    private String date;
     private String time;
     private int doctorId;
     private int patientId;
 
 
-    public Appointment(String day, String time, int doctorId, int patientId) {
-        this.day = day;
+    public Appointment(int doctorId, int patientId, String time, String date) {
+        this.date = date;
         this.time = time;
         this.doctorId = doctorId;
         this.patientId = patientId;
@@ -23,12 +22,12 @@ public class Appointment {
         this.id = id;
     }
 
-    public String getDay() {
-        return day;
+    public String getDate() {
+        return date;
     }
 
-    public void setDay(String day) {
-        this.day = day;
+    public void setDay(String date) {
+        this.date = date;
     }
 
     public String getTime() {

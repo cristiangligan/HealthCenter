@@ -10,6 +10,8 @@ import java.beans.PropertyChangeListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
 
@@ -677,25 +679,52 @@ public class Controller implements PropertyChangeListener {
     public void handleBookAnAppointment(JButton button) {
         String time = button.getText();
         String day = null;
+        Color dayColor = Color.LIGHT_GRAY;
+        String date;
+
         if (button.getBackground() == Color.RED) {
             day = "monday";
+            dayColor = Color.RED;
         } else if (button.getBackground() == Color.ORANGE) {
             day = "tuesday";
+            dayColor = Color.ORANGE;
         } else if (button.getBackground() == Color.YELLOW) {
             day = "wednesday";
+            dayColor = Color.YELLOW;
         } else if (button.getBackground() == Color.GREEN) {
             day = "thursday";
+            dayColor = Color.GREEN;
         } else if (button.getBackground() == Color.BLUE) {
             day = "friday";
+            dayColor = Color.BLUE;
         }
+
+        Calendar calendar = Calendar.getInstance();
+        if (day != null && day.equals("monday")) {
+            calendar.add(Calendar.DAY_OF_WEEK, 3);
+        } else if (day != null && day.equals("tuesday")) {
+            calendar.add(Calendar.DAY_OF_WEEK, 4);
+        } else if (day != null && day.equals("wednesday")) {
+            calendar.add(Calendar.DAY_OF_WEEK, 5);
+        } else if (day != null && day.equals("thursday")) {
+            calendar.add(Calendar.DAY_OF_WEEK, 6);
+        } else if (day != null && day.equals("friday")) {
+            calendar.add(Calendar.DAY_OF_WEEK, 7);
+        }
+
+        Date currentDate = calendar.getTime();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        date = simpleDateFormat.format(currentDate);
+
         int patientId = patientManager.getCurrentPatient().getPatientMedicalId();
         int doctorId = patientManager.getSelectedDoctor().getEmployerNr();
 
-        Appointment appointment = new Appointment(day, time, doctorId, patientId);
+        Appointment appointment = new Appointment(doctorId, patientId, time, date);
         int answer = JOptionPane.showConfirmDialog(null,
-            "Book an appointment on" + day + ": " + time, "HealthCenter", JOptionPane.YES_NO_OPTION);
+            "Book an appointment on " + date + ": " + time, "HealthCenter", JOptionPane.YES_NO_OPTION);
         if (answer == 0) {
             patientManager.bookAppointment(appointment);
+            patientScheduleScreen.setButtonsAvailability(dayColor, time);
         }
     }
 
@@ -708,6 +737,33 @@ public class Controller implements PropertyChangeListener {
             if(chooseBookDoctorScreen.isDoctorSelected()) {
                 patientManager.setSelectedDoctor(chooseBookDoctorScreen.getSelectedDoctor());
                 patientScheduleScreen = new PatientScheduleScreen(this);
+                cal.add(Calendar.WEEK_OF_YEAR, 1);
+                patientScheduleScreen.setWeekDoctorLbl(String.valueOf(cal.get(Calendar.WEEK_OF_YEAR)), patientManager.getSelectedDoctor().toString());
+                Appointment appointment = patientManager.existAppointmentWithDoctor(patientManager.getCurrentPatient(), patientManager.getSelectedDoctor());
+                if(appointment != null) {
+                    Color dayColor = null;
+                    String dateString = appointment.getDate();
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    try {
+                        Date date = simpleDateFormat.parse(dateString);
+                        cal.setTime(date);
+                        int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+                        if(dayOfWeek == 2) {
+                            dayColor = Color.RED;
+                        } else if (dayOfWeek == 3) {
+                            dayColor = Color.ORANGE;
+                        } else if (dayOfWeek == 4) {
+                            dayColor = Color.YELLOW;
+                        } else if (dayOfWeek == 5) {
+                            dayColor = Color.GREEN;
+                        } else if (dayOfWeek == 6) {
+                            dayColor = Color.BLUE;
+                        }
+                        patientScheduleScreen.setButtonsAvailability(dayColor, appointment.getTime());
+                    } catch (ParseException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
                 chooseBookDoctorScreen.dispose();
                 ArrayList<JButton> buttons = (ArrayList<JButton>) patientScheduleScreen.getButtonList();
             }
@@ -720,6 +776,7 @@ public class Controller implements PropertyChangeListener {
 
     public void handleBackFromChooseBookDoctorScreen() {
         welcomePatientScreen = new WelcomePatientScreen(this);
+        patientManager.setSelectedDoctor(null);
         chooseBookDoctorScreen.displayDoctors(patientManager.getDoctors());
         chooseBookDoctorScreen.dispose();
     }
@@ -728,6 +785,7 @@ public class Controller implements PropertyChangeListener {
 
     public void handleBackFromScheduleScreen() {
         chooseBookDoctorScreen = new ChooseBookDoctorScreen(this);
+        chooseBookDoctorScreen.displayDoctors(patientManager.getDoctors());
         patientScheduleScreen.dispose();
     }
     //------------------------------------------PATIENT - END--------------------------------------------------------

@@ -163,17 +163,17 @@ public class PatientManager extends JFrame {
 
     public void bookAppointment(Appointment appointment) {
         if (appointment != null) {
-            String insertQuery = "INSERT INTO public.appointment (id_doctor, id_patient, day, time) VALUES (?, ?, ?, ?)";
+            String insertQuery = "INSERT INTO public.appointment (id_doctor, id_patient, time, date) VALUES (?, ?, ?, ?)";
             try {
                 PreparedStatement statement = connection.prepareStatement(insertQuery);
                 int id_doctor = appointment.getDoctorId();
                 int id_patient = appointment.getPatientId();
-                String day = appointment.getDay();
                 String time = appointment.getTime();
+                String date = appointment.getDate();
                 statement.setInt(1, id_doctor);
                 statement.setInt(2, id_patient);
-                statement.setString(3, day);
-                statement.setString(4, time);
+                statement.setString(3, time);
+                statement.setString(4, date);
                 int rowCount = statement.executeUpdate();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
@@ -181,9 +181,27 @@ public class PatientManager extends JFrame {
         }
     }
 
-    public boolean existAppointmentWithDoctor() {
-        boolean exist = false;
-
-        return exist;
+    public Appointment existAppointmentWithDoctor(Patient currentPatient, Doctor selectedDoctor) {
+        Appointment appointment = null;
+        String selectQuery = "SELECT * FROM public.appointment WHERE appointment.id_patient = ? AND appointment.id_doctor = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(selectQuery)) {
+            preparedStatement.setInt(1, currentPatient.getPatientMedicalId());
+            preparedStatement.setInt(2, selectedDoctor.getEmployerNr());
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    int id = resultSet.getInt("id");
+                    int patientId = resultSet.getInt("id_patient");
+                    int doctorId = resultSet.getInt("id_doctor");
+                    String time = resultSet.getString("time");
+                    String date = resultSet.getString("date");
+                    appointment = new Appointment(doctorId, patientId, time, date);
+                }
+            } catch (SQLException e) {
+                return appointment;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return appointment;
     }
 }
