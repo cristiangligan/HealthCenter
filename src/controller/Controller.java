@@ -3,9 +3,7 @@ package controller;
 import model.*;
 import view.*;
 
-import javax.print.Doc;
 import javax.swing.*;
-import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.sql.Connection;
@@ -13,7 +11,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class Controller implements PropertyChangeListener {
     private Connection connection;
@@ -41,10 +38,9 @@ public class Controller implements PropertyChangeListener {
     private DoctorManager doctorManager;
     private PatientManager patientManager;
 
-
-    /*
+    //nytt
     private EditInfoPatientScreen editInfoPatientScreen;
-    */
+    private ViewMyInfoPatient viewMyInfoPatient;
 
     public Controller() {
         logInScreen = new LogInScreen(this);
@@ -138,11 +134,10 @@ public class Controller implements PropertyChangeListener {
                 welcomePatientScreen = new WelcomePatientScreen(this);
                 welcomePatientScreen.setWelcomePatient(patient.toString());
                 patientLogIn.dispose();
-                System.out.println(patientManager.getCurrentPatient());
+                System.out.println(patientManager.getLoggedInPatient());
             } else {
                 JOptionPane.showMessageDialog(null, "Incorrect medical number. Please try again.");
                 patientLogIn.clearFields();
-                ;
             }
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Medical number must be a valid number. Please try again.");
@@ -249,7 +244,7 @@ public class Controller implements PropertyChangeListener {
 
     }
 
-    public void viewMyScedule() {
+    public void viewMySchedule() {
     }
 
     public void viewMyAppointments() {
@@ -280,7 +275,6 @@ public class Controller implements PropertyChangeListener {
         welcomeAdminScreen.dispose();
     }
 
-    //Bellas code patient-part from admin
     public void handlePatients() {
         patientsScreen = new PatientsScreen(this);
         patientsScreen.displayPatients(adminManager.getPatients());
@@ -578,10 +572,11 @@ public class Controller implements PropertyChangeListener {
         }
     }
 
+    /*
     public void handleCancelEditSpecialization() {
 
     }
-
+     */
 
     public void handleCancelNewEditSpecialization() {
         specializationsScreen = new SpecializationsScreen(this);
@@ -600,15 +595,99 @@ public class Controller implements PropertyChangeListener {
         patientLogIn.dispose();
     }
 
-    public void viewInfoPatient() {
+
+    public void handleViewMyInfoPatient() {
+        Patient loggedInPatient = patientManager.getLoggedInPatient(); //hämtar den inloggade patienten
+        if (loggedInPatient != null) {
+            viewMyInfoPatient = new ViewMyInfoPatient(this);
+            viewMyInfoPatient.displayMyInfoPatient(loggedInPatient);
+            welcomePatientScreen.dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "Error, no patient is currently logged in.");
+        }
+    }
+
+    public void handleEditMyInfoButton() {
+        Patient loggedInPatient = patientManager.getLoggedInPatient();
+        if (loggedInPatient != null) {
+            editInfoPatientScreen = new EditInfoPatientScreen(this);
+            editInfoPatientScreen.displayEditMyInfo(loggedInPatient);
+            viewMyInfoPatient.dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "Error: No patient is currently logged in.");
+        }
+    }
+
+    public void handleBackFromMyInfo() {
+        welcomePatientScreen = new WelcomePatientScreen(this);
+        viewMyInfoPatient.dispose();
+    }
+
+    public void handleCancelFromEditMyInfo() {
+        if (editInfoPatientScreen != null) {
+            editInfoPatientScreen.dispose();
+            viewMyInfoPatient = new ViewMyInfoPatient(this);
+            Patient loggedInPatient = patientManager.getLoggedInPatient();
+            viewMyInfoPatient.displayMyInfoPatient(loggedInPatient);
+        }
+    }
+
+    public void handleSaveEditedPatientInfo() {
+        String editedFirstName = editInfoPatientScreen.getFirstName();
+        String editedLastName = editInfoPatientScreen.getLastName();
+        String editedAddress = editInfoPatientScreen.getAddress();
+        String editedPhone = editInfoPatientScreen.getPhone();
+        String editedBirthDate = editInfoPatientScreen.getBirthDate();
+        String editedGender = editInfoPatientScreen.getGender();
+
+        if (editedFirstName == null || editedFirstName.isBlank() || editedLastName == null || editedLastName.isBlank() || editedAddress == null || editedAddress.isBlank() || editedPhone == null || editedPhone.isBlank() || editedBirthDate == null || editedBirthDate.isBlank() || editedGender == null || editedGender.isBlank()) {
+            JOptionPane.showMessageDialog(null, "Please fill in all required fields.");
+            return;
+        }
+
+        if (!editedPhone.matches("\\d+") ) {
+            JOptionPane.showMessageDialog(null, "Phone number must contain only digits.");
+            return;
+        }
+
+        Patient loggedInPatient = patientManager.getLoggedInPatient();
+        if (loggedInPatient == null) {
+            JOptionPane.showMessageDialog(null, "No patient is currently logged in.");
+            return;
+        }
+
+        loggedInPatient.setFirstName(editedFirstName);
+        loggedInPatient.setLastName(editedLastName);
+        loggedInPatient.setGender(editedGender);
+        loggedInPatient.setAddress(editedAddress);
+        loggedInPatient.setPhone(editedPhone);
+        loggedInPatient.setBirthDate(editedBirthDate);
+
+        boolean success = false;
+        try {
+            success = patientManager.updatePatientInfo(loggedInPatient);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        if (success) {
+            JOptionPane.showMessageDialog(null, "Patient information successfully updated");
+            viewMyInfoPatient = new ViewMyInfoPatient(this);
+            viewMyInfoPatient.displayMyInfoPatient(loggedInPatient);
+            editInfoPatientScreen.dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "Error updating patient information. Please try again.");
+        }
 
     }
+
 
     public void bookAnAppointmentPatient() {
         chooseBookDoctorScreen = new ChooseBookDoctorScreen(this);
         chooseBookDoctorScreen.displayDoctors(patientManager.getDoctors());
         welcomePatientScreen.dispose();
     }
+
 
     public void handleBookATimeBtn() {
         scheduleScreen = new ScheduleScreen(this);
