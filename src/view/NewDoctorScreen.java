@@ -94,7 +94,7 @@ public class NewDoctorScreen extends JFrame {
         mainPnl.add(cancelBtn);
         springLayout.putConstraint(SpringLayout.NORTH, cancelBtn, 10, SpringLayout.SOUTH, lastNameField);
         springLayout.putConstraint(SpringLayout.WEST, cancelBtn, 0, SpringLayout.WEST, lastNameField);
-        cancelBtn.addActionListener(e -> controller.handleCancelNewEditDoctor());
+        cancelBtn.addActionListener(e -> controller.handleCancelNewDoctor());
 
         mainPnl.add(saveBtn);
         springLayout.putConstraint(SpringLayout.NORTH, saveBtn, 0, SpringLayout.NORTH, cancelBtn);
