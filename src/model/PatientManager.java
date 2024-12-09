@@ -143,10 +143,32 @@ public class PatientManager extends JFrame {
         return patient;
     }
 
-        public void subscribeListener(PropertyChangeListener listener) {
+    public boolean updatePatientInfo(Patient patient) throws SQLException {
+        String selectQuery = "UPDATE public.patient SET firstname = ?, lastname = ?, gender = ?, address = ? , phone = ?, birthdate = ? WHERE id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(selectQuery)) {
+            preparedStatement.setString(1, patient.getFirstName());
+            preparedStatement.setString(2, patient.getLastName());
+            preparedStatement.setString(3, patient.getGender());
+            preparedStatement.setString(4, patient.getAddress());
+            preparedStatement.setString(5, patient.getPhone());
+            preparedStatement.setDate(6, java.sql.Date.valueOf(patient.getBirthDate()));
+            preparedStatement.setInt(7, patient.getPatientMedicalId());
+
+            int rowsUpdated = preparedStatement.executeUpdate();
+            if (rowsUpdated > 0) {
+                setCurrentPatient(patient);
+                return true;
+            }
+        } catch (SQLException e) {
+            System.out.println("Error updating patient info: " + e.getMessage());
+        }
+        return false;
+    }
+
+    public void subscribeListener(PropertyChangeListener listener) {
         propertyChangeSupport.addPropertyChangeListener(listener);
     }
-    public Patient getCurrentPatient() {
+    public Patient getLoggedInPatient() {
         return currentPatient;
     }
     public void setCurrentPatient(Patient patient) {
@@ -203,5 +225,9 @@ public class PatientManager extends JFrame {
             throw new RuntimeException(e);
         }
         return appointment;
+    }
+
+    public Patient getCurrentPatient() {
+        return currentPatient;
     }
 }

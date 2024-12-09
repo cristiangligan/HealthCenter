@@ -6,10 +6,11 @@ import model.Patient;
 import javax.swing.*;
 import java.awt.*;
 
-public class EditInfoPatientScreen extends JFrame {
+public class ViewMyInfoPatient extends JFrame {
+
     private Controller controller;
     private JPanel mainPnl = new JPanel();
-    private JLabel titleLbl = new JLabel("Edit my info");
+    private JLabel titleLbl = new JLabel("My info");
     private JLabel firstNameLbl = new JLabel("First name");
     private JLabel lastNameLbl = new JLabel("Last name");
     private JLabel addressLbl = new JLabel("Address");
@@ -30,10 +31,10 @@ public class EditInfoPatientScreen extends JFrame {
     private JTextField medicalNumField = new JTextField();
     private JTextField registerDateField = new JTextField();
 
-    private JButton cancelBtn = new JButton("Cancel");
-    private JButton saveBtn = new JButton("Save");
+    private JButton backBtn = new JButton("Back");
+    private JButton editBtn = new JButton("Edit info");
 
-    public EditInfoPatientScreen(Controller controller) {
+    public ViewMyInfoPatient(Controller controller) {
         this.controller = controller;
         this.setTitle("Health Center");
         this.setContentPane(mainPnl);
@@ -49,31 +50,38 @@ public class EditInfoPatientScreen extends JFrame {
         springLayout.putConstraint(SpringLayout.EAST, firstNameField, -320, SpringLayout.EAST, mainPnl);
         springLayout.putConstraint(SpringLayout.WEST, firstNameField, 20, SpringLayout.WEST, mainPnl);
         springLayout.putConstraint(SpringLayout.NORTH, firstNameField, 40, SpringLayout.SOUTH, titleLbl);
+        //firstNameField.setText();
+        firstNameField.setEditable(false);
 
         mainPnl.add(lastNameField);
         springLayout.putConstraint(SpringLayout.NORTH, lastNameField, 40, SpringLayout.SOUTH, firstNameField);
         springLayout.putConstraint(SpringLayout.WEST, lastNameField, 0, SpringLayout.WEST, firstNameField);
         springLayout.putConstraint(SpringLayout.EAST, lastNameField, 0, SpringLayout.EAST, firstNameField);
+        lastNameField.setEditable(false);
 
         mainPnl.add(addressField);
         springLayout.putConstraint(SpringLayout.NORTH, addressField, 40, SpringLayout.SOUTH, lastNameField);
         springLayout.putConstraint(SpringLayout.WEST, addressField, 0, SpringLayout.WEST, lastNameField);
         springLayout.putConstraint(SpringLayout.EAST, addressField, 0, SpringLayout.EAST, lastNameField);
+        addressField.setEditable(false);
 
         mainPnl.add(birthDateField);
         springLayout.putConstraint(SpringLayout.NORTH, birthDateField, 40, SpringLayout.SOUTH, addressField);
         springLayout.putConstraint(SpringLayout.WEST, birthDateField, 0, SpringLayout.WEST, addressField);
         springLayout.putConstraint(SpringLayout.EAST, birthDateField, 0, SpringLayout.EAST, addressField);
+        birthDateField.setEditable(false);
 
         mainPnl.add(phoneField);
         springLayout.putConstraint(SpringLayout.NORTH, phoneField, 40, SpringLayout.SOUTH, birthDateField);
         springLayout.putConstraint(SpringLayout.WEST, phoneField, 0, SpringLayout.WEST, birthDateField);
         springLayout.putConstraint(SpringLayout.EAST, phoneField, 0, SpringLayout.EAST, birthDateField);
+        phoneField.setEditable(false);
 
         mainPnl.add(genderField);
         springLayout.putConstraint(SpringLayout.NORTH, genderField, 40, SpringLayout.SOUTH, phoneField);
         springLayout.putConstraint(SpringLayout.WEST, genderField, 0, SpringLayout.WEST, phoneField);
         springLayout.putConstraint(SpringLayout.EAST, genderField, 0, SpringLayout.EAST, phoneField);
+        genderField.setEditable(false);
 
         mainPnl.add(medicalNumField);
         springLayout.putConstraint(SpringLayout.WEST, medicalNumField, 50, SpringLayout.EAST, firstNameField);
@@ -87,15 +95,15 @@ public class EditInfoPatientScreen extends JFrame {
         springLayout.putConstraint(SpringLayout.NORTH, registerDateField, 40, SpringLayout.SOUTH, medicalNumField);
         registerDateField.setEditable(false);
 
-        mainPnl.add(cancelBtn);
-        springLayout.putConstraint(SpringLayout.WEST, cancelBtn, 0, SpringLayout.WEST, titleLbl);
-        springLayout.putConstraint(SpringLayout.SOUTH, cancelBtn, -20, SpringLayout.SOUTH, mainPnl);
-        cancelBtn.addActionListener(e -> controller.handleCancelFromEditMyInfo());
+        mainPnl.add(backBtn);
+        springLayout.putConstraint(SpringLayout.WEST, backBtn, 0, SpringLayout.WEST, titleLbl);
+        springLayout.putConstraint(SpringLayout.SOUTH, backBtn, -20, SpringLayout.SOUTH, mainPnl);
+        backBtn.addActionListener(e -> controller.handleBackFromMyInfo());
 
-        mainPnl.add(saveBtn);
-        springLayout.putConstraint(SpringLayout.EAST, saveBtn, -20, SpringLayout.EAST, mainPnl);
-        springLayout.putConstraint(SpringLayout.SOUTH, saveBtn, -20, SpringLayout.SOUTH, mainPnl);
-        saveBtn.addActionListener(e -> controller.handleSaveEditedPatientInfo());
+        mainPnl.add(editBtn);
+        springLayout.putConstraint(SpringLayout.EAST, editBtn, -20, SpringLayout.EAST, mainPnl);
+        springLayout.putConstraint(SpringLayout.SOUTH, editBtn, -20, SpringLayout.SOUTH, mainPnl);
+        editBtn.addActionListener(e -> controller.handleEditMyInfoButton());
 
         mainPnl.add(firstNameLbl);
         springLayout.putConstraint(SpringLayout.WEST, firstNameLbl, 0, SpringLayout.WEST, firstNameField);
@@ -136,9 +144,9 @@ public class EditInfoPatientScreen extends JFrame {
         this.setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
-        }
+    }
 
-    public void displayEditMyInfo(Patient patient) {
+    public void displayMyInfoPatient(Patient patient) {
         medicalNumField.setText(Integer.toString(patient.getPatientMedicalId()));
         firstNameField.setText(patient.getFirstName());
         lastNameField.setText(patient.getLastName());
@@ -148,37 +156,5 @@ public class EditInfoPatientScreen extends JFrame {
         genderField.setText(patient.getGender());
         registerDateField.setText(patient.getRegistrationDate());
         medicalNumField.setText(Integer.toString(patient.getPatientMedicalId()));
-    }
-
-    public String getFirstName() {
-        return firstNameField.getText();
-    }
-
-    public String getLastName() {
-        return lastNameField.getText();
-    }
-
-    public String getAddress() {
-        return addressField.getText();
-    }
-
-    public String getPhone() {
-        return phoneField.getText();
-    }
-
-    public String getBirthDate() {
-        return birthDateField.getText();
-    }
-
-    public String getGender() {
-        return genderField.getText();
-    }
-
-    public String getMedicalNum() {
-        return medicalNumField.getText();
-    }
-
-    public String getRegisterDate() {
-        return registerDateField.getText();
     }
 }

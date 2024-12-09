@@ -38,6 +38,7 @@ public class WelcomePatientScreen extends JFrame {
         btnMyInfo.setHorizontalAlignment(SwingConstants.CENTER);
         btnMyInfo.setFont(new Font(Font.SERIF, Font.BOLD, 15));
         pnlMain.add(btnMyInfo);
+        btnMyInfo.addActionListener(e -> controller.handleViewMyInfoPatient());
 
         //sätt layout för admin-knapp
         springLayout.putConstraint(SpringLayout.NORTH, btnMyInfo, 120, SpringLayout.NORTH, pnlMain);
