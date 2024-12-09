@@ -226,4 +226,8 @@ public class PatientManager extends JFrame {
         }
         return appointment;
     }
+
+    public Patient getCurrentPatient() {
+        return currentPatient;
+    }
 }
