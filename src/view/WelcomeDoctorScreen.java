@@ -40,6 +40,7 @@ public class WelcomeDoctorScreen extends JFrame {
         btnMyPatients.setFont(new Font(Font.SERIF, Font.BOLD, 15));
         //btnAdmin.setOpaque(true);
         pnlMain.add(btnMyPatients);
+        btnMyPatients.addActionListener(e -> controller.viewMyPatients());
 
         //sätt layout för admin-knapp
         springLayout.putConstraint(SpringLayout.NORTH, btnMyPatients, 120, SpringLayout.NORTH, pnlMain);
