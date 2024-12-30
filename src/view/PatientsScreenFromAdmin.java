@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-public class PatientsScreen extends JFrame {
+public class PatientsScreenFromAdmin extends JFrame {
     private Controller controller;
     private JPanel mainPnl = new JPanel();
     private JLabel titleLbl = new JLabel("Patients");
@@ -17,7 +17,7 @@ public class PatientsScreen extends JFrame {
     //scroll-funktion för lista med patienter
     private JScrollPane scrollPane = new JScrollPane(patientsLst);
 
-    public PatientsScreen(Controller controller) {
+    public PatientsScreenFromAdmin(Controller controller) {
         this.controller = controller;
         this.setTitle("Health Center");
         this.setContentPane(mainPnl);
