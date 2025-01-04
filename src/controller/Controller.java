@@ -25,7 +25,8 @@ public class Controller implements PropertyChangeListener {
     private WelcomeAdminScreen welcomeAdminScreen;
     private DoctorsScreenInAdmin doctorsScreenInAdmin;
     private NewDoctorScreen newDoctorScreen;
-    private PatientsScreen patientsScreen;
+    private PatientsScreenFromAdmin patientsScreenFromAdmin;
+    private PatientsScreenFromDoctor patientsScreenFromDoctor;
     private SpecializationsScreen specializationsScreen;
     private AddSpecializationScreen addSpecializationScreen;
     private EditSpecializationScreen editSpecializationScreen;
@@ -245,6 +246,14 @@ public class Controller implements PropertyChangeListener {
 
 
 
+    public void handleBackFromPatientScreenInDoctor() {
+        welcomeDoctorScreen = new WelcomeDoctorScreen(this);
+        welcomeDoctorScreen.setWelcomeDoctorLabel(doctorManager.getCurrentDoctor().toString());
+        patientsScreenFromDoctor.dispose();
+    }
+
+
+
     public Specialization[] getSpecializationArray() {
         ArrayList<Specialization> specializations = (ArrayList<Specialization>) adminManager.getSpecializations();
         Specialization[] specializationArray = new Specialization[specializations.size() + 1];
@@ -285,24 +294,31 @@ public class Controller implements PropertyChangeListener {
 
     //-------- Patients - START --------
     public void handlePatients() {
-        patientsScreen = new PatientsScreen(this);
-        patientsScreen.displayPatients(adminManager.getPatients());
+        patientsScreenFromAdmin = new PatientsScreenFromAdmin(this);
+        patientsScreenFromAdmin.displayPatients(adminManager.getPatients());
         welcomeAdminScreen.dispose();
     }
 
+
+
     public void handleBackFromPatientScreen() {
         welcomeAdminScreen = new WelcomeAdminScreen(this);
-        patientsScreen.dispose();
+        welcomeAdminScreen.setUsernameLabel(adminManager.getCurrentAdmin().toString());
+        patientsScreenFromAdmin.dispose();
     }
+
+
 
     public void handleViewMedicalRecord() {
         medicalRecordsScreen = new MedicalRecordsScreen(this);
-        patientsScreen.dispose();
+        patientsScreenFromDoctor.dispose();
     }
 
+
+
     public void handleBackFromMedicalRecord() {
-        patientsScreen = new PatientsScreen(this);
-        patientsScreen.displayPatients(adminManager.getPatients());
+        patientsScreenFromAdmin = new PatientsScreenFromAdmin(this);
+        patientsScreenFromAdmin.displayPatients(adminManager.getPatients());
         medicalRecordsScreen.dispose();
     }
 
@@ -329,6 +345,7 @@ public class Controller implements PropertyChangeListener {
 
     public void handleBackFromUpcomingAppointmentsScreen() {
         welcomeAdminScreen = new WelcomeAdminScreen(this);
+        welcomeAdminScreen.setUsernameLabel(adminManager.getCurrentAdmin().toString());
         upcomingAppointmentsScreen.dispose();
     }
     //-------- Appointments - END --------
@@ -523,7 +540,8 @@ public class Controller implements PropertyChangeListener {
 
 
     public void viewMyPatients() {
-
+        patientsScreenFromDoctor = new PatientsScreenFromDoctor(this);
+        welcomeDoctorScreen.dispose();
     }
 
     public void viewMyScheduleClicked() {
@@ -734,6 +752,7 @@ public class Controller implements PropertyChangeListener {
 
     public void handleBackFromMyInfo() {
         welcomePatientScreen = new WelcomePatientScreen(this);
+        welcomePatientScreen.setWelcomePatient(patientManager.getCurrentPatient().toString());
         viewMyInfoPatient.dispose();
     }
 
@@ -905,6 +924,7 @@ public class Controller implements PropertyChangeListener {
 
     public void handleBackFromChooseBookDoctorScreen() {
         welcomePatientScreen = new WelcomePatientScreen(this);
+        welcomePatientScreen.setWelcomePatient(patientManager.getCurrentPatient().toString());
         patientManager.setSelectedDoctor(null);
         chooseBookDoctorScreen.displayDoctors(patientManager.getDoctors());
         chooseBookDoctorScreen.dispose();
