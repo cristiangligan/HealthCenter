@@ -881,13 +881,14 @@ public class Controller implements PropertyChangeListener {
     public void handleBookATimeBtn() {
         Calendar cal = Calendar.getInstance();
         cal.setTime(new Date());
+        Date currentDate = cal.getTime();
         if(cal.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY) {
             if(chooseBookDoctorScreen.isDoctorSelected()) {
                 patientManager.setSelectedDoctor(chooseBookDoctorScreen.getSelectedDoctor());
                 patientScheduleScreen = new PatientScheduleScreen(this);
                 cal.add(Calendar.WEEK_OF_YEAR, 1);
                 patientScheduleScreen.setWeekDoctorLbl(String.valueOf(cal.get(Calendar.WEEK_OF_YEAR)), patientManager.getSelectedDoctor().toString());
-                Appointment appointment = patientManager.existAppointmentWithDoctor(patientManager.getCurrentPatient(), patientManager.getSelectedDoctor());
+                Appointment appointment = patientManager.getAppointmentWithDoctor(patientManager.getCurrentPatient(), patientManager.getSelectedDoctor(), currentDate);
                 if(appointment != null) {
                     Color dayColor = null;
                     String dateString = appointment.getDate();
@@ -913,7 +914,6 @@ public class Controller implements PropertyChangeListener {
                     }
                 }
                 chooseBookDoctorScreen.dispose();
-                ArrayList<JButton> buttons = (ArrayList<JButton>) patientScheduleScreen.getButtonList();
             }
         } else {
             JOptionPane.showMessageDialog(null, "You can only book appointments on fridays for the upcoming week.");
