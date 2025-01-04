@@ -311,7 +311,7 @@ public class Controller implements PropertyChangeListener {
 
     public void handleViewMedicalRecord() {
         medicalRecordsScreen = new MedicalRecordsScreen(this);
-        patientsScreenFromDoctor.dispose();
+        patientsScreenFromAdmin.dispose();
     }
 
 
