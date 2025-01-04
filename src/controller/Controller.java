@@ -544,12 +544,13 @@ public class Controller implements PropertyChangeListener {
         welcomeDoctorScreen.dispose();
     }
 
-    public void viewMyScheduleClicked() {
+    public void viewMySchedule() {
         doctorScheduleScreen = new DoctorScheduleScreen(this);
         welcomeDoctorScreen.dispose();
         Calendar cal = Calendar.getInstance();
         cal.setTime(new Date());
         cal.add(Calendar.WEEK_OF_YEAR, 1);
+        doctorScheduleScreen.setWeekDoctorLbl(String.valueOf(cal.get(Calendar.WEEK_OF_YEAR)), doctorManager.getCurrentDoctor().toString());
         int currDay = cal.get(Calendar.DAY_OF_WEEK);
         int diff = currDay - Calendar.MONDAY;
         if(cal.get(Calendar.DAY_OF_WEEK) == 1) {
