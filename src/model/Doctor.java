@@ -48,4 +48,7 @@ public class Doctor {
     public String toString() {
         return firstName + " " + lastName;
     }
+
+    public void add(String s) {
+    }
 }

@@ -3,6 +3,7 @@ package controller;
 import model.*;
 import view.*;
 
+import javax.print.Doc;
 import javax.swing.*;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
@@ -775,7 +776,16 @@ public class Controller implements PropertyChangeListener {
         welcomePatientScreen.dispose();
     }
 
+    public List<Doctor> searchDoctorByNameOrSpecialization(String searchTerm) throws SQLException {
+        return doctorManager.searchDoctors(searchTerm);
+    }
 
+    public List<Doctor> getAllDoctors() throws SQLException {
+        if (doctorManager == null) {
+            doctorManager = new DoctorManager(connection);
+        }
+        return doctorManager.getDoctors();
+    }
 
     public void handleBookAnAppointment(JButton button) {
         String time = button.getText();
