@@ -289,19 +289,25 @@ public class PatientScheduleScreen extends JFrame {
         this.weekDoctorLbl.setText("Week " + week + " | " + doctor);
     }
 
-    public void setButtonsAvailability(Color color, String time) {
+    public void setButtonsAvailability(Color color, String time, Boolean appointmentIsBooked) {
         Component[] components = mainPnl.getComponents();
         for(int i = 0; i < components.length; i++) {
             if (components[i] instanceof JButton) {
                 JButton button = (JButton) components[i];
                 if (!button.getText().equals("Back")) {
-                    if((button.getText().equals(time)) && (button.getBackground().equals(color))) {
-                        button.setOpaque(true);
-                        button.setEnabled(false);
+                    if(appointmentIsBooked) {
+                        if ((button.getText().equals(time)) && (button.getBackground().equals(color))) {
+                            button.setOpaque(true);
+                            button.setEnabled(false);
+                        } else {
+                            button.setEnabled(false);
+                        }
+                        components[i] = button;
                     } else {
-                        button.setEnabled(false);
+                        if ((button.getText().equals(time)) && (button.getBackground().equals(color))) {
+                            button.setEnabled(false);
+                        }
                     }
-                    components[i] = button;
                 }
             }
         }
