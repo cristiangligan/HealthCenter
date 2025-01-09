@@ -597,6 +597,57 @@ public class Controller implements PropertyChangeListener {
         welcomeDoctorScreen = new WelcomeDoctorScreen(this);
         welcomeDoctorScreen.setWelcomeDoctorLabel(doctorManager.getCurrentDoctor().getFirstName() + " " + doctorManager.getCurrentDoctor().getLastName());
     }
+
+    public void handleMakeTimeslotUnavailable(JButton button) {
+        String time = button.getText();
+        String day = null;
+        Color dayColor = Color.LIGHT_GRAY;
+        String date;
+
+        if (button.getBackground() == Color.RED) {
+            day = "monday";
+            dayColor = Color.RED;
+        } else if (button.getBackground() == Color.ORANGE) {
+            day = "tuesday";
+            dayColor = Color.ORANGE;
+        } else if (button.getBackground() == Color.YELLOW) {
+            day = "wednesday";
+            dayColor = Color.YELLOW;
+        } else if (button.getBackground() == Color.GREEN) {
+            day = "thursday";
+            dayColor = Color.GREEN;
+        } else if (button.getBackground() == Color.BLUE) {
+            day = "friday";
+            dayColor = Color.BLUE;
+        }
+
+        Calendar calendar = Calendar.getInstance();
+        if (day != null && day.equals("monday")) {
+            calendar.add(Calendar.DAY_OF_WEEK, 3);
+        } else if (day != null && day.equals("tuesday")) {
+            calendar.add(Calendar.DAY_OF_WEEK, 4);
+        } else if (day != null && day.equals("wednesday")) {
+            calendar.add(Calendar.DAY_OF_WEEK, 5);
+        } else if (day != null && day.equals("thursday")) {
+            calendar.add(Calendar.DAY_OF_WEEK, 6);
+        } else if (day != null && day.equals("friday")) {
+            calendar.add(Calendar.DAY_OF_WEEK, 7);
+        }
+
+        Date currentDate = calendar.getTime();
+        date = simpleDateFormat.format(currentDate);
+
+        int patientId = -1;
+        int doctorId = doctorManager.getCurrentDoctor().getEmployerNr();
+
+        Appointment appointment = new Appointment(doctorId, patientId, time, date);
+        int answer = JOptionPane.showConfirmDialog(null,
+            "Book an appointment on " + date + ": " + time, "HealthCenter", JOptionPane.YES_NO_OPTION);
+        if (answer == 0) {
+            doctorManager.makeTimeslotUnavailable(appointment);
+            doctorScheduleScreen.setButtonsAvailability(dayColor, time);
+        }
+    }
     //------------------------------------------DOCTOR - END-----------------------------------------------
 
 
