@@ -4,7 +4,10 @@ import controller.Controller;
 import model.Doctor;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ChooseBookDoctorScreen extends JFrame {
@@ -14,6 +17,9 @@ public class ChooseBookDoctorScreen extends JFrame {
     private JButton backBtn = new JButton("Back");
     private JButton bookTimeBtn = new JButton("Book a time");
     private JList doctorsLst = new JList();
+    private JTextField searchField = new JTextField();
+    private String filterWord = "";
+    private List<Doctor> doctors;
 
     public ChooseBookDoctorScreen(Controller controller) {
         this.controller = controller;
@@ -25,12 +31,36 @@ public class ChooseBookDoctorScreen extends JFrame {
         titleLbl.setFont(new Font(null, Font.PLAIN, 32));
         mainPnl.add(titleLbl);
         springLayout.putConstraint(SpringLayout.NORTH, titleLbl, 10, SpringLayout.NORTH, mainPnl);
-        springLayout.putConstraint(SpringLayout.WEST, titleLbl, 40, SpringLayout.WEST, mainPnl);
+        springLayout.putConstraint(SpringLayout.WEST, titleLbl, 20, SpringLayout.WEST, mainPnl);
+
+        mainPnl.add(searchField);
+        springLayout.putConstraint(SpringLayout.SOUTH, searchField, 0, SpringLayout.SOUTH, titleLbl);
+        springLayout.putConstraint(SpringLayout.EAST, searchField, -20, SpringLayout.EAST, mainPnl);
+        springLayout.putConstraint(SpringLayout.WEST, searchField, 20, SpringLayout.EAST, titleLbl);
+        searchField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                filterWord = searchField.getText();
+                displayFilteredDoctors();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                filterWord = searchField.getText();
+                displayFilteredDoctors();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                filterWord = searchField.getText();
+                displayFilteredDoctors();
+            }
+        });
 
         mainPnl.add(doctorsLst);
-        springLayout.putConstraint(SpringLayout.NORTH, doctorsLst, 100, SpringLayout.NORTH, mainPnl);
-        springLayout.putConstraint(SpringLayout.WEST, doctorsLst, 40, SpringLayout.WEST, mainPnl);
-        springLayout.putConstraint(SpringLayout.EAST, doctorsLst, -40, SpringLayout.EAST, mainPnl);
+        springLayout.putConstraint(SpringLayout.NORTH, doctorsLst, 20, SpringLayout.SOUTH, searchField);
+        springLayout.putConstraint(SpringLayout.WEST, doctorsLst, 20, SpringLayout.WEST, mainPnl);
+        springLayout.putConstraint(SpringLayout.EAST, doctorsLst, -20, SpringLayout.EAST, mainPnl);
         springLayout.putConstraint(SpringLayout.SOUTH, doctorsLst, -60, SpringLayout.SOUTH, mainPnl);
 
         mainPnl.add(backBtn);
@@ -52,7 +82,25 @@ public class ChooseBookDoctorScreen extends JFrame {
     }
 
     public void displayDoctors(List<Doctor> doctors) {
-        doctorsLst.setListData(doctors.toArray());
+        this.doctors = doctors;
+        doctorsLst.setListData(this.doctors.toArray());
+    }
+
+    public void displayFilteredDoctors() {
+        List<Doctor> filteredDoctors =
+            doctors
+                .stream()
+                .filter( doctor -> {
+                    String firstName = doctor.getFirstName().toLowerCase();
+                    String lastName = doctor.getLastName().toLowerCase();
+                    String specializationName = doctor.getSpecialization().getName().toLowerCase();
+                    String filter = filterWord.toLowerCase();
+                    return firstName.contains(filter) ||
+                        lastName.contains(filter) ||
+                        specializationName.contains(filter);
+                })
+                .toList();
+        doctorsLst.setListData(filteredDoctors.toArray());
     }
 
     public Doctor getSelectedDoctor() {

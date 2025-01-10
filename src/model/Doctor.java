@@ -46,6 +46,6 @@ public class Doctor {
 
     @Override
     public String toString() {
-        return firstName + " " + lastName;
+        return firstName + " " + lastName + " ("  + specialization.getName() + ")";
     }
 }
