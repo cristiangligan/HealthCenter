@@ -7,10 +7,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class AdminManager {
+    private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
     public static final String UPDATE_DOCTORS_LIST = "update_doctors_list";
     public static final String UPDATE_SPECIALIZATION_LIST = "update_specialization_list";
     private Connection connection;
@@ -251,6 +255,31 @@ public class AdminManager {
         } catch (SQLException e) {
             throw new RuntimeException("Error deleting specialization from database.", e);
         }
+    }
+
+    public ArrayList<Appointment> getUpcomingAppointments(Date currentDate) {
+        ArrayList<Appointment> appointments = new ArrayList<>();
+        String selectAppointmentData = "SELECT * FROM public.appointment";
+        try {
+            PreparedStatement statement = connection.prepareStatement(selectAppointmentData);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                String dateString = resultSet.getString("date");
+                Date appointmentDate = simpleDateFormat.parse(dateString);
+                if (appointmentDate.after(currentDate)) {
+                    int id = resultSet.getInt("id");
+                    int idDoctor = resultSet.getInt("id_doctor");
+                    int idPatient = resultSet.getInt("id_patient");
+                    String time = resultSet.getString("time");
+                    Appointment appointment = new Appointment(idDoctor, idPatient, time, dateString);
+                    appointment.setId(id);
+                    appointments.add(appointment);
+                }
+            }
+        } catch (SQLException | ParseException e) {
+            throw new RuntimeException(e);
+        }
+        return appointments;
     }
 
     public void setSelectedSpecialization(Specialization specialization) {

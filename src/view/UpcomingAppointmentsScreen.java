@@ -1,9 +1,11 @@
 package view;
 
 import controller.Controller;
+import model.Appointment;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class UpcomingAppointmentsScreen extends JFrame {
     private Controller controller;
@@ -43,5 +45,9 @@ public class UpcomingAppointmentsScreen extends JFrame {
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    public void displayAppointments(ArrayList<Appointment> appointments) {
+        upcomingAppointmentsLst.setListData(appointments.toArray());
     }
 }
