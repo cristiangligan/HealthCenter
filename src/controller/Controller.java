@@ -36,6 +36,7 @@ public class Controller implements PropertyChangeListener {
     private WelcomePatientScreen welcomePatientScreen;
     private ChooseBookDoctorScreen chooseBookDoctorScreen;
     private PatientScheduleScreen patientScheduleScreen;
+    private DoctorScheduleScreen doctorScheduleScreen;
     private WelcomeDoctorScreen welcomeDoctorScreen;
     private EditDoctorScreen editDoctorScreen;
     private DoctorManager doctorManager;
@@ -480,7 +481,7 @@ public class Controller implements PropertyChangeListener {
         try {
             logInScreen = new LogInScreen(this);
             doctorLogInScreen.dispose();
-        }catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             System.out.println(e);
         }
     }
@@ -525,10 +526,57 @@ public class Controller implements PropertyChangeListener {
 
     }
 
-    public void viewMyScedule() {
+    public void viewMyScheduleClicked() {
+        doctorScheduleScreen = new DoctorScheduleScreen(this);
+        welcomeDoctorScreen.dispose();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        cal.add(Calendar.WEEK_OF_YEAR, 1);
+        int currDay = cal.get(Calendar.DAY_OF_WEEK);
+        int diff = currDay - Calendar.MONDAY;
+        if(cal.get(Calendar.DAY_OF_WEEK) == 1) {
+            cal.add(Calendar.DAY_OF_WEEK, -6);
+        } else {
+            cal.add(Calendar.DAY_OF_WEEK, -diff);
+        }
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String date = simpleDateFormat.format(cal.getTime());
+        ArrayList<Appointment> appointments = doctorManager.getMyAppointments(doctorManager.getCurrentDoctor(), date);
+        for (Appointment appointment : appointments) {
+            if(appointment != null) {
+                Color dayColor = null;
+                String appointmentDateString = appointment.getDate();
+                try {
+                    Date appointmentDate = simpleDateFormat.parse(appointmentDateString);
+                    cal.setTime(appointmentDate);
+                    int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+                    if(dayOfWeek == 2) {
+                        dayColor = Color.RED;
+                    } else if (dayOfWeek == 3) {
+                        dayColor = Color.ORANGE;
+                    } else if (dayOfWeek == 4) {
+                        dayColor = Color.YELLOW;
+                    } else if (dayOfWeek == 5) {
+                        dayColor = Color.GREEN;
+                    } else if (dayOfWeek == 6) {
+                        dayColor = Color.BLUE;
+                    }
+                    doctorScheduleScreen.setButtonsAvailability(dayColor, appointment.getTime());
+                } catch (ParseException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
     }
 
     public void viewMyAppointments() {
+
+    }
+
+    public void handleBackFromDoctorScheduleScreen() {
+        doctorScheduleScreen.dispose();
+        welcomeDoctorScreen = new WelcomeDoctorScreen(this);
+        welcomeDoctorScreen.setWelcomeDoctorLabel(doctorManager.getCurrentDoctor().getFirstName() + " " + doctorManager.getCurrentDoctor().getLastName());
     }
     //------------------------------------------DOCTOR - END-----------------------------------------------
 
