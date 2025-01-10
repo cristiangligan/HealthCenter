@@ -7,7 +7,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PatientScheduleScreen extends JFrame {
+public class DoctorScheduleScreen extends JFrame {
     private final String TIME_9 = "09:00-09:45";
     private final String TIME_10 = "10:00-10:45";
     private final String TIME_11 = "11:00-11:45";
@@ -50,7 +50,7 @@ public class PatientScheduleScreen extends JFrame {
 
     private JButton backBtn = new JButton("Back");
 
-    public PatientScheduleScreen(Controller controller) {
+    public DoctorScheduleScreen(Controller controller) {
         this.controller = controller;
         this.setTitle("Health Center");
         this.setContentPane(mainPnl);
@@ -71,21 +71,21 @@ public class PatientScheduleScreen extends JFrame {
         monday9Btn.setBackground(Color.RED);
         springLayout.putConstraint(SpringLayout.NORTH, monday9Btn, 100, SpringLayout.NORTH, mainPnl);
         springLayout.putConstraint(SpringLayout.WEST, monday9Btn, 10, SpringLayout.WEST, mainPnl);
-        monday9Btn.addActionListener(e -> controller.handleBookAnAppointment(monday9Btn));
+        monday9Btn.addActionListener(e -> controller.handleMakeTimeslotUnavailable(monday9Btn));
 
         mainPnl.add(monday10Btn);
         monday10Btn.setPreferredSize(new Dimension(108, 40));
         monday10Btn.setBackground(Color.RED);
         springLayout.putConstraint(SpringLayout.NORTH, monday10Btn, 10, SpringLayout.SOUTH, monday9Btn);
         springLayout.putConstraint(SpringLayout.WEST, monday10Btn, 0, SpringLayout.WEST, monday9Btn);
-        monday10Btn.addActionListener(e -> controller.handleBookAnAppointment(monday10Btn));
+         monday10Btn.addActionListener(e -> controller.handleMakeTimeslotUnavailable(monday10Btn));
 
         mainPnl.add(monday11Btn);
         monday11Btn.setPreferredSize(new Dimension(108, 40));
         monday11Btn.setBackground(Color.RED);
         springLayout.putConstraint(SpringLayout.NORTH, monday11Btn, 10, SpringLayout.SOUTH, monday10Btn);
         springLayout.putConstraint(SpringLayout.WEST, monday11Btn, 0, SpringLayout.WEST, monday10Btn);
-        monday11Btn.addActionListener(e -> controller.handleBookAnAppointment(monday11Btn));
+        monday11Btn.addActionListener(e -> controller.handleMakeTimeslotUnavailable(monday11Btn));
 
 
         mainPnl.add(monday13Btn);
@@ -93,7 +93,7 @@ public class PatientScheduleScreen extends JFrame {
         monday13Btn.setBackground(Color.RED);
         springLayout.putConstraint(SpringLayout.NORTH, monday13Btn, 10, SpringLayout.SOUTH, monday11Btn);
         springLayout.putConstraint(SpringLayout.WEST, monday13Btn, 0, SpringLayout.WEST, monday11Btn);
-        monday13Btn.addActionListener(e -> controller.handleBookAnAppointment(monday13Btn));
+        monday13Btn.addActionListener(e -> controller.handleMakeTimeslotUnavailable(monday13Btn));
 
 
 
@@ -102,7 +102,7 @@ public class PatientScheduleScreen extends JFrame {
         tuesday9Btn.setBackground(Color.ORANGE);
         springLayout.putConstraint(SpringLayout.NORTH, tuesday9Btn, 0, SpringLayout.NORTH, monday9Btn);
         springLayout.putConstraint(SpringLayout.WEST, tuesday9Btn, 10, SpringLayout.EAST, monday9Btn);
-        tuesday9Btn.addActionListener(e -> controller.handleBookAnAppointment(tuesday9Btn));
+        tuesday9Btn.addActionListener(e -> controller.handleMakeTimeslotUnavailable(tuesday9Btn));
 
 
         mainPnl.add(tuesday10Btn);
@@ -110,7 +110,7 @@ public class PatientScheduleScreen extends JFrame {
         tuesday10Btn.setBackground(Color.ORANGE);
         springLayout.putConstraint(SpringLayout.NORTH, tuesday10Btn, 10, SpringLayout.SOUTH, tuesday9Btn);
         springLayout.putConstraint(SpringLayout.WEST, tuesday10Btn, 0, SpringLayout.WEST, tuesday9Btn);
-        tuesday10Btn.addActionListener(e -> controller.handleBookAnAppointment(tuesday10Btn));
+        tuesday10Btn.addActionListener(e -> controller.handleMakeTimeslotUnavailable(tuesday10Btn));
 
 
         mainPnl.add(tuesday11Btn);
@@ -118,7 +118,7 @@ public class PatientScheduleScreen extends JFrame {
         tuesday11Btn.setBackground(Color.ORANGE);
         springLayout.putConstraint(SpringLayout.NORTH, tuesday11Btn, 10, SpringLayout.SOUTH, tuesday10Btn);
         springLayout.putConstraint(SpringLayout.WEST, tuesday11Btn, 0, SpringLayout.WEST, tuesday10Btn);
-        tuesday11Btn.addActionListener(e -> controller.handleBookAnAppointment(tuesday11Btn));
+        tuesday11Btn.addActionListener(e -> controller.handleMakeTimeslotUnavailable(tuesday11Btn));
 
 
         mainPnl.add(tuesday13Btn);
@@ -126,7 +126,7 @@ public class PatientScheduleScreen extends JFrame {
         tuesday13Btn.setBackground(Color.ORANGE);
         springLayout.putConstraint(SpringLayout.NORTH, tuesday13Btn, 10, SpringLayout.SOUTH, tuesday11Btn);
         springLayout.putConstraint(SpringLayout.WEST, tuesday13Btn, 0, SpringLayout.WEST, tuesday11Btn);
-        tuesday13Btn.addActionListener(e -> controller.handleBookAnAppointment(tuesday13Btn));
+        tuesday13Btn.addActionListener(e -> controller.handleMakeTimeslotUnavailable(tuesday13Btn));
 
 
 
@@ -135,7 +135,7 @@ public class PatientScheduleScreen extends JFrame {
         wednesday9Btn.setBackground(Color.YELLOW);
         springLayout.putConstraint(SpringLayout.NORTH, wednesday9Btn, 0, SpringLayout.NORTH, tuesday9Btn);
         springLayout.putConstraint(SpringLayout.WEST, wednesday9Btn, 10, SpringLayout.EAST, tuesday9Btn);
-        wednesday9Btn.addActionListener(e -> controller.handleBookAnAppointment(wednesday9Btn));
+        wednesday9Btn.addActionListener(e -> controller.handleMakeTimeslotUnavailable(wednesday9Btn));
 
 
         mainPnl.add(wednesday10Btn);
@@ -143,7 +143,7 @@ public class PatientScheduleScreen extends JFrame {
         wednesday10Btn.setBackground(Color.YELLOW);
         springLayout.putConstraint(SpringLayout.NORTH, wednesday10Btn, 10, SpringLayout.SOUTH, wednesday9Btn);
         springLayout.putConstraint(SpringLayout.WEST, wednesday10Btn, 0, SpringLayout.WEST, wednesday9Btn);
-        wednesday10Btn.addActionListener(e -> controller.handleBookAnAppointment(wednesday10Btn));
+        wednesday10Btn.addActionListener(e -> controller.handleMakeTimeslotUnavailable(wednesday10Btn));
 
 
         mainPnl.add(wednesday11Btn);
@@ -151,7 +151,7 @@ public class PatientScheduleScreen extends JFrame {
         wednesday11Btn.setBackground(Color.YELLOW);
         springLayout.putConstraint(SpringLayout.NORTH, wednesday11Btn, 10, SpringLayout.SOUTH, wednesday10Btn);
         springLayout.putConstraint(SpringLayout.WEST, wednesday11Btn, 0, SpringLayout.WEST, wednesday10Btn);
-        wednesday11Btn.addActionListener(e -> controller.handleBookAnAppointment(wednesday11Btn));
+        wednesday11Btn.addActionListener(e -> controller.handleMakeTimeslotUnavailable(wednesday11Btn));
 
 
         mainPnl.add(wednesday13Btn);
@@ -159,7 +159,7 @@ public class PatientScheduleScreen extends JFrame {
         wednesday13Btn.setBackground(Color.YELLOW);
         springLayout.putConstraint(SpringLayout.NORTH, wednesday13Btn, 10, SpringLayout.SOUTH, wednesday11Btn);
         springLayout.putConstraint(SpringLayout.WEST, wednesday13Btn, 0, SpringLayout.WEST, wednesday11Btn);
-        wednesday13Btn.addActionListener(e -> controller.handleBookAnAppointment(wednesday13Btn));
+        wednesday13Btn.addActionListener(e -> controller.handleMakeTimeslotUnavailable(wednesday13Btn));
 
 
 
@@ -168,7 +168,7 @@ public class PatientScheduleScreen extends JFrame {
         thursday9Btn.setBackground(Color.GREEN);
         springLayout.putConstraint(SpringLayout.NORTH, thursday9Btn, 0, SpringLayout.NORTH, wednesday9Btn);
         springLayout.putConstraint(SpringLayout.WEST, thursday9Btn, 10, SpringLayout.EAST, wednesday9Btn);
-        thursday9Btn.addActionListener(e -> controller.handleBookAnAppointment(thursday9Btn));
+        thursday9Btn.addActionListener(e -> controller.handleMakeTimeslotUnavailable(thursday9Btn));
 
 
         mainPnl.add(thursday10Btn);
@@ -176,7 +176,7 @@ public class PatientScheduleScreen extends JFrame {
         thursday10Btn.setBackground(Color.GREEN);
         springLayout.putConstraint(SpringLayout.NORTH, thursday10Btn, 10, SpringLayout.SOUTH, thursday9Btn);
         springLayout.putConstraint(SpringLayout.WEST, thursday10Btn, 0, SpringLayout.WEST, thursday9Btn);
-        thursday10Btn.addActionListener(e -> controller.handleBookAnAppointment(thursday10Btn));
+        thursday10Btn.addActionListener(e -> controller.handleMakeTimeslotUnavailable(thursday10Btn));
 
 
         mainPnl.add(thursday11Btn);
@@ -184,7 +184,7 @@ public class PatientScheduleScreen extends JFrame {
         thursday11Btn.setBackground(Color.GREEN);
         springLayout.putConstraint(SpringLayout.NORTH, thursday11Btn, 10, SpringLayout.SOUTH, thursday10Btn);
         springLayout.putConstraint(SpringLayout.WEST, thursday11Btn, 0, SpringLayout.WEST, thursday10Btn);
-        thursday11Btn.addActionListener(e -> controller.handleBookAnAppointment(thursday11Btn));
+        thursday11Btn.addActionListener(e -> controller.handleMakeTimeslotUnavailable(thursday11Btn));
 
 
         mainPnl.add(thursday13Btn);
@@ -192,7 +192,7 @@ public class PatientScheduleScreen extends JFrame {
         thursday13Btn.setBackground(Color.GREEN);
         springLayout.putConstraint(SpringLayout.NORTH, thursday13Btn, 10, SpringLayout.SOUTH, thursday11Btn);
         springLayout.putConstraint(SpringLayout.WEST, thursday13Btn, 0, SpringLayout.WEST, thursday11Btn);
-        thursday13Btn.addActionListener(e -> controller.handleBookAnAppointment(thursday13Btn));
+        thursday13Btn.addActionListener(e -> controller.handleMakeTimeslotUnavailable(thursday13Btn));
 
 
 
@@ -201,7 +201,7 @@ public class PatientScheduleScreen extends JFrame {
         friday9Btn.setBackground(Color.BLUE);
         springLayout.putConstraint(SpringLayout.NORTH, friday9Btn, 0, SpringLayout.NORTH, thursday9Btn);
         springLayout.putConstraint(SpringLayout.WEST, friday9Btn, 10, SpringLayout.EAST, thursday9Btn);
-        friday9Btn.addActionListener(e -> controller.handleBookAnAppointment(friday9Btn));
+        friday9Btn.addActionListener(e -> controller.handleMakeTimeslotUnavailable(friday9Btn));
 
 
         mainPnl.add(friday10Btn);
@@ -209,7 +209,7 @@ public class PatientScheduleScreen extends JFrame {
         friday10Btn.setBackground(Color.BLUE);
         springLayout.putConstraint(SpringLayout.NORTH, friday10Btn, 10, SpringLayout.SOUTH, friday9Btn);
         springLayout.putConstraint(SpringLayout.WEST, friday10Btn, 0, SpringLayout.WEST, friday9Btn);
-        friday10Btn.addActionListener(e -> controller.handleBookAnAppointment(friday10Btn));
+        friday10Btn.addActionListener(e -> controller.handleMakeTimeslotUnavailable(friday10Btn));
 
 
         mainPnl.add(friday11Btn);
@@ -217,7 +217,7 @@ public class PatientScheduleScreen extends JFrame {
         friday11Btn.setBackground(Color.BLUE);
         springLayout.putConstraint(SpringLayout.NORTH, friday11Btn, 10, SpringLayout.SOUTH, friday10Btn);
         springLayout.putConstraint(SpringLayout.WEST, friday11Btn, 0, SpringLayout.WEST, friday10Btn);
-        friday11Btn.addActionListener(e -> controller.handleBookAnAppointment(friday11Btn));
+        friday11Btn.addActionListener(e -> controller.handleMakeTimeslotUnavailable(friday11Btn));
 
 
         mainPnl.add(friday13Btn);
@@ -225,7 +225,7 @@ public class PatientScheduleScreen extends JFrame {
         friday13Btn.setBackground(Color.BLUE);
         springLayout.putConstraint(SpringLayout.NORTH, friday13Btn, 10, SpringLayout.SOUTH, friday11Btn);
         springLayout.putConstraint(SpringLayout.WEST, friday13Btn, 0, SpringLayout.WEST, friday11Btn);
-        friday13Btn.addActionListener(e -> controller.handleBookAnAppointment(friday13Btn));
+        friday13Btn.addActionListener(e -> controller.handleMakeTimeslotUnavailable(friday13Btn));
 
 
         mainPnl.add(mondayLbl);
@@ -261,7 +261,7 @@ public class PatientScheduleScreen extends JFrame {
         mainPnl.add(backBtn);
         springLayout.putConstraint(SpringLayout.SOUTH, backBtn, -20, SpringLayout.SOUTH, mainPnl);
         springLayout.putConstraint(SpringLayout.WEST, backBtn, 0, SpringLayout.WEST, monday13Btn);
-        backBtn.addActionListener(e -> controller.handleBackFromScheduleScreen());
+        backBtn.addActionListener(e -> controller.handleBackFromDoctorScheduleScreen());
 
         this.pack();
         this.setVisible(true);
@@ -289,25 +289,17 @@ public class PatientScheduleScreen extends JFrame {
         this.weekDoctorLbl.setText("Week " + week + " | " + doctor);
     }
 
-    public void setButtonsAvailability(Color color, String time, Boolean appointmentIsBooked) {
+    public void setButtonsAvailability(Color color, String time) {
         Component[] components = mainPnl.getComponents();
         for(int i = 0; i < components.length; i++) {
             if (components[i] instanceof JButton) {
                 JButton button = (JButton) components[i];
                 if (!button.getText().equals("Back")) {
-                    if(appointmentIsBooked) {
-                        if ((button.getText().equals(time)) && (button.getBackground().equals(color))) {
-                            button.setOpaque(true);
-                            button.setEnabled(false);
-                        } else {
-                            button.setEnabled(false);
-                        }
-                        components[i] = button;
-                    } else {
-                        if ((button.getText().equals(time)) && (button.getBackground().equals(color))) {
-                            button.setEnabled(false);
-                        }
+                    if((button.getText().equals(time)) && (button.getBackground().equals(color))) {
+                        button.setOpaque(true);
+                        button.setEnabled(false);
                     }
+                    components[i] = button;
                 }
             }
         }
