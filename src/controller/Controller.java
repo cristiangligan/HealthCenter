@@ -310,7 +310,7 @@ public class Controller implements PropertyChangeListener {
 
 
 
-    public void handleViewMedicalRecord() {
+    public void handleViewMedicalRecordsFromAdmin() {
         medicalRecordsScreen = new MedicalRecordsScreen(this);
         patientsScreenFromAdmin.dispose();
     }
@@ -318,8 +318,8 @@ public class Controller implements PropertyChangeListener {
 
 
     public void handleBackFromMedicalRecord() {
-        patientsScreenFromAdmin = new PatientsScreenFromAdmin(this);
-        patientsScreenFromAdmin.displayPatients(adminManager.getPatients());
+        patientsScreenFromDoctor = new PatientsScreenFromDoctor(this);
+        patientsScreenFromDoctor.displayPatients(doctorManager.getDoctorsPatients(doctorManager.getCurrentDoctor()));
         medicalRecordsScreen.dispose();
     }
 
@@ -544,6 +544,8 @@ public class Controller implements PropertyChangeListener {
 
     public void viewMyPatients() {
         patientsScreenFromDoctor = new PatientsScreenFromDoctor(this);
+        ArrayList<Patient> patients = doctorManager.getDoctorsPatients(doctorManager.getCurrentDoctor());
+        patientsScreenFromDoctor.displayPatients(patients);
         welcomeDoctorScreen.dispose();
     }
 
@@ -588,6 +590,11 @@ public class Controller implements PropertyChangeListener {
                 }
             }
         }
+    }
+
+    public void handleViewMedicalRecordsFromDoctor() {
+        medicalRecordsScreen = new MedicalRecordsScreen(this);
+        patientsScreenFromDoctor.dispose();
     }
 
     public void viewMyAppointments() {
