@@ -14,6 +14,12 @@ public class Specialization {
         this.id = id;
     }
 
+    public Specialization(int id, String name, int cost) {
+        this.id = id;
+        this.name = name;
+        this.cost = cost;
+    }
+
     public String getName() {
         return name;
     }
