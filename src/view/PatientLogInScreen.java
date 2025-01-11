@@ -71,7 +71,7 @@ public class PatientLogInScreen extends JFrame {
 
         this.pack();
         this.setVisible(true);
-        this.setSize(new Dimension(600, 400));
+        this.setSize(new Dimension(600, 300));
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
