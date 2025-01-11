@@ -19,22 +19,34 @@ public class DoctorManager {
     }
 
     public Doctor verifyDoctor(int medicalId) {
-        String verifyQuery = "SELECT id, firstname, lastname, phone, id_specialization FROM public.doctor WHERE id = ?";
+        String verifyQuery =
+            "SELECT " +
+                "doctor.id as doctor_id, doctor.firstname, doctor.lastname, doctor.phone, " +
+                "specialization.id as spec_id, specialization.name as spec_name, specialization.visit_cost as visit_cost " +
+            "FROM public.doctor JOIN public.specialization ON doctor.id_specialization = specialization.id " +
+            "WHERE doctor.id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(verifyQuery)) {
             preparedStatement.setInt(1, medicalId);
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
-                    Doctor doctor = new Doctor
-                            (resultSet.getInt("id"), resultSet.getString("firstname"), resultSet.getString("lastname"), resultSet.getString("phone"), new Specialization(resultSet.getInt("id_specialization")));
-                    return doctor;
+                    int specId = resultSet.getInt("spec_id");
+                    String specName = resultSet.getString("spec_name");
+                    int visitCost = resultSet.getInt("visit_cost");
+                    Specialization specialization = new Specialization(specId, specName, visitCost);
+
+                    int doctorId = resultSet.getInt("doctor_id");
+                    String firstName = resultSet.getString("firstname");
+                    String lastName = resultSet.getString("lastname");
+                    String phone = resultSet.getString("phone");
+                    return new Doctor(doctorId, firstName, lastName, phone, specialization);
                 } else {
                     System.out.println("There's no user with the given medical number.");
                     return null;
                 }
             } catch (SQLException e) {
-            System.out.println("Wrong medical number.");
-            return null;
+                System.out.println("Wrong medical number.");
+                return null;
             }
         } catch(SQLException e) {
             System.out.println("Database error");
