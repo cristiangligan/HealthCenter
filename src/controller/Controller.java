@@ -14,6 +14,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import static javax.swing.JOptionPane.WARNING_MESSAGE;
 
 public class Controller implements PropertyChangeListener {
     private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -684,13 +688,21 @@ public class Controller implements PropertyChangeListener {
         patientManager.subscribeListener(this);
 
         try {
-            String patientIdText = String.valueOf(patientLogInScreen.getPatientIdText());
+            String patientIdText = patientLogInScreen.getPatientIdText();
             System.out.println("Input from text field " + patientIdText); //debugg
 
             if (patientIdText.isBlank()) {
-                JOptionPane.showMessageDialog(null, "You must write your medical number. Please try again.");
+                JOptionPane.showMessageDialog(null, "You must fill in your medical ID! Please try again.", "Patient log in", WARNING_MESSAGE);
                 return; //avbryter processen om fältet är tomt
             }
+
+            Pattern patternNineDigits = Pattern.compile("^[1-9][0-9]{8}$");
+            Matcher matcher = patternNineDigits.matcher(patientIdText);
+            if (!matcher.matches()) {
+                JOptionPane.showMessageDialog(null, "Invalid medical ID format!\nThe medical ID must have exactly 9 digits.", "Patient log in", WARNING_MESSAGE);
+                return;
+            }
+
             int patientId = Integer.parseInt(patientIdText);
             Patient patient = patientManager.verifyPatient(patientId);
 
@@ -702,12 +714,11 @@ public class Controller implements PropertyChangeListener {
                 patientLogInScreen.dispose();
                 System.out.println(patientManager.getCurrentPatient());
             } else {
-                JOptionPane.showMessageDialog(null, "Incorrect medical number. Please try again.");
+                JOptionPane.showMessageDialog(null, "Incorrect medical number. Please try again.", "Patient log in", WARNING_MESSAGE);
                 patientLogInScreen.clearFields();
-                ;
             }
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Medical number must be a valid number. Please try again.");
+            JOptionPane.showMessageDialog(null, "Medical number must be a valid number. Please try again.", "Patient log in", WARNING_MESSAGE);
             patientLogInScreen.clearFields();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -739,6 +750,7 @@ public class Controller implements PropertyChangeListener {
         patientManager = new PatientManager(connection);
         patientManager.subscribeListener(this);
 
+        String medicalId = registerNewPatientScreen.getMedicalId();
         String firstName = registerNewPatientScreen.getFirstName();
         String lastName = registerNewPatientScreen.getLastname();
         String gender = registerNewPatientScreen.getGender();
@@ -746,19 +758,31 @@ public class Controller implements PropertyChangeListener {
         String phone = registerNewPatientScreen.getPhone();
         String birthDate = registerNewPatientScreen.getBirthDate();
 
-        if (firstName.isBlank() || lastName.isBlank() || gender.isBlank() || address.isBlank() || phone.isBlank() || birthDate.isBlank()) {
-            JOptionPane.showMessageDialog(null, "Please fill in all fields correctly.");
+        if (medicalId.isBlank() || firstName.isBlank() || lastName.isBlank() || gender.isBlank() || address.isBlank() || phone.isBlank() || birthDate.isBlank()) {
+            JOptionPane.showMessageDialog(null, "Please fill in all the fields!", "Register new patient", WARNING_MESSAGE);
+            return;
+        }
+
+        Pattern patternNineDigits = Pattern.compile("^[1-9][0-9]{8}$");
+        Matcher matcher = patternNineDigits.matcher(medicalId);
+        if (!matcher.matches()) {
+            JOptionPane.showMessageDialog(null, "Invalid medical ID format!\nThe medical ID must have exactly 9 digits.", "Register new patient", WARNING_MESSAGE);
+            return;
+        }
+
+        if (!phone.matches("\\d+") ) {
+            JOptionPane.showMessageDialog(null, "Phone number must contain only digits.", "Edit patient info", WARNING_MESSAGE);
             return;
         }
 
         try {
             java.sql.Date.valueOf(birthDate);
         } catch (IllegalArgumentException e) {
-            JOptionPane.showMessageDialog(null, "Invalid format date. Please insert yyy-mm-dd");
+            JOptionPane.showMessageDialog(null, "Invalid date format!\nPlease fill in the date in the format \"yyyy-mm-dd\".", "Register new patient", WARNING_MESSAGE);
             return;
         }
 
-        boolean successSavingPatient = patientManager.saveNewPatient(firstName, lastName, gender, address, phone, birthDate);
+        boolean successSavingPatient = patientManager.saveNewPatient(medicalId, firstName, lastName, gender, address, phone, birthDate);
 
         if (successSavingPatient) {
             JOptionPane.showMessageDialog(null, "Patient registered.");
@@ -766,8 +790,9 @@ public class Controller implements PropertyChangeListener {
             welcomePatientScreen = new WelcomePatientScreen(this);
             Patient currentPatient = patientManager.getPatientInfo(firstName, lastName);
             welcomePatientScreen.setWelcomePatient(currentPatient.getFirstName() + " " + currentPatient.getLastName());
+            patientManager.setCurrentPatient(currentPatient);
         } else {
-            JOptionPane.showMessageDialog(null, "Failed to register patient. Please try again.");
+            JOptionPane.showMessageDialog(null, "Failed to register patient! Please try again.", "Register new patient", WARNING_MESSAGE);
         }
     }
 
@@ -834,19 +859,19 @@ public class Controller implements PropertyChangeListener {
         String editedBirthDate = editInfoPatientScreen.getBirthDate();
         String editedGender = editInfoPatientScreen.getGender();
 
-        if (editedFirstName == null || editedFirstName.isBlank() || editedLastName == null || editedLastName.isBlank() || editedAddress == null || editedAddress.isBlank() || editedPhone == null || editedPhone.isBlank() || editedBirthDate == null || editedBirthDate.isBlank() || editedGender == null || editedGender.isBlank()) {
-            JOptionPane.showMessageDialog(null, "Please fill in all required fields.");
+        if (editedFirstName.isBlank() || editedLastName.isBlank() || editedAddress.isBlank() || editedPhone.isBlank() || editedBirthDate.isBlank() || editedGender.isBlank()) {
+            JOptionPane.showMessageDialog(null, "Please fill in all required fields!", "Edit patient info", WARNING_MESSAGE);
             return;
         }
 
         if (!editedPhone.matches("\\d+") ) {
-            JOptionPane.showMessageDialog(null, "Phone number must contain only digits.");
+            JOptionPane.showMessageDialog(null, "Phone number must contain only digits.", "Edit patient info", WARNING_MESSAGE);
             return;
         }
 
         Patient loggedInPatient = patientManager.getLoggedInPatient();
         if (loggedInPatient == null) {
-            JOptionPane.showMessageDialog(null, "No patient is currently logged in.");
+            JOptionPane.showMessageDialog(null, "No patient is currently logged in.", "Edit patient info", WARNING_MESSAGE);
             return;
         }
 
@@ -870,7 +895,7 @@ public class Controller implements PropertyChangeListener {
             viewMyInfoPatient.displayMyInfoPatient(loggedInPatient);
             editInfoPatientScreen.dispose();
         } else {
-            JOptionPane.showMessageDialog(null, "Error updating patient information. Please try again.");
+            JOptionPane.showMessageDialog(null, "Error updating patient information! Please try again.", "Edit patient info", WARNING_MESSAGE);
         }
 
     }
@@ -924,7 +949,7 @@ public class Controller implements PropertyChangeListener {
         Date currentDate = calendar.getTime();
         date = simpleDateFormat.format(currentDate);
 
-        int patientId = patientManager.getCurrentPatient().getPatientMedicalId();
+        int patientId = patientManager.getCurrentPatient().getMedicalId();
         int doctorId = patientManager.getSelectedDoctor().getEmployerNr();
 
         Appointment appointment = new Appointment(doctorId, patientId, time, date);

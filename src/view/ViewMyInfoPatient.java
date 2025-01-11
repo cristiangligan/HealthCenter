@@ -18,7 +18,7 @@ public class ViewMyInfoPatient extends JFrame {
     private JLabel birthDateLbl = new JLabel("Birth date");
     private JLabel genderLbl = new JLabel("Gender");
     //obs medical number och registration date ska vara fixed - ska ej gå att ändra!
-    private JLabel medicalNumLbl = new JLabel("Medical number");
+    private JLabel medicalIdLbl = new JLabel("Medical ID");
     private JLabel registerDateLbl = new JLabel("Register date");
 
 
@@ -28,7 +28,7 @@ public class ViewMyInfoPatient extends JFrame {
     private JTextField phoneField = new JTextField();
     private JTextField birthDateField = new JTextField();
     private JTextField genderField = new JTextField();
-    private JTextField medicalNumField = new JTextField();
+    private JTextField medicalIdField = new JTextField();
     private JTextField registerDateField = new JTextField();
 
     private JButton backBtn = new JButton("Back");
@@ -83,16 +83,16 @@ public class ViewMyInfoPatient extends JFrame {
         springLayout.putConstraint(SpringLayout.EAST, genderField, 0, SpringLayout.EAST, phoneField);
         genderField.setEditable(false);
 
-        mainPnl.add(medicalNumField);
-        springLayout.putConstraint(SpringLayout.WEST, medicalNumField, 50, SpringLayout.EAST, firstNameField);
-        springLayout.putConstraint(SpringLayout.EAST, medicalNumField, -20, SpringLayout.EAST, mainPnl);
-        springLayout.putConstraint(SpringLayout.NORTH, medicalNumField, 0, SpringLayout.NORTH, firstNameField);
-        medicalNumField.setEditable(false);
+        mainPnl.add(medicalIdField);
+        springLayout.putConstraint(SpringLayout.WEST, medicalIdField, 50, SpringLayout.EAST, firstNameField);
+        springLayout.putConstraint(SpringLayout.EAST, medicalIdField, -20, SpringLayout.EAST, mainPnl);
+        springLayout.putConstraint(SpringLayout.NORTH, medicalIdField, 0, SpringLayout.NORTH, firstNameField);
+        medicalIdField.setEditable(false);
 
         mainPnl.add(registerDateField);
-        springLayout.putConstraint(SpringLayout.WEST, registerDateField, 0, SpringLayout.WEST, medicalNumField);
-        springLayout.putConstraint(SpringLayout.EAST, registerDateField, 0, SpringLayout.EAST, medicalNumField);
-        springLayout.putConstraint(SpringLayout.NORTH, registerDateField, 40, SpringLayout.SOUTH, medicalNumField);
+        springLayout.putConstraint(SpringLayout.WEST, registerDateField, 0, SpringLayout.WEST, medicalIdField);
+        springLayout.putConstraint(SpringLayout.EAST, registerDateField, 0, SpringLayout.EAST, medicalIdField);
+        springLayout.putConstraint(SpringLayout.NORTH, registerDateField, 40, SpringLayout.SOUTH, medicalIdField);
         registerDateField.setEditable(false);
 
         mainPnl.add(backBtn);
@@ -129,9 +129,9 @@ public class ViewMyInfoPatient extends JFrame {
         springLayout.putConstraint(SpringLayout.WEST, genderLbl, 0, SpringLayout.WEST, genderField);
         springLayout.putConstraint(SpringLayout.SOUTH, genderLbl, 0, SpringLayout.NORTH, genderField);
 
-        mainPnl.add(medicalNumLbl);
-        springLayout.putConstraint(SpringLayout.WEST, medicalNumLbl, 0, SpringLayout.WEST, medicalNumField);
-        springLayout.putConstraint(SpringLayout.SOUTH, medicalNumLbl, 0, SpringLayout.NORTH, medicalNumField);
+        mainPnl.add(medicalIdLbl);
+        springLayout.putConstraint(SpringLayout.WEST, medicalIdLbl, 0, SpringLayout.WEST, medicalIdField);
+        springLayout.putConstraint(SpringLayout.SOUTH, medicalIdLbl, 0, SpringLayout.NORTH, medicalIdField);
 
         mainPnl.add(registerDateLbl);
         springLayout.putConstraint(SpringLayout.WEST, registerDateLbl, 0, SpringLayout.WEST, registerDateField);
@@ -147,7 +147,7 @@ public class ViewMyInfoPatient extends JFrame {
     }
 
     public void displayMyInfoPatient(Patient patient) {
-        medicalNumField.setText(Integer.toString(patient.getPatientMedicalId()));
+        medicalIdField.setText(Integer.toString(patient.getMedicalId()));
         firstNameField.setText(patient.getFirstName());
         lastNameField.setText(patient.getLastName());
         addressField.setText(patient.getAddress());
@@ -155,6 +155,6 @@ public class ViewMyInfoPatient extends JFrame {
         birthDateField.setText(patient.getBirthDate());
         genderField.setText(patient.getGender());
         registerDateField.setText(patient.getRegistrationDate());
-        medicalNumField.setText(Integer.toString(patient.getPatientMedicalId()));
+        medicalIdField.setText(Integer.toString(patient.getMedicalId()));
     }
 }

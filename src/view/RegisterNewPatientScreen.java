@@ -1,12 +1,15 @@
 package view;
 import controller.Controller;
+import util.MedicalIdDocumentFilter;
 import javax.swing.*;
+import javax.swing.text.AbstractDocument;
 import java.awt.*;
 
 public class RegisterNewPatientScreen extends JFrame {
     private Controller controller;
     private JPanel mainPnl = new JPanel();
     private JLabel titleLbl = new JLabel("Register new patient");
+    private JLabel medicalIdLbl = new JLabel("Medical ID  (9 digits)");
     private JLabel firstNameLbl = new JLabel("First name");
     private JLabel lastNameLbl = new JLabel("Last name");
     private JLabel addressLbl = new JLabel("Address");
@@ -14,13 +17,13 @@ public class RegisterNewPatientScreen extends JFrame {
     private JLabel birthDateLbl = new JLabel("Birth date");
     //ska vi kanske göra om gender till JComboBox?
     private JLabel genderLbl = new JLabel("Gender");
+    private JTextField medicalIdField = new JTextField();
     private JTextField firstNameField = new JTextField();
     private JTextField lastNameField = new JTextField();
     private JTextField addressField = new JTextField();
     private JTextField phoneField = new JTextField();
     private JTextField birthDateField = new JTextField();
     private JTextField genderField = new JTextField();
-
 
     private JButton backBtn = new JButton("Back");
     private JButton registerBtn = new JButton("Register");
@@ -37,8 +40,18 @@ public class RegisterNewPatientScreen extends JFrame {
         springLayout.putConstraint(SpringLayout.NORTH, titleLbl, 20, SpringLayout.NORTH, mainPnl);
         springLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, titleLbl, 0, SpringLayout.HORIZONTAL_CENTER, mainPnl);
 
+        mainPnl.add(medicalIdLbl);
+        springLayout.putConstraint(SpringLayout.NORTH, medicalIdLbl, 40, SpringLayout.SOUTH, titleLbl);
+        springLayout.putConstraint(SpringLayout.WEST, medicalIdLbl, 40, SpringLayout.WEST, mainPnl);
+
+        mainPnl.add(medicalIdField);
+        medicalIdField.setPreferredSize(new Dimension(400, 30));
+        springLayout.putConstraint(SpringLayout.NORTH, medicalIdField, 5, SpringLayout.SOUTH, medicalIdLbl);
+        springLayout.putConstraint(SpringLayout.WEST, medicalIdField, 40, SpringLayout.WEST, mainPnl);
+        ((AbstractDocument) medicalIdField.getDocument()).setDocumentFilter(new MedicalIdDocumentFilter());
+
         mainPnl.add(firstNameLbl);
-        springLayout.putConstraint(SpringLayout.NORTH, firstNameLbl, 40, SpringLayout.SOUTH, titleLbl);
+        springLayout.putConstraint(SpringLayout.NORTH, firstNameLbl, 20, SpringLayout.SOUTH, medicalIdField);
         springLayout.putConstraint(SpringLayout.WEST, firstNameLbl, 40, SpringLayout.WEST, mainPnl);
 
         mainPnl.add(firstNameField);
@@ -104,12 +117,16 @@ public class RegisterNewPatientScreen extends JFrame {
         springLayout.putConstraint(SpringLayout.EAST, registerBtn, -40, SpringLayout.EAST, mainPnl);
 
         this.pack();
-        this.setSize(new Dimension(700, 600));
+        this.setSize(new Dimension(700, 700));
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
     } //end of constructor OBS! put getters outside
+
+    public String getMedicalId() {
+        return medicalIdField.getText();
+    }
 
     public String getFirstName() {
         return firstNameField.getText();
