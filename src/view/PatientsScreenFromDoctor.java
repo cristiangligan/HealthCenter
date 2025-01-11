@@ -5,7 +5,7 @@ import model.Patient;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.List;
+import java.util.ArrayList;
 
 public class PatientsScreenFromDoctor extends JFrame {
     private Controller controller;
@@ -44,7 +44,7 @@ public class PatientsScreenFromDoctor extends JFrame {
         mainPnl.add(viewMedicalRecordBtn);
         springLayout.putConstraint(SpringLayout.NORTH, viewMedicalRecordBtn, 10, SpringLayout.SOUTH, patientsLst);
         springLayout.putConstraint(SpringLayout.EAST, viewMedicalRecordBtn, 0, SpringLayout.EAST, patientsLst);
-        viewMedicalRecordBtn.addActionListener(e -> controller.handleViewMedicalRecord());
+        viewMedicalRecordBtn.addActionListener(e -> controller.handleViewMedicalRecordsFromDoctor());
 
         this.pack();
         this.setVisible(true);
@@ -54,7 +54,7 @@ public class PatientsScreenFromDoctor extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    public void displayPatients(List<Patient> patients) {
+    public void displayPatients(ArrayList<Patient> patients) {
         patientsLst.setListData(patients.toArray());
     }
 }
