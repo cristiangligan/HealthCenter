@@ -759,7 +759,7 @@ public class Controller implements PropertyChangeListener {
         patientManager = new PatientManager(connection);
         patientManager.subscribeListener(this);
 
-        String medicalId = registerNewPatientScreen.getMedicalId();
+        String medicalIdText = registerNewPatientScreen.getMedicalId();
         String firstName = registerNewPatientScreen.getFirstName();
         String lastName = registerNewPatientScreen.getLastname();
         String gender = registerNewPatientScreen.getGender();
@@ -767,13 +767,13 @@ public class Controller implements PropertyChangeListener {
         String phone = registerNewPatientScreen.getPhone();
         String birthDate = registerNewPatientScreen.getBirthDate();
 
-        if (medicalId.isBlank() || firstName.isBlank() || lastName.isBlank() || gender.isBlank() || address.isBlank() || phone.isBlank() || birthDate.isBlank()) {
+        if (medicalIdText.isBlank() || firstName.isBlank() || lastName.isBlank() || gender.isBlank() || address.isBlank() || phone.isBlank() || birthDate.isBlank()) {
             JOptionPane.showMessageDialog(null, "Please fill in all the fields!", "Register new patient", WARNING_MESSAGE);
             return;
         }
 
         Pattern patternNineDigits = Pattern.compile("^[1-9][0-9]{8}$");
-        Matcher matcher = patternNineDigits.matcher(medicalId);
+        Matcher matcher = patternNineDigits.matcher(medicalIdText);
         if (!matcher.matches()) {
             JOptionPane.showMessageDialog(null, "Invalid medical ID format!\nThe medical ID must have exactly 9 digits.", "Register new patient", WARNING_MESSAGE);
             return;
@@ -791,13 +791,14 @@ public class Controller implements PropertyChangeListener {
             return;
         }
 
+        int medicalId = Integer.parseInt(medicalIdText);
         boolean successSavingPatient = patientManager.saveNewPatient(medicalId, firstName, lastName, gender, address, phone, birthDate);
 
         if (successSavingPatient) {
             JOptionPane.showMessageDialog(null, "Patient registered.");
             registerNewPatientScreen.dispose();
             welcomePatientScreen = new WelcomePatientScreen(this);
-            Patient currentPatient = patientManager.getPatientInfo(firstName, lastName);
+            Patient currentPatient = patientManager.getPatientInfo(medicalId);
             welcomePatientScreen.setWelcomePatient(currentPatient.getFirstName() + " " + currentPatient.getLastName());
             patientManager.setCurrentPatient(currentPatient);
         } else {
