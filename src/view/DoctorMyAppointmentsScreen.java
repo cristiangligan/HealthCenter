@@ -11,7 +11,6 @@ public class DoctorMyAppointmentsScreen extends JFrame {
     private Controller controller;
     private JPanel mainPnl = new JPanel();
     private JLabel titleLbl = new JLabel("My appointments");
-    private JButton viewBtn = new JButton("View medical record");
     private JButton backBtn = new JButton("Back");
     private JList appointmentsLst = new JList();
 
@@ -37,10 +36,6 @@ public class DoctorMyAppointmentsScreen extends JFrame {
         springLayout.putConstraint(SpringLayout.NORTH, backBtn, 10, SpringLayout.SOUTH, appointmentsLst);
         springLayout.putConstraint(SpringLayout.WEST, backBtn, 0, SpringLayout.WEST, appointmentsLst);
         backBtn.addActionListener(e -> controller.handleBackMyAppointmentsScreen());
-
-        mainPnl.add(viewBtn);
-        springLayout.putConstraint(SpringLayout.NORTH, viewBtn, 10, SpringLayout.SOUTH, appointmentsLst);
-        springLayout.putConstraint(SpringLayout.EAST, viewBtn, 0, SpringLayout.EAST, appointmentsLst);
 
         this.pack();
         this.setVisible(true);

@@ -1,9 +1,11 @@
 package view;
 
 import controller.Controller;
+import model.MedicalRecord;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class MedicalRecordsScreen extends JFrame {
     private Controller controller;
@@ -47,5 +49,13 @@ public class MedicalRecordsScreen extends JFrame {
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    //TODO: implement
+    public void displayMedicalRecords(ArrayList<MedicalRecord> medicalRecords) {
+    }
+
+    public void setTitleLabel(String patientName) {
+        titleLbl.setText(patientName);
     }
 }
