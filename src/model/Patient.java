@@ -1,7 +1,7 @@
 package model;
 
 public class Patient {
-    private int patientMedicalId;
+    private int medicalId;
     private String firstName;
     private String lastName;
     private String gender;
@@ -10,8 +10,8 @@ public class Patient {
     private String birthDate;
     private String registrationDate;
 
-    public Patient(int patientMedicalId, String firstName, String lastName, String gender, String address, String phone, String birthDate, String registrationDate) {
-        this.patientMedicalId = patientMedicalId;
+    public Patient(int medicalId, String firstName, String lastName, String gender, String address, String phone, String birthDate, String registrationDate) {
+        this.medicalId = medicalId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
@@ -21,8 +21,8 @@ public class Patient {
         this.registrationDate = registrationDate;
     }
 
-    public int getPatientMedicalId() {
-        return patientMedicalId;
+    public int getMedicalId() {
+        return medicalId;
     }
 
     public String getFirstName() {

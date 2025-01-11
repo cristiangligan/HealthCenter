@@ -47,18 +47,16 @@ public class PatientManager extends JFrame {
         }
     }
 
-    public boolean saveNewPatient(String firstName, String lastName, String gender, String address, String phone, String birthDate) {
-        String verifyQuery = "INSERT INTO public.patient (firstname, lastname, gender, address, phone, birthdate, reg_date) VALUES (?, ?, ?, ?, ?, ?, CURRENT_DATE)";
+    public boolean saveNewPatient(String medicalId, String firstName, String lastName, String gender, String address, String phone, String birthDate) {
+        String verifyQuery = "INSERT INTO public.patient (id, firstname, lastname, gender, address, phone, birthdate, reg_date) VALUES (?, ?, ?, ?, ?, ?, ?, CURRENT_DATE)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(verifyQuery)) {
-            preparedStatement.setString(1, firstName);
-            preparedStatement.setString(2, lastName);
-            preparedStatement.setString(3, gender);
-            preparedStatement.setString(4, address);
-            preparedStatement.setString(5, phone);
-            preparedStatement.setString(6, String.valueOf(java.sql.Date.valueOf(birthDate)));
-
-            java.sql.Date sqlBirthDate = java.sql.Date.valueOf(birthDate);
-            preparedStatement.setDate(6, sqlBirthDate);
+            preparedStatement.setInt(1, Integer.parseInt(medicalId));
+            preparedStatement.setString(2, firstName);
+            preparedStatement.setString(3, lastName);
+            preparedStatement.setString(4, gender);
+            preparedStatement.setString(5, address);
+            preparedStatement.setString(6, phone);
+            preparedStatement.setDate(7, java.sql.Date.valueOf(birthDate));
 
             int rowsAffected = preparedStatement.executeUpdate();
             return rowsAffected > 0;
@@ -147,7 +145,7 @@ public class PatientManager extends JFrame {
     }
 
     public boolean updatePatientInfo(Patient patient) throws SQLException {
-        String selectQuery = "UPDATE public.patient SET firstname = ?, lastname = ?, gender = ?, address = ? , phone = ?, birthdate = ? WHERE id = ?";
+        String selectQuery = "UPDATE public.patient SET firstname = ?, lastname = ?, gender = ?, address = ? , phone = ?, birthdate = ?  WHERE id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(selectQuery)) {
             preparedStatement.setString(1, patient.getFirstName());
             preparedStatement.setString(2, patient.getLastName());
@@ -155,7 +153,7 @@ public class PatientManager extends JFrame {
             preparedStatement.setString(4, patient.getAddress());
             preparedStatement.setString(5, patient.getPhone());
             preparedStatement.setDate(6, java.sql.Date.valueOf(patient.getBirthDate()));
-            preparedStatement.setInt(7, patient.getPatientMedicalId());
+            preparedStatement.setInt(7, patient.getMedicalId());
 
             int rowsUpdated = preparedStatement.executeUpdate();
             if (rowsUpdated > 0) {
@@ -210,7 +208,7 @@ public class PatientManager extends JFrame {
         Appointment appointment = null;
         String selectQuery = "SELECT * FROM public.appointment WHERE appointment.id_patient = ? AND appointment.id_doctor = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(selectQuery)) {
-            preparedStatement.setInt(1, currentPatient.getPatientMedicalId());
+            preparedStatement.setInt(1, currentPatient.getMedicalId());
             preparedStatement.setInt(2, selectedDoctor.getEmployerNr());
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
