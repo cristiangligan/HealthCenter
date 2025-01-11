@@ -84,11 +84,12 @@ public class WelcomeDoctorScreen extends JFrame {
 
         this.pack();
         this.setVisible(true);
-        this.setSize(new Dimension(600, 400));
+        this.setSize(new Dimension(600, 460));
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
+
     public void setWelcomeDoctorLabel(String doctorLabel) {
         welcomeDoctor.setText("Welcome doctor " + doctorLabel);
     }
