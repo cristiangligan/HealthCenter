@@ -42,7 +42,7 @@ public class DoctorManager {
         }
     }
 
-    public ArrayList<Appointment> getMyAppointments(Doctor selectedDoctor, String nextMondayDate) {
+    public ArrayList<Appointment> getMyUpcomingAppointments(Doctor selectedDoctor, String nextMondayDate) {
         ArrayList<Appointment> appointments = new ArrayList<>();
         Appointment appointment = null;
         String selectQuery = "SELECT * FROM public.appointment WHERE appointment.id_doctor = ?";
@@ -60,6 +60,7 @@ public class DoctorManager {
                     Date mondayString = simpleDateFormat.parse(nextMondayDate);
                     if (date.compareTo(mondayString) >= 0) {
                         appointment = new Appointment(doctorId, patientId, time, dateString);
+                        appointment.setId(id);
                         appointments.add(appointment);
                     }
                 }
@@ -67,6 +68,35 @@ public class DoctorManager {
                 return appointments;
             } catch (ParseException e) {
                 throw new RuntimeException(e);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return appointments;
+    }
+
+    public ArrayList<Appointment> getDoctorsAppointments(Doctor doctor) {
+        ArrayList<Appointment> appointments = new ArrayList<>();
+        Appointment appointment = null;
+        String selectQuery = "SELECT * FROM public.appointment WHERE appointment.id_doctor = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(selectQuery)) {
+            preparedStatement.setInt(1, doctor.getEmployerNr());
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    int patientId = resultSet.getInt("id_patient");
+                    if (patientId != 0) {
+                        int id = resultSet.getInt("id");
+                        int doctorId = resultSet.getInt("id_doctor");
+                        String time = resultSet.getString("time");
+                        String dateString = resultSet.getString("date");
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                        appointment = new Appointment(doctorId, patientId, time, dateString);
+                        appointment.setId(id);
+                        appointments.add(appointment);
+                    }
+                }
+            } catch (SQLException e) {
+                return appointments;
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
