@@ -27,7 +27,6 @@ public class AdminLogIn extends JFrame {
                 lblLogInAdmin.setVerticalAlignment(SwingConstants.CENTER);
                 lblLogInAdmin.setHorizontalAlignment(SwingConstants.CENTER);
                 lblLogInAdmin.setFont(new Font(Font.SERIF, Font.BOLD, 20));
-                lblLogInAdmin.setBackground(Color.red);
                 lblLogInAdmin.setOpaque(true); //ej genomskinligt
                 pnlMain.add(lblLogInAdmin);
 
@@ -67,14 +66,15 @@ public class AdminLogIn extends JFrame {
 
                 btnBack = new JButton("Back");
                 pnlMain.add(btnBack);
-                springLayout.putConstraint(SpringLayout.NORTH, btnBack,20, SpringLayout.SOUTH, passwordField);
-                springLayout.putConstraint(SpringLayout.WEST, btnBack, 100, SpringLayout.WEST, pnlMain);
+                springLayout.putConstraint(SpringLayout.NORTH, btnBack,30, SpringLayout.SOUTH, passwordField);
+                springLayout.putConstraint(SpringLayout.WEST, btnBack, 30, SpringLayout.WEST, pnlMain);
                 btnBack.addActionListener(e -> controller.handleBackFromAdminLogIn());
 
                 btnLogin = new JButton("Login");
                 pnlMain.add(btnLogin);
-                springLayout.putConstraint(SpringLayout.NORTH, btnLogin,20, SpringLayout.SOUTH, passwordField);
-                springLayout.putConstraint(SpringLayout.WEST, btnLogin, -100, SpringLayout.EAST, pnlMain);
+                springLayout.putConstraint(SpringLayout.NORTH, btnLogin,30, SpringLayout.SOUTH, passwordField);
+                springLayout.putConstraint(SpringLayout.WEST, btnLogin, 0, SpringLayout.WEST, passwordField);
+                springLayout.putConstraint(SpringLayout.EAST, btnLogin, 0, SpringLayout.EAST, passwordField);
                 btnLogin.addActionListener(e -> controller.handleAdminLogIn());
 
                 this.pack();

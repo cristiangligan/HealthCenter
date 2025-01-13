@@ -28,7 +28,6 @@ public class PatientLogInScreen extends JFrame {
         lblLogInPatient.setVerticalAlignment(SwingConstants.CENTER);
         lblLogInPatient.setHorizontalAlignment(SwingConstants.CENTER);
         lblLogInPatient.setFont(new Font(Font.SERIF, Font.BOLD, 20));
-        lblLogInPatient.setBackground(Color.red);
         lblLogInPatient.setOpaque(true); //ej genomskinligt
         pnlMain.add(lblLogInPatient);
 

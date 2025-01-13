@@ -24,7 +24,6 @@ public class LogInScreen extends JFrame {
         lblLogInAs.setVerticalAlignment(SwingConstants.CENTER);
         lblLogInAs.setHorizontalAlignment(SwingConstants.CENTER);
         lblLogInAs.setFont(new Font(Font.SERIF, Font.BOLD, 20));
-        lblLogInAs.setBackground(Color.red);
         lblLogInAs.setOpaque(true); //ej genomskinligt
         pnlMain.add(lblLogInAs);
 

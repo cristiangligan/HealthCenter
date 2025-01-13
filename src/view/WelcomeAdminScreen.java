@@ -24,7 +24,6 @@ public class WelcomeAdminScreen extends JFrame {
             welcomeUsername.setVerticalAlignment(SwingConstants.CENTER);
             welcomeUsername.setHorizontalAlignment(SwingConstants.CENTER);
             welcomeUsername.setFont(new Font(Font.SERIF, Font.BOLD, 20));
-            //welcomeUsername.setBackground(Color.red);
             welcomeUsername.setOpaque(true); //ej genomskinligt
             pnlMain.add(welcomeUsername);
 
@@ -82,14 +81,14 @@ public class WelcomeAdminScreen extends JFrame {
             springLayout.putConstraint(SpringLayout.EAST, btnSpecializations, -150, SpringLayout.EAST, pnlMain);
 
             pnlMain.add(btnLogOut);
-            springLayout.putConstraint(SpringLayout.WEST, btnLogOut, 10, SpringLayout.WEST, pnlMain);
-            springLayout.putConstraint(SpringLayout.NORTH, btnLogOut, 0, SpringLayout.NORTH, btnSpecializations);
-            springLayout.putConstraint(SpringLayout.SOUTH, btnLogOut, 0, SpringLayout.SOUTH, btnSpecializations);
+            springLayout.putConstraint(SpringLayout.NORTH, btnLogOut, 40, SpringLayout.SOUTH, btnSpecializations);
+            springLayout.putConstraint(SpringLayout.WEST, btnLogOut, 150, SpringLayout.WEST, pnlMain);
+            springLayout.putConstraint(SpringLayout.EAST, btnLogOut, -150, SpringLayout.EAST, pnlMain);
             btnLogOut.addActionListener(e -> controller.logOutAdmin());
 
             this.pack();
             this.setVisible(true);
-            this.setSize(new Dimension(600, 400));
+            this.setSize(new Dimension(600, 540));
             this.setResizable(false);
             this.setLocationRelativeTo(null);
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

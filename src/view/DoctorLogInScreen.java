@@ -25,7 +25,6 @@ public class DoctorLogInScreen extends JFrame {
         lblLogInDoctor.setVerticalAlignment(SwingConstants.CENTER);
         lblLogInDoctor.setHorizontalAlignment(SwingConstants.CENTER);
         lblLogInDoctor.setFont(new Font(Font.SERIF, Font.BOLD, 20));
-        lblLogInDoctor.setBackground(Color.red);
         lblLogInDoctor.setOpaque(true); //ej genomskinligt
         pnlMain.add(lblLogInDoctor);
 
@@ -48,20 +47,21 @@ public class DoctorLogInScreen extends JFrame {
 
         btnBack = new JButton("Back");
         pnlMain.add(btnBack);
-        springLayout.putConstraint(SpringLayout.NORTH, btnBack,20, SpringLayout.SOUTH, doctorIdTextField);
-        springLayout.putConstraint(SpringLayout.WEST, btnBack, 100, SpringLayout.WEST, pnlMain);
+        springLayout.putConstraint(SpringLayout.NORTH, btnBack,30, SpringLayout.SOUTH, doctorIdTextField);
+        springLayout.putConstraint(SpringLayout.WEST, btnBack, 30, SpringLayout.WEST, pnlMain);
         btnBack.addActionListener(e -> controller.handleBackFromDoctorLogInScreen());
 
         btnLogin = new JButton("Login");
         pnlMain.add(btnLogin);
-        springLayout.putConstraint(SpringLayout.NORTH, btnLogin,20, SpringLayout.SOUTH, doctorIdTextField);
-        springLayout.putConstraint(SpringLayout.WEST, btnLogin, -100, SpringLayout.EAST, pnlMain);
+        springLayout.putConstraint(SpringLayout.NORTH, btnLogin,30, SpringLayout.SOUTH, doctorIdTextField);
+        springLayout.putConstraint(SpringLayout.WEST, btnLogin, 0, SpringLayout.WEST, doctorIdTextField);
+        springLayout.putConstraint(SpringLayout.EAST, btnLogin, 0, SpringLayout.EAST, doctorIdTextField);
         btnLogin.addActionListener(e -> controller.handleDoctorLogIn());
 
 
         this.pack();
         this.setVisible(true);
-        this.setSize(new Dimension(600, 400));
+        this.setSize(new Dimension(600, 300));
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
