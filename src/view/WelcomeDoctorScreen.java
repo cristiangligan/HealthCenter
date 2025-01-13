@@ -25,7 +25,6 @@ public class WelcomeDoctorScreen extends JFrame {
         welcomeDoctor.setVerticalAlignment(SwingConstants.CENTER);
         welcomeDoctor.setHorizontalAlignment(SwingConstants.CENTER);
         welcomeDoctor.setFont(new Font(Font.SERIF, Font.BOLD, 20));
-        //welcomeUsername.setBackground(Color.red);
         welcomeDoctor.setOpaque(true); //ej genomskinligt
         pnlMain.add(welcomeDoctor);
 
