@@ -49,6 +49,7 @@ public class Controller implements PropertyChangeListener {
     private EditDoctorScreen editDoctorScreen;
     private DoctorManager doctorManager;
     private PatientManager patientManager;
+    private UserManager userManager = new UserManager();
 
     //nytt
     private EditInfoPatientScreen editInfoPatientScreen;
@@ -107,6 +108,7 @@ public class Controller implements PropertyChangeListener {
         Admin admin = new Admin(username, password);
         admin = adminManager.verifyAdmin(admin);
         if(admin != null) {
+            userManager.setCurrentUser(admin);
             adminManager.setCurrentAdmin(admin);
             welcomeAdminScreen = new WelcomeAdminScreen(this);
             welcomeAdminScreen.setUsernameLabel(admin.toString());
@@ -128,8 +130,9 @@ public class Controller implements PropertyChangeListener {
 
 
     public void logOutAdmin() {
-        logInScreen = new LogInScreen(this);
         adminManager.setCurrentAdmin(null);
+        userManager.setCurrentUser(null);
+        logInScreen = new LogInScreen(this);
         welcomeAdminScreen.dispose();
     }
     //-------- LogIn/LogOut - END --------
@@ -522,6 +525,7 @@ public class Controller implements PropertyChangeListener {
             Doctor doctor = doctorManager.verifyDoctor(medicalId);
 
             if (doctor != null) {
+                userManager.setCurrentUser(doctor);
                 doctorManager.setCurrentDoctor(doctor);
                 welcomeDoctorScreen = new WelcomeDoctorScreen(this);
                 welcomeDoctorScreen.setWelcomeDoctorLabel(doctor.toString());
@@ -540,6 +544,8 @@ public class Controller implements PropertyChangeListener {
 
 
     public void logOutDoctor() {
+        doctorManager.setCurrentDoctor(null);
+        userManager.setCurrentUser(null);
         logInScreen = new LogInScreen(this);
         welcomeDoctorScreen.dispose();
     }
@@ -727,6 +733,7 @@ public class Controller implements PropertyChangeListener {
 
             if (patient != null) {
                 System.out.println("Logged in as: " + patient.getFirstName() + " " + patient.getLastName());
+                userManager.setCurrentUser(patient);
                 patientManager.setCurrentPatient(patient);
                 welcomePatientScreen = new WelcomePatientScreen(this);
                 welcomePatientScreen.setWelcomePatient(patient.toString());
@@ -757,6 +764,8 @@ public class Controller implements PropertyChangeListener {
 
 
     public void logOutPatient() {
+        patientManager.setCurrentPatient(null);
+        userManager.setCurrentUser(null);
         patientLogInScreen = new PatientLogInScreen(this);
         welcomePatientScreen.dispose();
     }
@@ -806,11 +815,12 @@ public class Controller implements PropertyChangeListener {
 
         if (successSavingPatient) {
             JOptionPane.showMessageDialog(null, "Patient registered.");
+            Patient currentPatient = patientManager.getPatientInfo(medicalId);
+            userManager.setCurrentUser(currentPatient);
+            patientManager.setCurrentPatient(currentPatient);
             registerNewPatientScreen.dispose();
             welcomePatientScreen = new WelcomePatientScreen(this);
-            Patient currentPatient = patientManager.getPatientInfo(medicalId);
             welcomePatientScreen.setWelcomePatient(currentPatient.getFirstName() + " " + currentPatient.getLastName());
-            patientManager.setCurrentPatient(currentPatient);
         } else {
             JOptionPane.showMessageDialog(null, "Failed to register patient! Please try again.", "Register new patient", WARNING_MESSAGE);
         }
@@ -1076,7 +1086,21 @@ public class Controller implements PropertyChangeListener {
     }
     //------------------------------------------PROPERTY_CHANGE - END------------------------------------------------
 
+    public boolean isCurrentUserSet() {
+        return userManager.isCurrentUserSet();
+    }
 
+    public boolean isCurrentUserAdmin() {
+        return userManager.isCurrentUserAdmin();
+    }
+
+    public boolean isCurrentUserDoctor() {
+        return userManager.isCurrentUserDoctor();
+    }
+
+    public boolean isCurrentUserPatient() {
+        return userManager.isCurrentUserPatient();
+    }
 
     public static void main(String[] args) {
       Controller controller = new Controller();

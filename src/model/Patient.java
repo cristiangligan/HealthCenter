@@ -1,7 +1,6 @@
 package model;
 
-public class Patient {
-    private int medicalId;
+public class Patient extends User {
     private String firstName;
     private String lastName;
     private String gender;
@@ -11,7 +10,7 @@ public class Patient {
     private String registrationDate;
 
     public Patient(int medicalId, String firstName, String lastName, String gender, String address, String phone, String birthDate, String registrationDate) {
-        this.medicalId = medicalId;
+        this.id = medicalId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
@@ -22,7 +21,7 @@ public class Patient {
     }
 
     public int getMedicalId() {
-        return medicalId;
+        return id;
     }
 
     public String getFirstName() {
