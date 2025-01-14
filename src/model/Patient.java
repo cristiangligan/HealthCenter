@@ -1,5 +1,8 @@
 package model;
 
+import model.common.User;
+import model.common.UserType;
+
 public class Patient extends User {
     private String firstName;
     private String lastName;
@@ -7,9 +10,11 @@ public class Patient extends User {
     private String address;
     private String phone;
     private String birthDate;
-    private String registrationDate;
+    private final String registrationDate;
 
     public Patient(int medicalId, String firstName, String lastName, String gender, String address, String phone, String birthDate, String registrationDate) {
+        this.type = UserType.PATIENT;
+
         this.id = medicalId;
         this.firstName = firstName;
         this.lastName = lastName;

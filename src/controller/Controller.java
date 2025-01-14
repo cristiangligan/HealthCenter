@@ -1,6 +1,7 @@
 package controller;
 
 import model.*;
+import model.common.User;
 import view.*;
 
 import javax.swing.*;
@@ -18,7 +19,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static javax.swing.JOptionPane.WARNING_MESSAGE;
-import static javax.swing.JOptionPane.showMessageDialog;
 
 public class Controller implements PropertyChangeListener {
     private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -49,7 +49,7 @@ public class Controller implements PropertyChangeListener {
     private EditDoctorScreen editDoctorScreen;
     private DoctorManager doctorManager;
     private PatientManager patientManager;
-    private UserManager userManager = new UserManager();
+    private UserManager userManager;
 
     //nytt
     private EditInfoPatientScreen editInfoPatientScreen;
@@ -75,8 +75,8 @@ public class Controller implements PropertyChangeListener {
             connection = DriverManager.getConnection(URL, user, password);
 
             if (connection != null) {
+                userManager = new UserManager(connection);
                 System.out.println("Connected successfully!");
-
             } else {
                 System.out.println("Not successful!");
             }
@@ -125,15 +125,6 @@ public class Controller implements PropertyChangeListener {
     public void handleBackFromAdminLogIn() {
         logInScreen = new LogInScreen(this);
         adminLogIn.dispose();
-    }
-
-
-
-    public void logOutAdmin() {
-        adminManager.setCurrentAdmin(null);
-        userManager.setCurrentUser(null);
-        logInScreen = new LogInScreen(this);
-        welcomeAdminScreen.dispose();
     }
     //-------- LogIn/LogOut - END --------
 
@@ -315,33 +306,6 @@ public class Controller implements PropertyChangeListener {
         welcomeAdminScreen.setUsernameLabel(adminManager.getCurrentAdmin().toString());
         patientsScreenFromAdmin.dispose();
     }
-
-
-
-    public void handleViewMedicalRecordsFromAdmin() {
-        medicalRecordsScreen = new MedicalRecordsScreen(this);
-        patientsScreenFromAdmin.dispose();
-    }
-
-
-
-    public void handleBackFromMedicalRecord() {
-        patientsScreenFromDoctor = new PatientsScreenFromDoctor(this);
-        patientsScreenFromDoctor.displayPatients(doctorManager.getDoctorsPatients(doctorManager.getCurrentDoctor()));
-        medicalRecordsScreen.dispose();
-    }
-
-
-
-    public void handleViewFromMedicalRecord() {
-        diagnosisScreen = new DiagnosisScreen(this);
-        medicalRecordsScreen.dispose();
-    }
-
-    public void handleBackFromDiagnosisScreen() {
-        medicalRecordsScreen = new MedicalRecordsScreen(this);
-        diagnosisScreen.dispose();
-    }
     //-------- Patients - END --------
 
 
@@ -424,7 +388,7 @@ public class Controller implements PropertyChangeListener {
     public void handleSaveNewSpecialization() {
         String name = addSpecializationScreen.getSpecializationName();
         int cost;
-        if (name == null || name.isEmpty() || name.isBlank()) {
+        if (name == null || name.isBlank()) {
             JOptionPane.showMessageDialog(null, "Please input a specialization name.");
         } else {
             try {
@@ -447,7 +411,7 @@ public class Controller implements PropertyChangeListener {
     public void handleSaveEditedSpecialization() {
         String editedName = editSpecializationScreen.getSpecializationName();
         int editedCost;
-        if (editedName == null || editedName.isEmpty() || editedName.isBlank()) {
+        if (editedName == null || editedName.isBlank()) {
             JOptionPane.showMessageDialog(null, "Please input a specialization name.");
         } else {
             try {
@@ -540,15 +504,6 @@ public class Controller implements PropertyChangeListener {
             doctorLogInScreen.clearFields();
         }
     }
-
-
-
-    public void logOutDoctor() {
-        doctorManager.setCurrentDoctor(null);
-        userManager.setCurrentUser(null);
-        logInScreen = new LogInScreen(this);
-        welcomeDoctorScreen.dispose();
-    }
     //-------- LogIn/LogOut - END --------
 
 
@@ -600,20 +555,6 @@ public class Controller implements PropertyChangeListener {
                     throw new RuntimeException(e);
                 }
             }
-        }
-    }
-
-    public void handleViewMedicalRecordsFromDoctor() {
-        Patient patient = patientsScreenFromDoctor.getSelectedPatient();
-        if (patient != null) {
-            doctorManager.setSelectedPatient(patient);
-            medicalRecordsScreen = new MedicalRecordsScreen(this);
-            medicalRecordsScreen.setTitleLabel(patient.getFirstName()+ " " + patient.getLastName());
-            ArrayList<MedicalRecord> medicalRecords = doctorManager.getMedicalRecords(patient);
-            medicalRecordsScreen.displayMedicalRecords(medicalRecords);
-            patientsScreenFromDoctor.dispose();
-        } else {
-            JOptionPane.showMessageDialog(null, "Please select a patient.", "No selection", WARNING_MESSAGE);
         }
     }
 
@@ -749,25 +690,6 @@ public class Controller implements PropertyChangeListener {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }
-
-
-
-    public void logInAsPatient() {
-        if(patientManager == null) {
-            patientManager = new PatientManager(connection);
-        }
-        welcomePatientScreen = new WelcomePatientScreen(this);
-        patientLogInScreen.dispose();
-    }
-
-
-
-    public void logOutPatient() {
-        patientManager.setCurrentPatient(null);
-        userManager.setCurrentUser(null);
-        patientLogInScreen = new PatientLogInScreen(this);
-        welcomePatientScreen.dispose();
     }
     //-------- LogIn/LogOut - END --------
 
@@ -1086,20 +1008,98 @@ public class Controller implements PropertyChangeListener {
     }
     //------------------------------------------PROPERTY_CHANGE - END------------------------------------------------
 
-    public boolean isCurrentUserSet() {
-        return userManager.isCurrentUserSet();
+    public void logOut() {
+        User currentUser = userManager.getCurrentUser();
+        logInScreen = new LogInScreen(this);
+
+        if (currentUser.isAdmin()) {
+            adminManager.setCurrentAdmin(null);
+            welcomeAdminScreen.dispose();
+        } else if (currentUser.isDoctor()) {
+            doctorManager.setCurrentDoctor(null);
+            doctorManager.setSelectedPatient(null);
+            welcomeDoctorScreen.dispose();
+        } else if (currentUser.isPatient()) {
+            patientManager.setCurrentPatient(null);
+            welcomePatientScreen.dispose();
+        }
+
+        userManager.setCurrentUser(null);
+    }
+
+    public void handleViewMedicalRecords(Patient patient) {
+        ArrayList<MedicalRecord> medicalRecords = userManager.getMedicalRecords(patient);
+        medicalRecordsScreen = new MedicalRecordsScreen(this);
+        medicalRecordsScreen.setTitleLabel(patient.getFirstName()+ " " + patient.getLastName());
+        medicalRecordsScreen.displayMedicalRecords(medicalRecords);
+
+        User currentUser = userManager.getCurrentUser();
+        if (currentUser.isAdmin()) {
+            patientsScreenFromAdmin.dispose();
+        } else if (currentUser.isDoctor()) {
+            doctorManager.setSelectedPatient(patient);
+            patientsScreenFromDoctor.dispose();
+        } else if (currentUser.isPatient()) {
+            welcomePatientScreen.dispose();
+        }
+    }
+
+    public void handleBackFromMedicalRecords() {
+        User currentUser = userManager.getCurrentUser();
+
+        if (currentUser.isAdmin()) {
+            patientsScreenFromAdmin = new PatientsScreenFromAdmin(this);
+            patientsScreenFromAdmin.displayPatients(adminManager.getPatients());
+        } else if (currentUser.isDoctor()) {
+            Doctor currentDoctor = (Doctor) currentUser;
+            patientsScreenFromDoctor = new PatientsScreenFromDoctor(this);
+            patientsScreenFromDoctor.displayPatients(doctorManager.getDoctorsPatients(currentDoctor));
+        } else if (currentUser.isPatient()) {
+            Patient currentPatient = (Patient) currentUser;
+            welcomePatientScreen = new WelcomePatientScreen(this);
+            welcomePatientScreen.setWelcomePatient(currentPatient.toString());
+        }
+
+        medicalRecordsScreen.dispose();
+    }
+
+    public void handleViewDiagnosis(MedicalRecord medicalRecord) {
+        diagnosisScreen = new DiagnosisScreen(medicalRecord,this);
+        medicalRecordsScreen.dispose();
+    }
+
+    public void handleBackFromDiagnosis(int patientId) {
+        Patient patient = userManager.getPatient(patientId);
+        ArrayList<MedicalRecord> medicalRecords = userManager.getMedicalRecords(patient);
+        medicalRecordsScreen = new MedicalRecordsScreen(this);
+        medicalRecordsScreen.setTitleLabel(patient.getFirstName()+ " " + patient.getLastName());
+        medicalRecordsScreen.displayMedicalRecords(medicalRecords);
+
+        diagnosisScreen.dispose();
+    }
+
+    public Doctor getDoctor(int doctorId) {
+        return userManager.getDoctor(doctorId);
+    }
+
+    public Patient getPatient(int patientId) {
+        return userManager.getPatient(patientId);
+    }
+
+    public User getCurrentUser() {
+        return userManager.getCurrentUser();
     }
 
     public boolean isCurrentUserAdmin() {
-        return userManager.isCurrentUserAdmin();
+        return userManager.getCurrentUser().isAdmin();
     }
 
     public boolean isCurrentUserDoctor() {
-        return userManager.isCurrentUserDoctor();
+        return userManager.getCurrentUser().isDoctor();
     }
 
     public boolean isCurrentUserPatient() {
-        return userManager.isCurrentUserPatient();
+        return userManager.getCurrentUser().isPatient();
     }
 
     public static void main(String[] args) {

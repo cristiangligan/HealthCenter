@@ -6,17 +6,13 @@ import javax.swing.*;
 import java.awt.*;
 
 public class WelcomeDoctorScreen extends JFrame {
-    private Controller controller;
-    private JPanel pnlMain = new JPanel();
-    private JLabel welcomeDoctor;
-    private JButton btnMyPatients;
-    private JButton btnMySchedule;
-    private JButton btnMyAppointments;
-    private JButton logOut;
+    private final Controller controller;
+    private final JLabel welcomeDoctor;
 
     public WelcomeDoctorScreen(Controller controller) {
         this.controller = controller;
         this.setTitle("Health Center");
+        JPanel pnlMain = new JPanel();
         this.setContentPane(pnlMain);
         SpringLayout springLayout = new SpringLayout();
         pnlMain.setLayout(springLayout);
@@ -33,7 +29,7 @@ public class WelcomeDoctorScreen extends JFrame {
         springLayout.putConstraint(SpringLayout.WEST, welcomeDoctor, 10, SpringLayout.WEST, pnlMain);
         springLayout.putConstraint(SpringLayout.EAST, welcomeDoctor, -10, SpringLayout.EAST, pnlMain);
 
-        btnMyPatients = new JButton("My patients");
+        JButton btnMyPatients = new JButton("My patients");
         btnMyPatients.setVerticalAlignment(SwingConstants.CENTER);
         btnMyPatients.setHorizontalAlignment(SwingConstants.CENTER);
         btnMyPatients.setFont(new Font(Font.SERIF, Font.BOLD, 15));
@@ -46,7 +42,7 @@ public class WelcomeDoctorScreen extends JFrame {
         springLayout.putConstraint(SpringLayout.WEST, btnMyPatients, 150, SpringLayout.WEST, pnlMain);
         springLayout.putConstraint(SpringLayout.EAST, btnMyPatients, -150, SpringLayout.EAST, pnlMain);
 
-        btnMySchedule = new JButton("My schedule");
+        JButton btnMySchedule = new JButton("My schedule");
         btnMySchedule.setVerticalAlignment(SwingConstants.CENTER);
         btnMySchedule.setHorizontalAlignment(SwingConstants.CENTER);
         btnMySchedule.setFont(new Font(Font.SERIF, Font.BOLD, 15));
@@ -58,7 +54,7 @@ public class WelcomeDoctorScreen extends JFrame {
         springLayout.putConstraint(SpringLayout.WEST, btnMySchedule, 150, SpringLayout.WEST, pnlMain);
         springLayout.putConstraint(SpringLayout.EAST, btnMySchedule, -150, SpringLayout.EAST, pnlMain);
 
-        btnMyAppointments = new JButton("My appointments");
+        JButton btnMyAppointments = new JButton("My appointments");
         btnMyAppointments.setVerticalAlignment(SwingConstants.CENTER);
         btnMyAppointments.setHorizontalAlignment(SwingConstants.CENTER);
         btnMyAppointments.setFont(new Font(Font.SERIF, Font.BOLD, 15));
@@ -70,12 +66,12 @@ public class WelcomeDoctorScreen extends JFrame {
         springLayout.putConstraint(SpringLayout.WEST, btnMyAppointments, 150, SpringLayout.WEST, pnlMain);
         springLayout.putConstraint(SpringLayout.EAST, btnMyAppointments, -150, SpringLayout.EAST, pnlMain);
 
-        logOut = new JButton("Log out");
+        JButton logOut = new JButton("Log out");
         logOut.setVerticalAlignment(SwingConstants.CENTER);
         logOut.setHorizontalAlignment(SwingConstants.CENTER);
         logOut.setFont(new Font(Font.SERIF, Font.BOLD, 15));
         pnlMain.add(logOut);
-        logOut.addActionListener(e -> controller.logOutDoctor());
+        logOut.addActionListener(e -> controller.logOut());
 
         springLayout.putConstraint(SpringLayout.NORTH, logOut, 40, SpringLayout.SOUTH, btnMyAppointments);
         springLayout.putConstraint(SpringLayout.WEST, logOut, 150, SpringLayout.WEST, pnlMain);

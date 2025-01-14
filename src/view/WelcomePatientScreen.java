@@ -1,22 +1,19 @@
 package view;
 
 import controller.Controller;
+import model.Patient;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class WelcomePatientScreen extends JFrame {
-    private Controller controller;
-    private JPanel pnlMain = new JPanel();
-    private JLabel welcomePatient;
-    private JButton btnMyInfo;
-    private JButton btnBookAnAppointment;
-    private JButton btnViewMedicalRecord;
-    private JButton btnLogOut;
+    private final Controller controller;
+    private final JLabel welcomePatient;
 
     public WelcomePatientScreen(Controller controller) {
         this.controller = controller;
         this.setTitle("Health Center");
+        JPanel pnlMain = new JPanel();
         this.setContentPane(pnlMain);
         SpringLayout springLayout = new SpringLayout();
         pnlMain.setLayout(springLayout);
@@ -33,7 +30,7 @@ public class WelcomePatientScreen extends JFrame {
         springLayout.putConstraint(SpringLayout.WEST, welcomePatient, 10, SpringLayout.WEST, pnlMain);
         springLayout.putConstraint(SpringLayout.EAST, welcomePatient, -10, SpringLayout.EAST, pnlMain);
 
-        btnMyInfo = new JButton("My info");
+        JButton btnMyInfo = new JButton("My info");
         btnMyInfo.setVerticalAlignment(SwingConstants.CENTER);
         btnMyInfo.setHorizontalAlignment(SwingConstants.CENTER);
         btnMyInfo.setFont(new Font(Font.SERIF, Font.BOLD, 15));
@@ -45,7 +42,7 @@ public class WelcomePatientScreen extends JFrame {
         springLayout.putConstraint(SpringLayout.WEST, btnMyInfo, 150, SpringLayout.WEST, pnlMain);
         springLayout.putConstraint(SpringLayout.EAST, btnMyInfo, -150, SpringLayout.EAST, pnlMain);
 
-        btnBookAnAppointment = new JButton("Book an appointment");
+        JButton btnBookAnAppointment = new JButton("Book an appointment");
         btnBookAnAppointment.setVerticalAlignment(SwingConstants.CENTER);
         btnBookAnAppointment.setHorizontalAlignment(SwingConstants.CENTER);
         btnBookAnAppointment.setFont(new Font(Font.SERIF, Font.BOLD, 15));
@@ -57,24 +54,27 @@ public class WelcomePatientScreen extends JFrame {
         springLayout.putConstraint(SpringLayout.WEST, btnBookAnAppointment, 150, SpringLayout.WEST, pnlMain);
         springLayout.putConstraint(SpringLayout.EAST, btnBookAnAppointment, -150, SpringLayout.EAST, pnlMain);
 
-        btnViewMedicalRecord = new JButton("View medical records");
+        JButton btnViewMedicalRecord = new JButton("View medical records");
         btnViewMedicalRecord.setVerticalAlignment(SwingConstants.CENTER);
         btnViewMedicalRecord.setHorizontalAlignment(SwingConstants.CENTER);
         btnViewMedicalRecord.setFont(new Font(Font.SERIF, Font.BOLD, 15));
         pnlMain.add(btnViewMedicalRecord);
-        //btnViewMedicalRecord.addActionListener(e -> controller.viewMedicalRecordsPatient());
+        btnViewMedicalRecord.addActionListener(e -> {
+            Patient patient = (Patient)controller.getCurrentUser();
+            controller.handleViewMedicalRecords(patient);
+        });
 
         //sätt layout för doctor-knapp
         springLayout.putConstraint(SpringLayout.NORTH, btnViewMedicalRecord, 40, SpringLayout.SOUTH, btnBookAnAppointment);
         springLayout.putConstraint(SpringLayout.WEST, btnViewMedicalRecord, 150, SpringLayout.WEST, pnlMain);
         springLayout.putConstraint(SpringLayout.EAST, btnViewMedicalRecord, -150, SpringLayout.EAST, pnlMain);
 
-        btnLogOut = new JButton("Log out");
+        JButton btnLogOut = new JButton("Log out");
         btnLogOut.setVerticalAlignment(SwingConstants.CENTER);
         btnLogOut.setHorizontalAlignment(SwingConstants.CENTER);
         btnLogOut.setFont(new Font(Font.SERIF, Font.BOLD, 15));
         pnlMain.add(btnLogOut);
-        btnLogOut.addActionListener(e -> controller.logOutPatient());
+        btnLogOut.addActionListener(e -> controller.logOut());
 
         springLayout.putConstraint(SpringLayout.NORTH, btnLogOut, 40, SpringLayout.SOUTH, btnViewMedicalRecord);
         springLayout.putConstraint(SpringLayout.WEST, btnLogOut, 150, SpringLayout.WEST, pnlMain);

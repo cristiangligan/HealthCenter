@@ -65,4 +65,9 @@ public class MedicalRecord {
     public void setPatientId(int patientId) {
         this.patientId = patientId;
     }
+
+    @Override
+    public String toString() {
+        return id + " - " + diagnosis;
+    }
 }

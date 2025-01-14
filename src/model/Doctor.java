@@ -1,12 +1,17 @@
 package model;
 
+import model.common.User;
+import model.common.UserType;
+
 public class Doctor extends User {
-    private String firstName;
-    private String lastName;
-    private String phone;
-    private Specialization specialization;
+    private final String firstName;
+    private final String lastName;
+    private final String phone;
+    private final Specialization specialization;
 
     public Doctor(int employerNr, String firstName, String lastName, String phone, Specialization specialization) {
+        this.type = UserType.DOCTOR;
+
         this.id = employerNr;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -37,11 +42,6 @@ public class Doctor extends User {
     public Specialization getSpecialization() {
         return specialization;
     }
-
-    public void setFirstName(String text) {
-        this.firstName = firstName;
-    }
-
 
     @Override
     public String toString() {
