@@ -1,10 +1,15 @@
 package model;
 
+import model.common.User;
+import model.common.UserType;
+
 public class Admin extends User {
-    private String username;
-    private String password;
+    private final String username;
+    private final String password;
 
     public Admin(String username, String password) {
+        this.type = UserType.ADMIN;
+
         this.username = username;
         this.password = password;
     }
