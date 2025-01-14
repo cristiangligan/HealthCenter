@@ -1,17 +1,20 @@
 package model;
 
-public class Admin {
-    private int id;
+public class Admin extends User {
     private String username;
     private String password;
 
     public Admin(String username, String password) {
-        this.id = id;
         this.username = username;
         this.password = password;
     }
+
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getUsername() {
@@ -25,7 +28,4 @@ public class Admin {
     public String toString() {
         return username;
     }
-
-
-
 }

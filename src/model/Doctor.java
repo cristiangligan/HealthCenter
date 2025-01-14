@@ -1,14 +1,13 @@
 package model;
 
-public class Doctor {
-    private int employerNr;
+public class Doctor extends User {
     private String firstName;
     private String lastName;
     private String phone;
     private Specialization specialization;
 
     public Doctor(int employerNr, String firstName, String lastName, String phone, Specialization specialization) {
-        this.employerNr = employerNr;
+        this.id = employerNr;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
@@ -16,11 +15,11 @@ public class Doctor {
     }
 
     public void setEmployerNr(int employerNr) {
-        this.employerNr = employerNr;
+        this.id = employerNr;
     }
 
     public int getEmployerNr() {
-        return employerNr;
+        return id;
     }
 
     public String getFirstName() {
