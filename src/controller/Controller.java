@@ -629,7 +629,7 @@ public class Controller implements PropertyChangeListener {
         }
     }
 
-    public void addMedicalRecord() {
+    public void handleAddMedicalRecord() {
         diagnosisScreen = new DiagnosisScreen(null, this);
     }
     //------------------------------------------DOCTOR - END-----------------------------------------------
@@ -1057,6 +1057,7 @@ public class Controller implements PropertyChangeListener {
             patientsScreenFromAdmin.displayPatients(adminManager.getPatients());
         } else if (currentUser.isDoctor()) {
             Doctor currentDoctor = (Doctor) currentUser;
+            doctorManager.setSelectedPatient(null);
             patientsScreenFromDoctor = new PatientsScreenFromDoctor(this);
             patientsScreenFromDoctor.displayPatients(doctorManager.getDoctorsPatients(currentDoctor));
         } else if (currentUser.isPatient()) {
