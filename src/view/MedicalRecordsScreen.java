@@ -30,14 +30,6 @@ public class MedicalRecordsScreen extends JFrame {
         springLayout.putConstraint(SpringLayout.WEST, titleLbl, 40, SpringLayout.WEST, mainPnl);
 
         mainPnl.add(medicalRecordsLst);
-        medicalRecordsLst.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (e.getClickCount() == 2) {
-                    viewDiagnosis();
-                }
-            }
-        });
         springLayout.putConstraint(SpringLayout.NORTH, medicalRecordsLst, 100, SpringLayout.NORTH, mainPnl);
         springLayout.putConstraint(SpringLayout.WEST, medicalRecordsLst, 40, SpringLayout.WEST, mainPnl);
         springLayout.putConstraint(SpringLayout.EAST, medicalRecordsLst, -40, SpringLayout.EAST, mainPnl);
@@ -60,6 +52,22 @@ public class MedicalRecordsScreen extends JFrame {
         springLayout.putConstraint(SpringLayout.SOUTH, addMedicalRecordBtn, -10, SpringLayout.NORTH, medicalRecordsLst);
         springLayout.putConstraint(SpringLayout.EAST, addMedicalRecordBtn, 0, SpringLayout.EAST, medicalRecordsLst);
         addMedicalRecordBtn.addActionListener(e -> controller.handleAddMedicalRecord());
+
+        if (!controller.isCurrentUserDoctor()) {
+            addMedicalRecordBtn.setVisible(false);
+        }
+        if (controller.isCurrentUserAdmin()) {
+            viewBtn.setVisible(false);
+        } else {
+            medicalRecordsLst.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    if (e.getClickCount() == 2) {
+                        viewDiagnosis();
+                    }
+                }
+            });
+        }
 
         this.pack();
         this.setVisible(true);
