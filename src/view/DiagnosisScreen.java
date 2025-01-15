@@ -73,7 +73,9 @@ public class DiagnosisScreen extends JFrame {
         this.setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        setMedicalRecord();
+        if(medicalRecord != null) {
+            setMedicalRecord();
+        }
     }
 
     private void setMedicalRecord() {
