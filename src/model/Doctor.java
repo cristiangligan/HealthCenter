@@ -45,6 +45,6 @@ public class Doctor extends User {
 
     @Override
     public String toString() {
-        return firstName + " " + lastName + " ("  + specialization.getName() + ")";
+        return firstName + " " + lastName + " ("  + specialization.getName() + " | " + specialization.getCost() + "$)";
     }
 }
