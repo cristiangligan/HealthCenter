@@ -1,7 +1,6 @@
 package view;
 
 import controller.Controller;
-import model.Doctor;
 import model.MedicalRecord;
 
 import javax.swing.*;
@@ -9,8 +8,10 @@ import java.awt.*;
 
 public class DiagnosisScreen extends JFrame {
     private final Controller controller;
-    private final JLabel doctorDateLbl = new JLabel("Doctor | Date");
-    private final JLabel costLbl = new JLabel("Cost: 000$");
+    private final JButton saveBtn;
+    private final JLabel dateLbl = new JLabel("Date");
+    private final JLabel doctorLbl = new JLabel("Doctor");
+    private final JLabel costLbl = new JLabel("000$");
     private final JTextArea descriptionArea = new JTextArea();
     private final JTextArea prescriptionArea = new JTextArea();
     private final JTextArea diagnosisArea = new JTextArea();
@@ -34,11 +35,15 @@ public class DiagnosisScreen extends JFrame {
         mainPnl.add(diagnosisArea);
         springLayout.putConstraint(SpringLayout.SOUTH, diagnosisArea, 0, SpringLayout.SOUTH, diagnosisLbl);
         springLayout.putConstraint(SpringLayout.WEST, diagnosisArea, 5, SpringLayout.EAST, diagnosisLbl);
-        springLayout.putConstraint(SpringLayout.EAST, diagnosisArea, -40, SpringLayout.WEST, doctorDateLbl);
+        springLayout.putConstraint(SpringLayout.EAST, diagnosisArea, -40, SpringLayout.WEST, dateLbl);
 
-        mainPnl.add(doctorDateLbl);
-        springLayout.putConstraint(SpringLayout.EAST, doctorDateLbl, -40, SpringLayout.EAST, mainPnl);
-        springLayout.putConstraint(SpringLayout.SOUTH, doctorDateLbl, 0, SpringLayout.SOUTH, diagnosisLbl);
+        mainPnl.add(dateLbl);
+        springLayout.putConstraint(SpringLayout.EAST, dateLbl, -40, SpringLayout.EAST, mainPnl);
+        springLayout.putConstraint(SpringLayout.NORTH, dateLbl, 10, SpringLayout.SOUTH, diagnosisLbl);
+
+        mainPnl.add(doctorLbl);
+        springLayout.putConstraint(SpringLayout.EAST, doctorLbl, -10, SpringLayout.WEST, dateLbl);
+        springLayout.putConstraint(SpringLayout.SOUTH, doctorLbl, 0, SpringLayout.SOUTH, dateLbl);
 
         mainPnl.add(descriptionArea);
         springLayout.putConstraint(SpringLayout.NORTH, descriptionArea, 100, SpringLayout.NORTH, mainPnl);
@@ -66,13 +71,13 @@ public class DiagnosisScreen extends JFrame {
         mainPnl.add(backBtn);
         springLayout.putConstraint(SpringLayout.NORTH, backBtn, 10, SpringLayout.SOUTH, descriptionArea);
         springLayout.putConstraint(SpringLayout.WEST, backBtn, 0, SpringLayout.WEST, descriptionArea);
-        //backBtn.addActionListener(e -> controller.handleBackFromDiagnosis(medicalRecord.getPatientId()));
+        backBtn.addActionListener(e -> controller.handleBackFromDiagnosis());
 
-        JButton saveBtn = new JButton("Save");
+        saveBtn = new JButton("Save");
         mainPnl.add(saveBtn);
-        springLayout.putConstraint(SpringLayout.NORTH, saveBtn, 10, SpringLayout.SOUTH, descriptionArea);
-        springLayout.putConstraint(SpringLayout.WEST, saveBtn, 0, SpringLayout.WEST, descriptionArea);
-        //saveBtn.addActionListener(e -> controller.handleSaveNewMedicalRecord();
+        springLayout.putConstraint(SpringLayout.NORTH, saveBtn, 10, SpringLayout.SOUTH, prescriptionArea);
+        springLayout.putConstraint(SpringLayout.WEST, saveBtn, 0, SpringLayout.WEST, prescriptionArea);
+        saveBtn.addActionListener(e -> controller.handleSaveNewMedicalRecord());
 
         mainPnl.add(costLbl);
         springLayout.putConstraint(SpringLayout.NORTH, costLbl, 0, SpringLayout.NORTH, backBtn);
@@ -85,24 +90,41 @@ public class DiagnosisScreen extends JFrame {
         this.setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        if(medicalRecord != null) {
+        if (medicalRecord != null) {
             setMedicalRecord();
+            makeScreenReadOnly();
         }
     }
 
     private void setMedicalRecord() {
-        Doctor doctor = controller.getDoctor(medicalRecord.getDoctorId());
-        doctorDateLbl.setText(doctor.getFirstName() + " " + doctor.getLastName() + " | Date");
-        costLbl.setText(doctor.getSpecialization().getCost() + "$");
         diagnosisArea.setText(medicalRecord.getDiagnosis());
         descriptionArea.setText(medicalRecord.getDescription());
         prescriptionArea.setText(medicalRecord.getPrescription());
     }
 
-    /*private MedicalRecord getMedicalFromView() {
+    private void makeScreenReadOnly() {
+        diagnosisArea.setEditable(false);
+        descriptionArea.setEditable(false);
+        prescriptionArea.setEditable(false);
+        saveBtn.setVisible(false);
+    }
 
+    public void setDateLabel(String dateString) {
+        dateLbl.setText(dateString);
+    }
+
+    public void setDoctorLabel(String doctorName) {
+        doctorLbl.setText(doctorName);
+    }
+
+    public void setCostLabel(int cost) {
+        costLbl.setText(cost + "$");
+    }
+    public MedicalRecord getMedicalFromView(int doctorId, int patientId) {
         String diagnosisText = diagnosisArea.getText();
         String descriptionText = descriptionArea.getText();
         String prescriptionText = prescriptionArea.getText();
-    }*/
+        String dateText = dateLbl.getText();
+        return new MedicalRecord(diagnosisText, descriptionText, prescriptionText, doctorId, patientId, dateText);
+    }
 }

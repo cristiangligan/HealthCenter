@@ -7,14 +7,16 @@ public class MedicalRecord {
     private String prescription;
     private int doctorId;
     private int patientId;
+    private String date;
 
 
-    public MedicalRecord(String diagnosis, String description, String prescription, int doctorId, int patientId) {
+    public MedicalRecord(String diagnosis, String description, String prescription, int doctorId, int patientId, String date) {
         this.diagnosis = diagnosis;
         this.description = description;
         this.prescription = prescription;
         this.doctorId = doctorId;
         this.patientId = patientId;
+        this.date = date;
     }
 
 
@@ -69,5 +71,9 @@ public class MedicalRecord {
     @Override
     public String toString() {
         return id + " - " + diagnosis;
+    }
+
+    public String getDate() {
+        return date;
     }
 }

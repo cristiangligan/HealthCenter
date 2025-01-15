@@ -116,6 +116,30 @@ public class DoctorManager {
         return appointments;
     }
 
+    public Appointment getAppointmentForPatient(Doctor doctor, Patient patient, String dateString) {
+        Appointment appointment = null;
+        String selectQuery = "SELECT * FROM public.appointment WHERE appointment.id_doctor = ? AND appointment.id_patient = ? AND appointment.date = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(selectQuery)) {
+            preparedStatement.setInt(1, doctor.getEmployerNr());
+            preparedStatement.setInt(2, patient.getMedicalId());
+            preparedStatement.setString(3, dateString);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    int id = resultSet.getInt("id");
+                    int doctorId = resultSet.getInt("id_doctor");
+                    int patientId = resultSet.getInt("id_patient");
+                    String time = resultSet.getString("time");
+                    String date = resultSet.getString("date");
+                    appointment = new Appointment(doctorId, patientId, time, date);
+                    appointment.setId(id);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return appointment;
+    }
+
     public void makeTimeslotUnavailable(Appointment appointment) {
         if (appointment != null) {
             String insertQuery = "INSERT INTO public.appointment (id_doctor, id_patient, time, date) VALUES (?, ?, ?, ?)";
@@ -179,31 +203,26 @@ public class DoctorManager {
         return patients;
     }
 
-    public ArrayList<MedicalRecord> getMedicalRecords(Patient patient) {
-        ArrayList<MedicalRecord> medicalRecords = new ArrayList<>();
-        MedicalRecord medicalRecord = null;
-        String selectQuery = "SELECT * FROM public.medical_record WHERE appointment.id_patient = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(selectQuery)) {
-            preparedStatement.setInt(1, patient.getMedicalId());
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                while (resultSet.next()) {
-                    int id = resultSet.getInt("id");
-                    String diagnosis = resultSet.getString("diagnosis");
-                    String description = resultSet.getString("description");
-                    String prescription = resultSet.getString("prescription");
-                    int doctorId = resultSet.getInt("id_doctor");
-                    int patientId = resultSet.getInt("id_patient");
-                    medicalRecord = new MedicalRecord(diagnosis, description, prescription, doctorId, patientId);
-                    medicalRecord.setId(id);
-                    medicalRecords.add(medicalRecord);
-                }
-            } catch (SQLException e) {
-                return medicalRecords;
-            }
+    public void saveNewMedicalRecord(MedicalRecord medicalRecord) {
+        String insertQuery = "INSERT INTO public.medical_record (diagnosis, description, prescription, id_doctor, id_patient, date) VALUES (?, ?, ?, ?, ?, ?)";
+        try {
+            PreparedStatement statement = connection.prepareStatement(insertQuery);
+            String diagnosis = medicalRecord.getDiagnosis();
+            String description = medicalRecord.getDescription();
+            String prescription = medicalRecord.getPrescription();
+            int id_doctor = medicalRecord.getDoctorId();
+            int id_patient = medicalRecord.getPatientId();
+            String date = medicalRecord.getDate();
+            statement.setString(1, diagnosis);
+            statement.setString(2, description);
+            statement.setString(3, prescription);
+            statement.setInt(4, id_doctor);
+            statement.setInt(5, id_patient);
+            statement.setString(6, date);
+            statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return medicalRecords;
     }
 
     public void subscribeListener(PropertyChangeListener listener) {

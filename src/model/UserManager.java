@@ -97,7 +97,8 @@ public class UserManager {
                     String prescription = resultSet.getString("prescription");
                     int doctorId = resultSet.getInt("id_doctor");
                     int patientId = resultSet.getInt("id_patient");
-                    MedicalRecord medicalRecord = new MedicalRecord(diagnosis, description, prescription, doctorId, patientId);
+                    String date = resultSet.getString("date");
+                    MedicalRecord medicalRecord = new MedicalRecord(diagnosis, description, prescription, doctorId, patientId, date);
                     medicalRecord.setId(id);
                     medicalRecords.add(medicalRecord);
                 }

@@ -52,11 +52,11 @@ public class PatientsScreenFromAdmin extends JFrame {
         //back from patient screen to welcome username
         backBtn.addActionListener(e -> controller.handleBackFromPatientScreen());
 
-        JButton viewMedicalRecordBtn = new JButton("View medical record");
-        mainPnl.add(viewMedicalRecordBtn);
-        springLayout.putConstraint(SpringLayout.NORTH, viewMedicalRecordBtn, 10, SpringLayout.SOUTH, patientsLst);
-        springLayout.putConstraint(SpringLayout.EAST, viewMedicalRecordBtn, 0, SpringLayout.EAST, patientsLst);
-        viewMedicalRecordBtn.addActionListener(e -> viewMedicalRecords());
+        JButton viewMedicalRecordsBtn = new JButton("View medical records");
+        mainPnl.add(viewMedicalRecordsBtn);
+        springLayout.putConstraint(SpringLayout.NORTH, viewMedicalRecordsBtn, 10, SpringLayout.SOUTH, patientsLst);
+        springLayout.putConstraint(SpringLayout.EAST, viewMedicalRecordsBtn, 0, SpringLayout.EAST, patientsLst);
+        viewMedicalRecordsBtn.addActionListener(e -> viewMedicalRecords());
 
         this.pack();
         this.setVisible(true);

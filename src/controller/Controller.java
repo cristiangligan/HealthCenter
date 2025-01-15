@@ -630,7 +630,36 @@ public class Controller implements PropertyChangeListener {
     }
 
     public void handleAddMedicalRecord() {
-        diagnosisScreen = new DiagnosisScreen(null, this);
+        String dateString = simpleDateFormat.format(new Date());
+        Doctor doctor = doctorManager.getCurrentDoctor();
+        Patient patient = doctorManager.getSelectedPatient();
+        Appointment appointment = doctorManager.getAppointmentForPatient(doctor, patient, dateString);
+        if (appointment != null) {
+            diagnosisScreen = new DiagnosisScreen(null, this);
+            diagnosisScreen.setDateLabel(dateString);
+            diagnosisScreen.setDoctorLabel(doctor.getFirstName() + " " + doctor.getLastName());
+            diagnosisScreen.setCostLabel(doctor.getSpecialization().getCost());
+            medicalRecordsScreen.dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "No appointment with patient today.", "Add appointment", WARNING_MESSAGE);
+        }
+    }
+
+    public void handleSaveNewMedicalRecord() {
+        MedicalRecord medicalRecord = diagnosisScreen.getMedicalFromView(doctorManager.getCurrentDoctor().getEmployerNr(), doctorManager.getSelectedPatient().getMedicalId());
+        if (medicalRecord.getDiagnosis().isBlank() || medicalRecord.getDescription().isBlank() || medicalRecord.getPrescription().isBlank()) {
+            JOptionPane.showMessageDialog(null, "Please fill in all fields!", "Save medical record", WARNING_MESSAGE);
+            return;
+        }
+        int option = JOptionPane.showConfirmDialog(null,
+            "Are you sure you want save?", "Save medical record", JOptionPane.YES_NO_OPTION);
+        if (option == JOptionPane.YES_OPTION) {
+            doctorManager.saveNewMedicalRecord(medicalRecord);
+            medicalRecordsScreen = new MedicalRecordsScreen(this);
+            ArrayList<MedicalRecord> medicalRecords = userManager.getMedicalRecords(doctorManager.getSelectedPatient());
+            medicalRecordsScreen.displayMedicalRecords(medicalRecords);
+            diagnosisScreen.dispose();
+        }
     }
     //------------------------------------------DOCTOR - END-----------------------------------------------
 
@@ -1071,11 +1100,21 @@ public class Controller implements PropertyChangeListener {
 
     public void handleViewDiagnosis(MedicalRecord medicalRecord) {
         diagnosisScreen = new DiagnosisScreen(medicalRecord,this);
+        Doctor doctor = userManager.getDoctor(medicalRecord.getDoctorId());
+        diagnosisScreen.setDateLabel(medicalRecord.getDate());
+        diagnosisScreen.setDoctorLabel(doctor.getFirstName() + " " + doctor.getLastName());
+        diagnosisScreen.setCostLabel(doctor.getSpecialization().getCost());
         medicalRecordsScreen.dispose();
     }
 
-    public void handleBackFromDiagnosis(int patientId) {
-        Patient patient = userManager.getPatient(patientId);
+    public void handleBackFromDiagnosis() {
+        User currentUser = userManager.getCurrentUser();
+        Patient patient = null;
+        if (currentUser.isDoctor()) {
+            patient = doctorManager.getSelectedPatient();
+        } else if (currentUser.isPatient()) {
+            patient = patientManager.getCurrentPatient();
+        }
         ArrayList<MedicalRecord> medicalRecords = userManager.getMedicalRecords(patient);
         medicalRecordsScreen = new MedicalRecordsScreen(this);
         medicalRecordsScreen.setTitleLabel(patient.getFirstName()+ " " + patient.getLastName());
