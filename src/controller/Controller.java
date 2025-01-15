@@ -524,7 +524,7 @@ public class Controller implements PropertyChangeListener {
         doctorScheduleScreen.setWeekDoctorLbl(String.valueOf(cal.get(Calendar.WEEK_OF_YEAR)), doctorManager.getCurrentDoctor().toString());
         int currDay = cal.get(Calendar.DAY_OF_WEEK);
         int diff = currDay - Calendar.MONDAY;
-        if(cal.get(Calendar.DAY_OF_WEEK) == 1) {
+        if(cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
             cal.add(Calendar.DAY_OF_WEEK, -6);
         } else {
             cal.add(Calendar.DAY_OF_WEEK, -diff);
@@ -601,16 +601,17 @@ public class Controller implements PropertyChangeListener {
         }
 
         Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.WEEK_OF_YEAR, 1);
         if (day != null && day.equals("monday")) {
-            calendar.add(Calendar.DAY_OF_WEEK, 3);
+            calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
         } else if (day != null && day.equals("tuesday")) {
-            calendar.add(Calendar.DAY_OF_WEEK, 4);
+            calendar.set(Calendar.DAY_OF_WEEK, Calendar.TUESDAY);
         } else if (day != null && day.equals("wednesday")) {
-            calendar.add(Calendar.DAY_OF_WEEK, 5);
+            calendar.set(Calendar.DAY_OF_WEEK, Calendar.WEDNESDAY);
         } else if (day != null && day.equals("thursday")) {
-            calendar.add(Calendar.DAY_OF_WEEK, 6);
+            calendar.set(Calendar.DAY_OF_WEEK, Calendar.THURSDAY);
         } else if (day != null && day.equals("friday")) {
-            calendar.add(Calendar.DAY_OF_WEEK, 7);
+            calendar.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY);
         }
 
         Date currentDate = calendar.getTime();
