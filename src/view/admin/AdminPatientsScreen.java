@@ -1,4 +1,4 @@
-package view;
+package view.admin;
 
 import controller.Controller;
 import model.Patient;
@@ -7,15 +7,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
+import java.util.List;
 
 import static javax.swing.JOptionPane.WARNING_MESSAGE;
 
-public class PatientsScreenFromDoctor extends JFrame {
+public class AdminPatientsScreen extends JFrame {
     private final Controller controller;
     private final JList patientsLst = new JList();
 
-    public PatientsScreenFromDoctor(Controller controller) {
+    public AdminPatientsScreen(Controller controller) {
         this.controller = controller;
         this.setTitle("Health Center");
         JPanel mainPnl = new JPanel();
@@ -49,7 +49,7 @@ public class PatientsScreenFromDoctor extends JFrame {
         springLayout.putConstraint(SpringLayout.NORTH, backBtn, 10, SpringLayout.SOUTH, scrollPane);
         springLayout.putConstraint(SpringLayout.WEST, backBtn, 0, SpringLayout.WEST, scrollPane);
         //back from patient screen to welcome username
-        backBtn.addActionListener(e -> controller.handleBackFromPatientScreenInDoctor());
+        backBtn.addActionListener(e -> controller.handleBackFromPatientScreen());
 
         JButton viewMedicalRecordsBtn = new JButton("View medical records");
         mainPnl.add(viewMedicalRecordsBtn);
@@ -65,7 +65,7 @@ public class PatientsScreenFromDoctor extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    public void displayPatients(ArrayList<Patient> patients) {
+    public void displayPatients(List<Patient> patients) {
         patientsLst.setListData(patients.toArray());
     }
 
@@ -87,4 +87,3 @@ public class PatientsScreenFromDoctor extends JFrame {
         return patient;
     }
 }
-

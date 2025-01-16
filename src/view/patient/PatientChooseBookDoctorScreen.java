@@ -1,4 +1,4 @@
-package view;
+package view.patient;
 
 import controller.Controller;
 import model.Doctor;
@@ -11,14 +11,14 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 
-public class ChooseBookDoctorScreen extends JFrame {
+public class PatientChooseBookDoctorScreen extends JFrame {
     private final Controller controller;
     private final JList doctorsLst = new JList();
     private final JTextField searchField = new JTextField();
     private String filterWord = "";
     private List<Doctor> doctors;
 
-    public ChooseBookDoctorScreen(Controller controller) {
+    public PatientChooseBookDoctorScreen(Controller controller) {
         this.controller = controller;
         this.setTitle("Health Center");
         JPanel mainPnl = new JPanel();

@@ -1,5 +1,9 @@
-package model;
+package model.managers;
 
+import model.Doctor;
+import model.MedicalRecord;
+import model.Patient;
+import model.Specialization;
 import model.common.User;
 
 import java.sql.Connection;

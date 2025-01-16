@@ -1,11 +1,11 @@
-package view;
+package view.patient;
 import controller.Controller;
 import util.MedicalIdDocumentFilter;
 import javax.swing.*;
 import javax.swing.text.AbstractDocument;
 import java.awt.*;
 
-public class RegisterNewPatientScreen extends JFrame {
+public class PatientRegisterScreen extends JFrame {
     private Controller controller;
     private JPanel mainPnl = new JPanel();
     private JLabel titleLbl = new JLabel("Register new patient");
@@ -28,7 +28,7 @@ public class RegisterNewPatientScreen extends JFrame {
     private JButton backBtn = new JButton("Back");
     private JButton registerBtn = new JButton("Register");
 
-    public RegisterNewPatientScreen(Controller controller) {
+    public PatientRegisterScreen(Controller controller) {
         this.controller = controller;
         this.setTitle("Health Center");
         this.setContentPane(mainPnl);

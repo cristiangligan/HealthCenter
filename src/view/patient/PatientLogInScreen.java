@@ -1,4 +1,4 @@
-package view;
+package view.patient;
 
 import controller.Controller;
 import util.MedicalIdDocumentFilter;

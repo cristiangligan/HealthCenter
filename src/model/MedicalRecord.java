@@ -19,7 +19,6 @@ public class MedicalRecord {
         this.date = date;
     }
 
-
     public int getId() {
         return id;
     }
@@ -68,12 +67,12 @@ public class MedicalRecord {
         this.patientId = patientId;
     }
 
+    public String getDate() {
+        return date;
+    }
+
     @Override
     public String toString() {
         return id + " - " + diagnosis;
-    }
-
-    public String getDate() {
-        return date;
     }
 }

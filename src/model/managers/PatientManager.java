@@ -1,6 +1,9 @@
-package model;
+package model.managers;
 
-import controller.Controller;
+import model.Appointment;
+import model.Doctor;
+import model.Patient;
+import model.Specialization;
 
 import javax.swing.*;
 import java.beans.PropertyChangeListener;
@@ -13,9 +16,8 @@ import java.util.Date;
 import java.util.List;
 
 public class PatientManager extends JFrame {
-    private Controller controller;
-    private Connection connection;
-    private PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
+    private final Connection connection;
+    private final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
     private Patient currentPatient;
 
     private Doctor selectedDoctor;
@@ -142,9 +144,11 @@ public class PatientManager extends JFrame {
     public void subscribeListener(PropertyChangeListener listener) {
         propertyChangeSupport.addPropertyChangeListener(listener);
     }
+
     public Patient getLoggedInPatient() {
         return currentPatient;
     }
+
     public void setCurrentPatient(Patient patient) {
         this.currentPatient = patient;
     }
