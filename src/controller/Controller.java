@@ -518,18 +518,18 @@ public class Controller implements PropertyChangeListener {
     public void viewMySchedule() {
         doctorScheduleScreen = new DoctorScheduleScreen(this);
         welcomeDoctorScreen.dispose();
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(new Date());
-        cal.add(Calendar.WEEK_OF_YEAR, 1);
-        doctorScheduleScreen.setWeekDoctorLbl(String.valueOf(cal.get(Calendar.WEEK_OF_YEAR)), doctorManager.getCurrentDoctor().toString());
-        int currDay = cal.get(Calendar.DAY_OF_WEEK);
+        Calendar cal = Calendar.getInstance(); //hämtar kalender
+        cal.setTime(new Date()); //sätter datum till dagens datum, inga parametrar
+        cal.add(Calendar.WEEK_OF_YEAR, 1); //lägger till en vecka (dvs 7 dagar)
+        doctorScheduleScreen.setWeekDoctorLbl(String.valueOf(cal.get(Calendar.WEEK_OF_YEAR)), doctorManager.getCurrentDoctor().toString()); //hämtar namnet på inloggad läkare
+        int currDay = cal.get(Calendar.DAY_OF_WEEK); //sätter dagens datum till current date + vecka
         int diff = currDay - Calendar.MONDAY;
         if(cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
             cal.add(Calendar.DAY_OF_WEEK, -6);
         } else {
             cal.add(Calendar.DAY_OF_WEEK, -diff);
         }
-        String date = simpleDateFormat.format(cal.getTime());
+        String date = simpleDateFormat.format(cal.getTime()); //formaterar datum (konstant som instansvariabel längst upp)
         ArrayList<Appointment> appointments = doctorManager.getMyUpcomingAppointments(doctorManager.getCurrentDoctor(), date);
         for (Appointment appointment : appointments) {
             if(appointment != null) {
@@ -924,7 +924,7 @@ public class Controller implements PropertyChangeListener {
         Calendar cal = Calendar.getInstance();
         cal.setTime(new Date());
         Date currentDate = cal.getTime();
-        if(cal.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY) {
+        if(cal.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY) { //ska endast kunna boka på en fredag
             if(chooseBookDoctorScreen.isDoctorSelected()) {
                 patientManager.setSelectedDoctor(chooseBookDoctorScreen.getSelectedDoctor());
                 patientScheduleScreen = new PatientScheduleScreen(this);

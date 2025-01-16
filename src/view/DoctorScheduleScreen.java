@@ -289,7 +289,7 @@ public class DoctorScheduleScreen extends JFrame {
         this.weekDoctorLbl.setText("Week " + week + " | " + doctor);
     }
 
-    public void setButtonsAvailability(Color color, String time) {
+    public void setButtonsAvailability(Color color, String time) { //loopar igenom alla knappar - time och färg
         Component[] components = mainPnl.getComponents();
         for(int i = 0; i < components.length; i++) {
             if (components[i] instanceof JButton) {
