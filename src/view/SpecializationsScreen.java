@@ -16,8 +16,7 @@ public class SpecializationsScreen extends JFrame {
     private JButton editBtn = new JButton("Edit");
     private JButton deleteBtn = new JButton("Delete");
     private JButton backBtn = new JButton("Back");
-    private JList specializationLst = new JList();
-    private JScrollPane scrollPane = new JScrollPane(specializationLst);
+    private final JList specializationLst = new JList();
 
     public SpecializationsScreen(Controller controller) {
         this.controller = controller;
@@ -31,6 +30,7 @@ public class SpecializationsScreen extends JFrame {
         springLayout.putConstraint(SpringLayout.NORTH, titleLbl, 10, SpringLayout.NORTH, mainPnl);
         springLayout.putConstraint(SpringLayout.WEST, titleLbl, 40, SpringLayout.WEST, mainPnl);
 
+        JScrollPane scrollPane = new JScrollPane(specializationLst);
         mainPnl.add(scrollPane);
         springLayout.putConstraint(SpringLayout.NORTH, scrollPane, 100, SpringLayout.NORTH, mainPnl);
         springLayout.putConstraint(SpringLayout.WEST, scrollPane, 40, SpringLayout.WEST, mainPnl);

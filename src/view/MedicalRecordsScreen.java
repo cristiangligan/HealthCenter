@@ -29,28 +29,29 @@ public class MedicalRecordsScreen extends JFrame {
         springLayout.putConstraint(SpringLayout.NORTH, titleLbl, 10, SpringLayout.NORTH, mainPnl);
         springLayout.putConstraint(SpringLayout.WEST, titleLbl, 40, SpringLayout.WEST, mainPnl);
 
-        mainPnl.add(medicalRecordsLst);
-        springLayout.putConstraint(SpringLayout.NORTH, medicalRecordsLst, 100, SpringLayout.NORTH, mainPnl);
-        springLayout.putConstraint(SpringLayout.WEST, medicalRecordsLst, 40, SpringLayout.WEST, mainPnl);
-        springLayout.putConstraint(SpringLayout.EAST, medicalRecordsLst, -40, SpringLayout.EAST, mainPnl);
-        springLayout.putConstraint(SpringLayout.SOUTH, medicalRecordsLst, -60, SpringLayout.SOUTH, mainPnl);
+        JScrollPane scrollPane = new JScrollPane(medicalRecordsLst);
+        mainPnl.add(scrollPane);
+        springLayout.putConstraint(SpringLayout.NORTH, scrollPane, 100, SpringLayout.NORTH, mainPnl);
+        springLayout.putConstraint(SpringLayout.WEST, scrollPane, 40, SpringLayout.WEST, mainPnl);
+        springLayout.putConstraint(SpringLayout.EAST, scrollPane, -40, SpringLayout.EAST, mainPnl);
+        springLayout.putConstraint(SpringLayout.SOUTH, scrollPane, -60, SpringLayout.SOUTH, mainPnl);
 
         JButton backBtn = new JButton("Back");
         mainPnl.add(backBtn);
-        springLayout.putConstraint(SpringLayout.NORTH, backBtn, 10, SpringLayout.SOUTH, medicalRecordsLst);
-        springLayout.putConstraint(SpringLayout.WEST, backBtn, 0, SpringLayout.WEST, medicalRecordsLst);
+        springLayout.putConstraint(SpringLayout.NORTH, backBtn, 10, SpringLayout.SOUTH, scrollPane);
+        springLayout.putConstraint(SpringLayout.WEST, backBtn, 0, SpringLayout.WEST, scrollPane);
         backBtn.addActionListener(e -> controller.handleBackFromMedicalRecords());
 
         JButton viewBtn = new JButton("View");
         mainPnl.add(viewBtn);
-        springLayout.putConstraint(SpringLayout.NORTH, viewBtn, 10, SpringLayout.SOUTH, medicalRecordsLst);
-        springLayout.putConstraint(SpringLayout.EAST, viewBtn, 0, SpringLayout.EAST, medicalRecordsLst);
+        springLayout.putConstraint(SpringLayout.NORTH, viewBtn, 10, SpringLayout.SOUTH, scrollPane);
+        springLayout.putConstraint(SpringLayout.EAST, viewBtn, 0, SpringLayout.EAST, scrollPane);
         viewBtn.addActionListener(e -> viewDiagnosis());
 
         JButton addMedicalRecordBtn = new JButton("Add");
         mainPnl.add(addMedicalRecordBtn);
-        springLayout.putConstraint(SpringLayout.SOUTH, addMedicalRecordBtn, -10, SpringLayout.NORTH, medicalRecordsLst);
-        springLayout.putConstraint(SpringLayout.EAST, addMedicalRecordBtn, 0, SpringLayout.EAST, medicalRecordsLst);
+        springLayout.putConstraint(SpringLayout.SOUTH, addMedicalRecordBtn, -10, SpringLayout.NORTH, scrollPane);
+        springLayout.putConstraint(SpringLayout.EAST, addMedicalRecordBtn, 0, SpringLayout.EAST, scrollPane);
         addMedicalRecordBtn.addActionListener(e -> controller.handleAddMedicalRecord());
 
         if (!controller.isCurrentUserDoctor()) {

@@ -12,7 +12,7 @@ public class DoctorMyAppointmentsScreen extends JFrame {
     private JPanel mainPnl = new JPanel();
     private JLabel titleLbl = new JLabel("My appointments");
     private JButton backBtn = new JButton("Back");
-    private JList appointmentsLst = new JList();
+    private final JList appointmentsLst = new JList();
 
     public DoctorMyAppointmentsScreen(Controller controller) {
         this.controller = controller;
@@ -26,15 +26,16 @@ public class DoctorMyAppointmentsScreen extends JFrame {
         springLayout.putConstraint(SpringLayout.NORTH, titleLbl, 10, SpringLayout.NORTH, mainPnl);
         springLayout.putConstraint(SpringLayout.WEST, titleLbl, 40, SpringLayout.WEST, mainPnl);
 
-        mainPnl.add(appointmentsLst);
-        springLayout.putConstraint(SpringLayout.NORTH, appointmentsLst, 100, SpringLayout.NORTH, mainPnl);
-        springLayout.putConstraint(SpringLayout.WEST, appointmentsLst, 40, SpringLayout.WEST, mainPnl);
-        springLayout.putConstraint(SpringLayout.EAST, appointmentsLst, -40, SpringLayout.EAST, mainPnl);
-        springLayout.putConstraint(SpringLayout.SOUTH, appointmentsLst, -60, SpringLayout.SOUTH, mainPnl);
+        JScrollPane scrollPane = new JScrollPane(appointmentsLst);
+        mainPnl.add(scrollPane);
+        springLayout.putConstraint(SpringLayout.NORTH, scrollPane, 100, SpringLayout.NORTH, mainPnl);
+        springLayout.putConstraint(SpringLayout.WEST, scrollPane, 40, SpringLayout.WEST, mainPnl);
+        springLayout.putConstraint(SpringLayout.EAST, scrollPane, -40, SpringLayout.EAST, mainPnl);
+        springLayout.putConstraint(SpringLayout.SOUTH, scrollPane, -60, SpringLayout.SOUTH, mainPnl);
 
         mainPnl.add(backBtn);
-        springLayout.putConstraint(SpringLayout.NORTH, backBtn, 10, SpringLayout.SOUTH, appointmentsLst);
-        springLayout.putConstraint(SpringLayout.WEST, backBtn, 0, SpringLayout.WEST, appointmentsLst);
+        springLayout.putConstraint(SpringLayout.NORTH, backBtn, 10, SpringLayout.SOUTH, scrollPane);
+        springLayout.putConstraint(SpringLayout.WEST, backBtn, 0, SpringLayout.WEST, scrollPane);
         backBtn.addActionListener(e -> controller.handleBackMyAppointmentsScreen());
 
         this.pack();
