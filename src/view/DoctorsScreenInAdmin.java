@@ -15,8 +15,7 @@ public class DoctorsScreenInAdmin extends JFrame {
     private JButton editBtn = new JButton("Edit");
     private JButton deleteBtn = new JButton("Delete");
     private JButton backBtn = new JButton("Back");
-    private JList doctorsLst = new JList();
-    private JScrollPane scrollPane = new JScrollPane(doctorsLst);
+    private final JList doctorsLst = new JList();
 
     public DoctorsScreenInAdmin(Controller controller) {
         this.controller = controller;
@@ -30,6 +29,7 @@ public class DoctorsScreenInAdmin extends JFrame {
         springLayout.putConstraint(SpringLayout.NORTH, titleLbl, 10, SpringLayout.NORTH, mainPnl);
         springLayout.putConstraint(SpringLayout.WEST, titleLbl, 40, SpringLayout.WEST, mainPnl);
 
+        JScrollPane scrollPane = new JScrollPane(doctorsLst);
         mainPnl.add(scrollPane);
         springLayout.putConstraint(SpringLayout.NORTH, scrollPane, 100, SpringLayout.NORTH, mainPnl);
         springLayout.putConstraint(SpringLayout.WEST, scrollPane, 40, SpringLayout.WEST, mainPnl);

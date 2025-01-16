@@ -14,8 +14,6 @@ import static javax.swing.JOptionPane.WARNING_MESSAGE;
 public class PatientsScreenFromAdmin extends JFrame {
     private final Controller controller;
     private final JList patientsLst = new JList();
-    //scroll-funktion för lista med patienter
-    // private JScrollPane scrollPane = new JScrollPane(patientsLst);
 
     public PatientsScreenFromAdmin(Controller controller) {
         this.controller = controller;
@@ -31,7 +29,8 @@ public class PatientsScreenFromAdmin extends JFrame {
         springLayout.putConstraint(SpringLayout.NORTH, titleLbl, 10, SpringLayout.NORTH, mainPnl);
         springLayout.putConstraint(SpringLayout.WEST, titleLbl, 40, SpringLayout.WEST, mainPnl);
 
-        mainPnl.add(patientsLst);
+        JScrollPane scrollPane = new JScrollPane(patientsLst);
+        mainPnl.add(scrollPane);
         patientsLst.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -40,22 +39,22 @@ public class PatientsScreenFromAdmin extends JFrame {
                 }
             }
         });
-        springLayout.putConstraint(SpringLayout.NORTH, patientsLst, 100, SpringLayout.NORTH, mainPnl);
-        springLayout.putConstraint(SpringLayout.WEST, patientsLst, 40, SpringLayout.WEST, mainPnl);
-        springLayout.putConstraint(SpringLayout.EAST, patientsLst, -40, SpringLayout.EAST, mainPnl);
-        springLayout.putConstraint(SpringLayout.SOUTH, patientsLst, -60, SpringLayout.SOUTH, mainPnl);
+        springLayout.putConstraint(SpringLayout.NORTH, scrollPane, 100, SpringLayout.NORTH, mainPnl);
+        springLayout.putConstraint(SpringLayout.WEST, scrollPane, 40, SpringLayout.WEST, mainPnl);
+        springLayout.putConstraint(SpringLayout.EAST, scrollPane, -40, SpringLayout.EAST, mainPnl);
+        springLayout.putConstraint(SpringLayout.SOUTH, scrollPane, -60, SpringLayout.SOUTH, mainPnl);
 
         JButton backBtn = new JButton("Back");
         mainPnl.add(backBtn);
-        springLayout.putConstraint(SpringLayout.NORTH, backBtn, 10, SpringLayout.SOUTH, patientsLst);
-        springLayout.putConstraint(SpringLayout.WEST, backBtn, 0, SpringLayout.WEST, patientsLst);
+        springLayout.putConstraint(SpringLayout.NORTH, backBtn, 10, SpringLayout.SOUTH, scrollPane);
+        springLayout.putConstraint(SpringLayout.WEST, backBtn, 0, SpringLayout.WEST, scrollPane);
         //back from patient screen to welcome username
         backBtn.addActionListener(e -> controller.handleBackFromPatientScreen());
 
         JButton viewMedicalRecordsBtn = new JButton("View medical records");
         mainPnl.add(viewMedicalRecordsBtn);
-        springLayout.putConstraint(SpringLayout.NORTH, viewMedicalRecordsBtn, 10, SpringLayout.SOUTH, patientsLst);
-        springLayout.putConstraint(SpringLayout.EAST, viewMedicalRecordsBtn, 0, SpringLayout.EAST, patientsLst);
+        springLayout.putConstraint(SpringLayout.NORTH, viewMedicalRecordsBtn, 10, SpringLayout.SOUTH, scrollPane);
+        springLayout.putConstraint(SpringLayout.EAST, viewMedicalRecordsBtn, 0, SpringLayout.EAST, scrollPane);
         viewMedicalRecordsBtn.addActionListener(e -> viewMedicalRecords());
 
         this.pack();

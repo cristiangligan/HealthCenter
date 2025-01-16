@@ -56,7 +56,8 @@ public class ChooseBookDoctorScreen extends JFrame {
             }
         });
 
-        mainPnl.add(doctorsLst);
+        JScrollPane scrollPane = new JScrollPane(doctorsLst);
+        mainPnl.add(scrollPane);
         doctorsLst.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -65,21 +66,21 @@ public class ChooseBookDoctorScreen extends JFrame {
                 }
             }
         });
-        springLayout.putConstraint(SpringLayout.NORTH, doctorsLst, 20, SpringLayout.SOUTH, searchField);
-        springLayout.putConstraint(SpringLayout.WEST, doctorsLst, 20, SpringLayout.WEST, mainPnl);
-        springLayout.putConstraint(SpringLayout.EAST, doctorsLst, -20, SpringLayout.EAST, mainPnl);
-        springLayout.putConstraint(SpringLayout.SOUTH, doctorsLst, -60, SpringLayout.SOUTH, mainPnl);
+        springLayout.putConstraint(SpringLayout.NORTH, scrollPane, 20, SpringLayout.SOUTH, searchField);
+        springLayout.putConstraint(SpringLayout.WEST, scrollPane, 20, SpringLayout.WEST, mainPnl);
+        springLayout.putConstraint(SpringLayout.EAST, scrollPane, -20, SpringLayout.EAST, mainPnl);
+        springLayout.putConstraint(SpringLayout.SOUTH, scrollPane, -60, SpringLayout.SOUTH, mainPnl);
 
         JButton backBtn = new JButton("Back");
         mainPnl.add(backBtn);
-        springLayout.putConstraint(SpringLayout.NORTH, backBtn, 10, SpringLayout.SOUTH, doctorsLst);
-        springLayout.putConstraint(SpringLayout.WEST, backBtn, 0, SpringLayout.WEST, doctorsLst);
+        springLayout.putConstraint(SpringLayout.NORTH, backBtn, 10, SpringLayout.SOUTH, scrollPane);
+        springLayout.putConstraint(SpringLayout.WEST, backBtn, 0, SpringLayout.WEST, scrollPane);
         backBtn.addActionListener(e -> controller.handleBackFromChooseBookDoctorScreen());
 
         JButton bookTimeBtn = new JButton("Book a time");
         mainPnl.add(bookTimeBtn);
-        springLayout.putConstraint(SpringLayout.NORTH, bookTimeBtn, 10, SpringLayout.SOUTH, doctorsLst);
-        springLayout.putConstraint(SpringLayout.EAST, bookTimeBtn, 0, SpringLayout.EAST, doctorsLst);
+        springLayout.putConstraint(SpringLayout.NORTH, bookTimeBtn, 10, SpringLayout.SOUTH, scrollPane);
+        springLayout.putConstraint(SpringLayout.EAST, bookTimeBtn, 0, SpringLayout.EAST, scrollPane);
         bookTimeBtn.addActionListener(e -> controller.handleBookATimeBtn());
 
         this.pack();
