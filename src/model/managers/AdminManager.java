@@ -1,6 +1,7 @@
-package model;
+package model.managers;
 
-import javax.print.Doc;
+import model.*;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.sql.Connection;
@@ -17,8 +18,8 @@ public class AdminManager {
     private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
     public static final String UPDATE_DOCTORS_LIST = "update_doctors_list";
     public static final String UPDATE_SPECIALIZATION_LIST = "update_specialization_list";
-    private Connection connection;
-    private PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
+    private final Connection connection;
+    private final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
 
     private Admin currentAdmin;
     private Specialization selectedSpecialization;

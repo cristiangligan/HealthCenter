@@ -1,11 +1,11 @@
-package view;
+package view.patient;
 
 import controller.Controller;
 import model.Patient;
 import javax.swing.*;
 import java.awt.*;
 
-public class EditInfoPatientScreen extends JFrame {
+public class PatientEditInfoScreen extends JFrame {
     private Controller controller;
     private JPanel mainPnl = new JPanel();
     private JLabel titleLbl = new JLabel("Edit my info");
@@ -32,7 +32,7 @@ public class EditInfoPatientScreen extends JFrame {
     private JButton cancelBtn = new JButton("Cancel");
     private JButton saveBtn = new JButton("Save");
 
-    public EditInfoPatientScreen(Controller controller) {
+    public PatientEditInfoScreen(Controller controller) {
         this.controller = controller;
         this.setTitle("Health Center");
         this.setContentPane(mainPnl);

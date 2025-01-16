@@ -1,4 +1,4 @@
-package view;
+package view.patient;
 
 import controller.Controller;
 import model.Patient;
@@ -6,11 +6,11 @@ import model.Patient;
 import javax.swing.*;
 import java.awt.*;
 
-public class WelcomePatientScreen extends JFrame {
+public class PatientWelcomeScreen extends JFrame {
     private final Controller controller;
     private final JLabel welcomePatient;
 
-    public WelcomePatientScreen(Controller controller) {
+    public PatientWelcomeScreen(Controller controller) {
         this.controller = controller;
         this.setTitle("Health Center");
         JPanel pnlMain = new JPanel();

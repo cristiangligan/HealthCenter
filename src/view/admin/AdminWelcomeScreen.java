@@ -1,13 +1,13 @@
-package view;
+package view.admin;
 import controller.Controller;
 import javax.swing.*;
 import java.awt.*;
 
-public class WelcomeAdminScreen extends JFrame {
+public class AdminWelcomeScreen extends JFrame {
     private final Controller controller;
     private final JLabel welcomeUsername;
 
-    public WelcomeAdminScreen(Controller controller) {
+    public AdminWelcomeScreen(Controller controller) {
         this.controller = controller;
         this.setTitle("Health Center");
         JPanel pnlMain = new JPanel();

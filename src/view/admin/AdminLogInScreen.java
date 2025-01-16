@@ -1,16 +1,16 @@
-package view;
+package view.admin;
 
 import controller.Controller;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class AdminLogIn extends JFrame {
+public class AdminLogInScreen extends JFrame {
     private final Controller controller;
     private final JTextField usernameField;
     private final JTextField passwordField;
 
-    public AdminLogIn(Controller controller) {
+    public AdminLogInScreen(Controller controller) {
         this.controller = controller;
         this.setTitle("Health Center");
         JPanel pnlMain = new JPanel();

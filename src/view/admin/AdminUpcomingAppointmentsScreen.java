@@ -1,4 +1,4 @@
-package view;
+package view.admin;
 
 import controller.Controller;
 import model.Appointment;
@@ -7,14 +7,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class UpcomingAppointmentsScreen extends JFrame {
+public class AdminUpcomingAppointmentsScreen extends JFrame {
     private Controller controller;
     private JPanel mainPnl = new JPanel();
     private JLabel titleLbl = new JLabel("Upcoming appointments");
     private JButton backBtn = new JButton("Back");
     private final JList upcomingAppointmentsLst = new JList();
 
-    public UpcomingAppointmentsScreen(Controller controller) {
+    public AdminUpcomingAppointmentsScreen(Controller controller) {
         this.controller = controller;
         this.setTitle("Health Center");
         this.setContentPane(mainPnl);

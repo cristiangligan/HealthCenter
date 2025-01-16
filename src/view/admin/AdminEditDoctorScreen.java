@@ -1,4 +1,4 @@
-package view;
+package view.admin;
 
 import controller.Controller;
 import model.Doctor;
@@ -7,7 +7,7 @@ import model.Specialization;
 import javax.swing.*;
 import java.awt.*;
 
-public class EditDoctorScreen extends JFrame {
+public class AdminEditDoctorScreen extends JFrame {
     private Controller controller;
     private Doctor doctor;
     private JPanel mainPnl = new JPanel();
@@ -27,7 +27,7 @@ public class EditDoctorScreen extends JFrame {
     private JButton cancelBtn = new JButton("Cancel");
     private JButton saveBtn = new JButton("Save");
 
-    public EditDoctorScreen(Controller controller, Doctor doctor) {
+    public AdminEditDoctorScreen(Controller controller, Doctor doctor) {
         this.controller = controller;
         this.doctor = doctor;
         this.setTitle("Health Center");

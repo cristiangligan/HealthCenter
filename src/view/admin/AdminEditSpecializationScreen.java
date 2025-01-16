@@ -1,11 +1,12 @@
-package view;
+package view.admin;
 
 import controller.Controller;
+import model.Specialization;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class AddSpecializationScreen extends JFrame {
+public class AdminEditSpecializationScreen extends JFrame {
     private Controller controller;
     private JPanel mainPnl = new JPanel();
     private JLabel titleLbl = new JLabel("Specialization");
@@ -18,7 +19,7 @@ public class AddSpecializationScreen extends JFrame {
     private JButton cancelBtn = new JButton("Cancel");
     private JButton saveBtn = new JButton("Save");
 
-    public AddSpecializationScreen(Controller controller) {
+    public AdminEditSpecializationScreen(Controller controller) {
         this.controller = controller;
         this.setTitle("Health Center");
         this.setContentPane(mainPnl);
@@ -59,7 +60,7 @@ public class AddSpecializationScreen extends JFrame {
         mainPnl.add(saveBtn);
         springLayout.putConstraint(SpringLayout.NORTH, saveBtn, 0, SpringLayout.NORTH, cancelBtn);
         springLayout.putConstraint(SpringLayout.EAST, saveBtn, -40, SpringLayout.EAST, mainPnl);
-        saveBtn.addActionListener(e -> controller.handleSaveNewSpecialization());
+        saveBtn.addActionListener(e -> controller.handleSaveEditedSpecialization());
 
         this.pack();
         this.setVisible(true);
@@ -76,4 +77,10 @@ public class AddSpecializationScreen extends JFrame {
     public String getCost() {
         return costField.getText();
     }
+
+    public void displaySpecializationInfo(Specialization specialization) {
+        specializationNameField.setText(specialization.getName());
+        costField.setText(Integer.toString(specialization.getCost()));
+    }
 }
+

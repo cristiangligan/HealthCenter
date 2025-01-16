@@ -1,4 +1,4 @@
-package view;
+package view.doctor;
 
 import controller.Controller;
 import model.Appointment;

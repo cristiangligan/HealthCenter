@@ -80,6 +80,7 @@ public class Patient extends User {
     public String getRegistrationDate() {
         return registrationDate;
     }
+
     @Override
     public String toString() {
         return firstName + " " + lastName;

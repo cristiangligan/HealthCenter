@@ -1,4 +1,6 @@
-package model;
+package model.managers;
+
+import model.*;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -9,8 +11,8 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class DoctorManager {
-    private Connection connection;
-    private PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
+    private final Connection connection;
+    private final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
     private Doctor currentDoctor;
     private Patient selectedPatient;
 
@@ -240,7 +242,8 @@ public class DoctorManager {
     public void setSelectedPatient(Patient patient) {
         selectedPatient = patient;
     }
-     public Patient getSelectedPatient() {
+
+    public Patient getSelectedPatient() {
         return selectedPatient;
      }
 }

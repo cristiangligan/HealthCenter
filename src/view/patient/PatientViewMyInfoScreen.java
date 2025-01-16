@@ -1,4 +1,4 @@
-package view;
+package view.patient;
 
 import controller.Controller;
 import model.Patient;
@@ -6,7 +6,7 @@ import model.Patient;
 import javax.swing.*;
 import java.awt.*;
 
-public class ViewMyInfoPatient extends JFrame {
+public class PatientViewMyInfoScreen extends JFrame {
 
     private Controller controller;
     private JPanel mainPnl = new JPanel();
@@ -34,7 +34,7 @@ public class ViewMyInfoPatient extends JFrame {
     private JButton backBtn = new JButton("Back");
     private JButton editBtn = new JButton("Edit info");
 
-    public ViewMyInfoPatient(Controller controller) {
+    public PatientViewMyInfoScreen(Controller controller) {
         this.controller = controller;
         this.setTitle("Health Center");
         this.setContentPane(mainPnl);
