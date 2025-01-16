@@ -285,6 +285,39 @@ public class AdminManager {
         return appointments;
     }
 
+    public ArrayList<Specialization> getDoctorsSpecializationsFromAppointmentsWithPatient(Patient patient) {
+        ArrayList<Specialization> specializations = new ArrayList<>();
+        Specialization specialization = null;
+        ArrayList<Integer> specIds = new ArrayList<>();
+        String selectIdsQuery = "SELECT id_specialization FROM public.doctor JOIN public.appointment ON public.doctor.id = public.appointment.id_doctor WHERE id_patient = ?";
+        try (PreparedStatement preparedStatement1 = connection.prepareStatement(selectIdsQuery)) {
+            preparedStatement1.setInt(1, patient.getMedicalId());
+            try (ResultSet resultSet = preparedStatement1.executeQuery()) {
+                while (resultSet.next()) {
+                    int id = resultSet.getInt("id_specialization");
+                    specIds.add(id);
+                }
+            }
+            for (Integer id : specIds) {
+                String selectSpecializationsQuery = "SELECT * FROM public.specialization WHERE id = ?";
+                try (PreparedStatement preparedStatement2 = connection.prepareStatement(selectSpecializationsQuery)) {
+                    preparedStatement2.setInt(1,id);
+                    try (ResultSet resultSet = preparedStatement2.executeQuery()) {
+                        while (resultSet.next()) {
+                            int id_specialization = resultSet.getInt("id");
+                            String name = resultSet.getString("name");
+                            int visit_cost = resultSet.getInt("visit_cost");
+                            specializations.add(new Specialization(id_specialization, name, visit_cost));
+                        }
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return specializations;
+    }
+
     public void setSelectedSpecialization(Specialization specialization) {
         this.selectedSpecialization = specialization;
     }

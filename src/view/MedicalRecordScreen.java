@@ -6,7 +6,7 @@ import model.MedicalRecord;
 import javax.swing.*;
 import java.awt.*;
 
-public class DiagnosisScreen extends JFrame {
+public class MedicalRecordScreen extends JFrame {
     private final Controller controller;
     private final JButton saveBtn;
     private final JLabel dateLbl = new JLabel("Date");
@@ -17,7 +17,7 @@ public class DiagnosisScreen extends JFrame {
     private final JTextArea diagnosisArea = new JTextArea();
     private final MedicalRecord medicalRecord;
 
-    public DiagnosisScreen(MedicalRecord medicalRecord, Controller controller) {
+    public MedicalRecordScreen(MedicalRecord medicalRecord, Controller controller) {
         this.medicalRecord = medicalRecord;
         this.controller = controller;
         this.setTitle("Health Center");
@@ -46,6 +46,7 @@ public class DiagnosisScreen extends JFrame {
         springLayout.putConstraint(SpringLayout.SOUTH, doctorLbl, 0, SpringLayout.SOUTH, dateLbl);
 
         mainPnl.add(descriptionArea);
+        descriptionArea.setLineWrap(true);
         springLayout.putConstraint(SpringLayout.NORTH, descriptionArea, 100, SpringLayout.NORTH, mainPnl);
         springLayout.putConstraint(SpringLayout.WEST, descriptionArea, 40, SpringLayout.WEST, mainPnl);
         springLayout.putConstraint(SpringLayout.EAST, descriptionArea, -310, SpringLayout.EAST, mainPnl);
