@@ -628,6 +628,10 @@ public class Controller implements PropertyChangeListener {
             doctorScheduleScreen.setButtonsAvailability(dayColor, time);
         }
     }
+
+    public void addMedicalRecord() {
+        diagnosisScreen = new DiagnosisScreen(null, this);
+    }
     //------------------------------------------DOCTOR - END-----------------------------------------------
 
 

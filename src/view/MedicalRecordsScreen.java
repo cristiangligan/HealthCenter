@@ -55,6 +55,12 @@ public class MedicalRecordsScreen extends JFrame {
         springLayout.putConstraint(SpringLayout.EAST, viewBtn, 0, SpringLayout.EAST, medicalRecordsLst);
         viewBtn.addActionListener(e -> viewDiagnosis());
 
+        JButton addMedicalRecordBtn = new JButton("Add");
+        mainPnl.add(addMedicalRecordBtn);
+        springLayout.putConstraint(SpringLayout.SOUTH, addMedicalRecordBtn, -10, SpringLayout.NORTH, medicalRecordsLst);
+        springLayout.putConstraint(SpringLayout.EAST, addMedicalRecordBtn, 0, SpringLayout.EAST, medicalRecordsLst);
+        addMedicalRecordBtn.addActionListener(e -> controller.addMedicalRecord());
+
         this.pack();
         this.setVisible(true);
         this.setSize(new Dimension(600, 400));
