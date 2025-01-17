@@ -2,10 +2,7 @@ package model;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -75,6 +72,26 @@ public class DoctorManager {
             throw new RuntimeException(e);
         }
         return appointments;
+    }
+
+    public void makeTimeslotUnavailable(Appointment appointment) {
+        if (appointment != null) {
+            String insertQuery = "INSERT INTO public.appointment (id_doctor, id_patient, time, date) VALUES (?, ?, ?, ?)";
+            try {
+                PreparedStatement statement = connection.prepareStatement(insertQuery);
+                int id_doctor = appointment.getDoctorId();
+                int id_patient = appointment.getPatientId();
+                String time = appointment.getTime();
+                String date = appointment.getDate();
+                statement.setInt(1, id_doctor);
+                statement.setNull(2, Types.INTEGER);
+                statement.setString(3, time);
+                statement.setString(4, date);
+                int rowCount = statement.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     public void subscribeListener(PropertyChangeListener listener) {
