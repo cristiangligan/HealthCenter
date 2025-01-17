@@ -149,7 +149,7 @@ public class AdminManager {
                 statement.setString(4, phone);
                 statement.setInt(5, specialization.getId());
                 int rowCount = statement.executeUpdate();
-                propertyChangeSupport.firePropertyChange(UPDATE_DOCTORS_LIST, null, getSpecializations());
+                propertyChangeSupport.firePropertyChange(UPDATE_DOCTORS_LIST, null, getDoctors());
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
