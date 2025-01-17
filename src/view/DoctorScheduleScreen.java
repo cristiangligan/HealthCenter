@@ -298,8 +298,6 @@ public class DoctorScheduleScreen extends JFrame {
                     if((button.getText().equals(time)) && (button.getBackground().equals(color))) {
                         button.setOpaque(true);
                         button.setEnabled(false);
-                    } else {
-                        button.setEnabled(false);
                     }
                     components[i] = button;
                 }

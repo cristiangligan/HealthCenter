@@ -6,7 +6,10 @@ import javax.swing.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class PatientManager extends JFrame {
@@ -203,23 +206,30 @@ public class PatientManager extends JFrame {
         }
     }
 
-    public Appointment existAppointmentWithDoctor(Patient currentPatient, Doctor selectedDoctor) {
+    public Appointment getAppointmentWithDoctor(Patient currentPatient, Doctor selectedDoctor, Date currentDate) {
         Appointment appointment = null;
         String selectQuery = "SELECT * FROM public.appointment WHERE appointment.id_patient = ? AND appointment.id_doctor = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(selectQuery)) {
             preparedStatement.setInt(1, currentPatient.getPatientMedicalId());
             preparedStatement.setInt(2, selectedDoctor.getEmployerNr());
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
+                while (resultSet.next()) {
                     int id = resultSet.getInt("id");
                     int patientId = resultSet.getInt("id_patient");
                     int doctorId = resultSet.getInt("id_doctor");
                     String time = resultSet.getString("time");
-                    String date = resultSet.getString("date");
-                    appointment = new Appointment(doctorId, patientId, time, date);
+                    String dateString = resultSet.getString("date");
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    Date date = simpleDateFormat.parse(dateString);
+                    if (date.after(currentDate)) {
+                        appointment = new Appointment(doctorId, patientId, time, dateString);
+                        break;
+                    }
                 }
             } catch (SQLException e) {
                 return appointment;
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
