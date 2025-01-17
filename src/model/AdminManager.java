@@ -150,6 +150,7 @@ public class AdminManager {
                 statement.setInt(5, specialization.getId());
                 int rowCount = statement.executeUpdate();
                 propertyChangeSupport.firePropertyChange(UPDATE_DOCTORS_LIST, null, getDoctors());
+                //här
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
