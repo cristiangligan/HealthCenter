@@ -53,4 +53,9 @@ public class Appointment {
     public void setPatientId(int patientId) {
         this.patientId = patientId;
     }
+
+    @Override
+    public String toString() {
+        return doctorId + " - " + patientId + " - " + date + " - " + time;
+    }
 }

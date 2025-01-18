@@ -341,6 +341,8 @@ public class Controller implements PropertyChangeListener {
     //-------- Appointments - START --------
     public void handleAppointments() {
         upcomingAppointmentsScreen = new UpcomingAppointmentsScreen(this);
+        ArrayList<Appointment> appointments = adminManager.getUpcomingAppointments(Calendar.getInstance().getTime());
+        upcomingAppointmentsScreen.displayAppointments(appointments);
         welcomeAdminScreen.dispose();
     }
 
