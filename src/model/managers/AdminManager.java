@@ -213,10 +213,11 @@ public class AdminManager {
     public void saveEditedSpecialization(Specialization editedSpecialization) {
         if (editedSpecialization != null) {
             String updateQuery = "UPDATE public.specialization SET name = ?, visit_cost = ? WHERE specialization.id = ?";
-            try (PreparedStatement statement = connection.prepareStatement(updateQuery)) {
-                statement.setString(1, editedSpecialization.getName());
-                statement.setInt(2, editedSpecialization.getCost());
-                statement.setInt(3, editedSpecialization.getId());
+            try (PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
+                preparedStatement.setString(1, editedSpecialization.getName());
+                preparedStatement.setInt(2, editedSpecialization.getCost());
+                preparedStatement.setInt(3, editedSpecialization.getId());
+                preparedStatement.executeUpdate();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
