@@ -44,7 +44,7 @@ public class PatientsScreenFromAdmin extends JFrame {
         mainPnl.add(viewMedicalRecordBtn);
         springLayout.putConstraint(SpringLayout.NORTH, viewMedicalRecordBtn, 10, SpringLayout.SOUTH, patientsLst);
         springLayout.putConstraint(SpringLayout.EAST, viewMedicalRecordBtn, 0, SpringLayout.EAST, patientsLst);
-        viewMedicalRecordBtn.addActionListener(e -> controller.handleViewMedicalRecord());
+        viewMedicalRecordBtn.addActionListener(e -> controller.handleViewMedicalRecordsFromAdmin());
 
         this.pack();
         this.setVisible(true);

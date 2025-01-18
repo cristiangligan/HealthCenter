@@ -94,6 +94,49 @@ public class DoctorManager {
         }
     }
 
+    public ArrayList<Patient> getDoctorsPatients(Doctor doctor) {
+        ArrayList<Patient> patients = new ArrayList<>();
+        ArrayList<Integer> ints = new ArrayList<>();
+        String selectDistinctPatientsQuery = "SELECT DISTINCT ON (id_patient) id_patient FROM public.appointment WHERE appointment.id_doctor = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(selectDistinctPatientsQuery)) {
+            preparedStatement.setInt(1, doctor.getEmployerNr());
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    int id = resultSet.getInt("id_patient");
+                    if (id != 0) {
+                        ints.add(id);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        String selectPatientsQuery = "SELECT * FROM public.patient WHERE id = ?";
+        for(Integer integer: ints) {
+            try (PreparedStatement preparedStatement2 = connection.prepareStatement(selectPatientsQuery)) {
+                preparedStatement2.setInt(1, integer);
+                try (ResultSet resultSet = preparedStatement2.executeQuery()) {
+                    if (resultSet.next()) {
+                        int id = resultSet.getInt("id");
+                        String firstName = resultSet.getString("firstname");
+                        String lastName = resultSet.getString("lastname");
+                        String gender = resultSet.getString("gender");
+                        String address = resultSet.getString("address");
+                        String phone = resultSet.getString("phone");
+                        String birthdate =  resultSet.getDate("birthdate").toString();
+                        String regdate = resultSet.getDate("reg_date").toString();
+                        patients.add(new Patient(id, firstName, lastName, gender, address, phone, birthdate, regdate));
+                    }
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return patients;
+    }
+
     public void subscribeListener(PropertyChangeListener listener) {
         propertyChangeSupport.addPropertyChangeListener(listener);
     }
