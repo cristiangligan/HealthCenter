@@ -12,7 +12,7 @@ public class DoctorManager {
     private Connection connection;
     private PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
     private Doctor currentDoctor;
-    //private
+    private Patient selectedPatient;
 
     public DoctorManager(Connection connection) {
         this.connection = connection;
@@ -179,6 +179,33 @@ public class DoctorManager {
         return patients;
     }
 
+    public ArrayList<MedicalRecord> getMedicalRecords(Patient patient) {
+        ArrayList<MedicalRecord> medicalRecords = new ArrayList<>();
+        MedicalRecord medicalRecord = null;
+        String selectQuery = "SELECT * FROM public.medical_record WHERE appointment.id_patient = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(selectQuery)) {
+            preparedStatement.setInt(1, patient.getMedicalId());
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    int id = resultSet.getInt("id");
+                    String diagnosis = resultSet.getString("diagnosis");
+                    String description = resultSet.getString("description");
+                    String prescription = resultSet.getString("prescription");
+                    int doctorId = resultSet.getInt("id_doctor");
+                    int patientId = resultSet.getInt("id_patient");
+                    medicalRecord = new MedicalRecord(diagnosis, description, prescription, doctorId, patientId);
+                    medicalRecord.setId(id);
+                    medicalRecords.add(medicalRecord);
+                }
+            } catch (SQLException e) {
+                return medicalRecords;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return medicalRecords;
+    }
+
     public void subscribeListener(PropertyChangeListener listener) {
         propertyChangeSupport.addPropertyChangeListener(listener);
     }
@@ -191,4 +218,10 @@ public class DoctorManager {
         this.currentDoctor = doctor;
     }
 
+    public void setSelectedPatient(Patient patient) {
+        selectedPatient = patient;
+    }
+     public Patient getSelectedPatient() {
+        return selectedPatient;
+     }
 }

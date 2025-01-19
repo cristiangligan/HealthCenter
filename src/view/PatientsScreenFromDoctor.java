@@ -11,7 +11,7 @@ public class PatientsScreenFromDoctor extends JFrame {
     private Controller controller;
     private JPanel mainPnl = new JPanel();
     private JLabel titleLbl = new JLabel("Patients");
-    private JButton viewMedicalRecordBtn = new JButton("View medical record");
+    private JButton viewMedicalRecordsBtn = new JButton("View medical records");
     private JButton backBtn = new JButton("Back");
     private JList patientsLst = new JList();
     //scroll-funktion för lista med patienter
@@ -41,10 +41,10 @@ public class PatientsScreenFromDoctor extends JFrame {
         //back from patient screen to welcome username
         backBtn.addActionListener(e -> controller.handleBackFromPatientScreenInDoctor());
 
-        mainPnl.add(viewMedicalRecordBtn);
-        springLayout.putConstraint(SpringLayout.NORTH, viewMedicalRecordBtn, 10, SpringLayout.SOUTH, patientsLst);
-        springLayout.putConstraint(SpringLayout.EAST, viewMedicalRecordBtn, 0, SpringLayout.EAST, patientsLst);
-        viewMedicalRecordBtn.addActionListener(e -> controller.handleViewMedicalRecordsFromDoctor());
+        mainPnl.add(viewMedicalRecordsBtn);
+        springLayout.putConstraint(SpringLayout.NORTH, viewMedicalRecordsBtn, 10, SpringLayout.SOUTH, patientsLst);
+        springLayout.putConstraint(SpringLayout.EAST, viewMedicalRecordsBtn, 0, SpringLayout.EAST, patientsLst);
+        viewMedicalRecordsBtn.addActionListener(e -> controller.handleViewMedicalRecordsFromDoctor());
 
         this.pack();
         this.setVisible(true);
@@ -56,6 +56,15 @@ public class PatientsScreenFromDoctor extends JFrame {
 
     public void displayPatients(ArrayList<Patient> patients) {
         patientsLst.setListData(patients.toArray());
+    }
+
+    public Patient getSelectedPatient() {
+        Patient patient = null;
+        int selectedIndex = patientsLst.getSelectedIndex();
+        if (selectedIndex != -1) {
+            patient = (Patient) patientsLst.getSelectedValue();
+        }
+        return patient;
     }
 }
 

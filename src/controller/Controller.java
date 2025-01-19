@@ -18,6 +18,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static javax.swing.JOptionPane.WARNING_MESSAGE;
+import static javax.swing.JOptionPane.showMessageDialog;
 
 public class Controller implements PropertyChangeListener {
     private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -597,8 +598,17 @@ public class Controller implements PropertyChangeListener {
     }
 
     public void handleViewMedicalRecordsFromDoctor() {
-        medicalRecordsScreen = new MedicalRecordsScreen(this);
-        patientsScreenFromDoctor.dispose();
+        Patient patient = patientsScreenFromDoctor.getSelectedPatient();
+        if (patient != null) {
+            doctorManager.setSelectedPatient(patient);
+            medicalRecordsScreen = new MedicalRecordsScreen(this);
+            medicalRecordsScreen.setTitleLabel(patient.getFirstName()+ " " + patient.getLastName());
+            ArrayList<MedicalRecord> medicalRecords = doctorManager.getMedicalRecords(patient);
+            medicalRecordsScreen.displayMedicalRecords(medicalRecords);
+            patientsScreenFromDoctor.dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "Please select a patient.", "No selection", WARNING_MESSAGE);
+        }
     }
 
     public void viewMyAppointments() {
