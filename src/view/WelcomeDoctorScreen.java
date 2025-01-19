@@ -64,6 +64,7 @@ public class WelcomeDoctorScreen extends JFrame {
         btnMyAppointments.setHorizontalAlignment(SwingConstants.CENTER);
         btnMyAppointments.setFont(new Font(Font.SERIF, Font.BOLD, 15));
         pnlMain.add(btnMyAppointments);
+        btnMyAppointments.addActionListener(e -> controller.viewMyAppointments());
 
         //sätt layout för doctor-knapp
         springLayout.putConstraint(SpringLayout.NORTH, btnMyAppointments, 40, SpringLayout.SOUTH, btnMySchedule);

@@ -36,6 +36,7 @@ public class Controller implements PropertyChangeListener {
     private AddSpecializationScreen addSpecializationScreen;
     private EditSpecializationScreen editSpecializationScreen;
     private MedicalRecordsScreen medicalRecordsScreen;
+    private DoctorMyAppointmentsScreen doctorMyAppointmentsScreen;
     private DiagnosisScreen diagnosisScreen;
     private UpcomingAppointmentsScreen upcomingAppointmentsScreen;
     private RegisterNewPatientScreen registerNewPatientScreen;
@@ -153,7 +154,6 @@ public class Controller implements PropertyChangeListener {
         newDoctorScreen = new NewDoctorScreen(this);
         doctorsScreenInAdmin.dispose();
     }
-
 
 
     public void handleEditDoctor() {
@@ -568,7 +568,7 @@ public class Controller implements PropertyChangeListener {
             cal.add(Calendar.DAY_OF_WEEK, -diff);
         }
         String date = simpleDateFormat.format(cal.getTime());
-        ArrayList<Appointment> appointments = doctorManager.getMyAppointments(doctorManager.getCurrentDoctor(), date);
+        ArrayList<Appointment> appointments = doctorManager.getMyUpcomingAppointments(doctorManager.getCurrentDoctor(), date);
         for (Appointment appointment : appointments) {
             if(appointment != null) {
                 Color dayColor = null;
@@ -602,7 +602,16 @@ public class Controller implements PropertyChangeListener {
     }
 
     public void viewMyAppointments() {
+        ArrayList<Appointment> appointments = doctorManager.getDoctorsAppointments(doctorManager.getCurrentDoctor());
+        doctorMyAppointmentsScreen = new DoctorMyAppointmentsScreen(this);
+        doctorMyAppointmentsScreen.displayAppointments(appointments);
+        welcomeDoctorScreen.dispose();
+    }
 
+    public void handleBackMyAppointmentsScreen() {
+        doctorMyAppointmentsScreen.dispose();
+        welcomeDoctorScreen = new WelcomeDoctorScreen(this);
+        welcomeDoctorScreen.setWelcomeDoctorLabel(doctorManager.getCurrentDoctor().getFirstName());
     }
 
     public void handleBackFromDoctorScheduleScreen() {
@@ -982,7 +991,7 @@ public class Controller implements PropertyChangeListener {
                     Date nextMondayDate = cal.getTime();
                     String nextMondayDateString = simpleDateFormat.format(nextMondayDate);
                     doctorManager = new DoctorManager(connection);
-                    ArrayList<Appointment> appointments = doctorManager.getMyAppointments(patientManager.getSelectedDoctor(), nextMondayDateString);
+                    ArrayList<Appointment> appointments = doctorManager.getMyUpcomingAppointments(patientManager.getSelectedDoctor(), nextMondayDateString);
                     for(Appointment app : appointments) {
                         setButtonsAvailability(app, false);
                     }
