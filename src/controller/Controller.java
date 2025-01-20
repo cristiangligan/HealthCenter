@@ -68,7 +68,7 @@ public class Controller implements PropertyChangeListener {
     // Common screens
     private LogInScreen logInScreen;
     private MedicalRecordsScreen medicalRecordsScreen;
-    private DiagnosisScreen diagnosisScreen;
+    private MedicalRecordScreen medicalRecordScreen;
 
     //constructor
     public Controller() {
@@ -286,6 +286,15 @@ public class Controller implements PropertyChangeListener {
         adminWelcomeScreen = new AdminWelcomeScreen(this);
         adminWelcomeScreen.setUsernameLabel(adminManager.getCurrentAdmin().toString());
         adminPatientsScreen.dispose();
+    }
+
+    public void handleSetTotalCost(Patient selectedPatient) {
+        ArrayList<Specialization> specializations = adminManager.getDoctorsSpecializationsFromAppointmentsWithPatient(selectedPatient);
+        int totalCost = 0;
+        for (Specialization specialization: specializations) {
+            totalCost += specialization.getCost();
+        }
+        adminPatientsScreen.setTotalCostLabel(String.valueOf(totalCost));
     }
     //-------- Patients - END --------
 
@@ -590,10 +599,10 @@ public class Controller implements PropertyChangeListener {
         Patient patient = doctorManager.getSelectedPatient();
         Appointment appointment = doctorManager.getAppointmentForPatient(doctor, patient, dateString);
         if (appointment != null) {
-            diagnosisScreen = new DiagnosisScreen(null, this);
-            diagnosisScreen.setDateLabel(dateString);
-            diagnosisScreen.setDoctorLabel(doctor.getFirstName() + " " + doctor.getLastName());
-            diagnosisScreen.setCostLabel(doctor.getSpecialization().getCost());
+            medicalRecordScreen = new MedicalRecordScreen(null, this);
+            medicalRecordScreen.setDateLabel(dateString);
+            medicalRecordScreen.setDoctorLabel(doctor.getFirstName() + " " + doctor.getLastName());
+            medicalRecordScreen.setCostLabel(doctor.getSpecialization().getCost());
             medicalRecordsScreen.dispose();
         } else {
             JOptionPane.showMessageDialog(null, "No appointment with patient today.", "Add appointment", WARNING_MESSAGE);
@@ -601,7 +610,7 @@ public class Controller implements PropertyChangeListener {
     }
 
     public void handleSaveNewMedicalRecord() {
-        MedicalRecord medicalRecord = diagnosisScreen.getMedicalFromView(doctorManager.getCurrentDoctor().getEmployerNr(), doctorManager.getSelectedPatient().getMedicalId());
+        MedicalRecord medicalRecord = medicalRecordScreen.getMedicalFromView(doctorManager.getCurrentDoctor().getEmployerNr(), doctorManager.getSelectedPatient().getMedicalId());
         if (medicalRecord.getDiagnosis().isBlank() || medicalRecord.getDescription().isBlank() || medicalRecord.getPrescription().isBlank()) {
             JOptionPane.showMessageDialog(null, "Please fill in all fields!", "Save medical record", WARNING_MESSAGE);
             return;
@@ -613,7 +622,7 @@ public class Controller implements PropertyChangeListener {
             medicalRecordsScreen = new MedicalRecordsScreen(this);
             ArrayList<MedicalRecord> medicalRecords = userManager.getMedicalRecords(doctorManager.getSelectedPatient());
             medicalRecordsScreen.displayMedicalRecords(medicalRecords);
-            diagnosisScreen.dispose();
+            medicalRecordScreen.dispose();
         }
     }
 //------------------------------------------DOCTOR - END-----------------------------------------------
@@ -1035,11 +1044,11 @@ public class Controller implements PropertyChangeListener {
     }
 
     public void handleViewDiagnosis(MedicalRecord medicalRecord) {
-        diagnosisScreen = new DiagnosisScreen(medicalRecord,this);
+        medicalRecordScreen = new MedicalRecordScreen(medicalRecord,this);
         Doctor doctor = userManager.getDoctor(medicalRecord.getDoctorId());
-        diagnosisScreen.setDateLabel(medicalRecord.getDate());
-        diagnosisScreen.setDoctorLabel(doctor.getFirstName() + " " + doctor.getLastName());
-        diagnosisScreen.setCostLabel(doctor.getSpecialization().getCost());
+        medicalRecordScreen.setDateLabel(medicalRecord.getDate());
+        medicalRecordScreen.setDoctorLabel(doctor.getFirstName() + " " + doctor.getLastName());
+        medicalRecordScreen.setCostLabel(doctor.getSpecialization().getCost());
         medicalRecordsScreen.dispose();
     }
 
@@ -1056,7 +1065,7 @@ public class Controller implements PropertyChangeListener {
         medicalRecordsScreen.setTitleLabel(patient.getFirstName()+ " " + patient.getLastName());
         medicalRecordsScreen.displayMedicalRecords(medicalRecords);
 
-        diagnosisScreen.dispose();
+        medicalRecordScreen.dispose();
     }
 
     public Doctor getDoctor(int doctorId) {

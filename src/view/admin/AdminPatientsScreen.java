@@ -14,6 +14,7 @@ import static javax.swing.JOptionPane.WARNING_MESSAGE;
 public class AdminPatientsScreen extends JFrame {
     private final Controller controller;
     private final JList patientsLst = new JList();
+    private final JLabel totalCostLbl = new JLabel("Sum total visit cost: ");
 
     public AdminPatientsScreen(Controller controller) {
         this.controller = controller;
@@ -39,10 +40,18 @@ public class AdminPatientsScreen extends JFrame {
                 }
             }
         });
+        patientsLst.addListSelectionListener(e -> {
+            Patient selectedPatient = getSelectedPatient();
+            controller.handleSetTotalCost(selectedPatient);
+        });
         springLayout.putConstraint(SpringLayout.NORTH, scrollPane, 100, SpringLayout.NORTH, mainPnl);
         springLayout.putConstraint(SpringLayout.WEST, scrollPane, 40, SpringLayout.WEST, mainPnl);
         springLayout.putConstraint(SpringLayout.EAST, scrollPane, -40, SpringLayout.EAST, mainPnl);
         springLayout.putConstraint(SpringLayout.SOUTH, scrollPane, -60, SpringLayout.SOUTH, mainPnl);
+
+        mainPnl.add(totalCostLbl);
+        springLayout.putConstraint(SpringLayout.SOUTH, totalCostLbl, -10, SpringLayout.NORTH, scrollPane);
+        springLayout.putConstraint(SpringLayout.EAST, totalCostLbl, 0, SpringLayout.EAST, scrollPane);
 
         JButton backBtn = new JButton("Back");
         mainPnl.add(backBtn);
@@ -85,5 +94,9 @@ public class AdminPatientsScreen extends JFrame {
             patient = (Patient) patientsLst.getSelectedValue();
         }
         return patient;
+    }
+
+    public void setTotalCostLabel(String cost) {
+        totalCostLbl.setText("Sum total visit cost: " + cost + "$");
     }
 }
